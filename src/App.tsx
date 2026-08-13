@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 export function App() {
   const [currentPage, setCurrentPage] = useState<'home' | 'privacy' | 'terms' | 'about' | 'contact'>('home');
 
+  // البريد الإلكتروني الرسمي للتواصل
+  const contactEmail = "Jmal30997@gmail.com";
+
   // Sample Resume Data
   const [fullName, setFullName] = useState('جمال محمد');
   const [jobTitle, setJobTitle] = useState('مطور ويب / Software Engineer');
@@ -85,32 +88,45 @@ export function App() {
           </div>
         )}
 
-        {/* Pages */}
+        {/* Pages Optimized for Google AdSense */}
         {currentPage === 'privacy' && (
-          <div style={{ backgroundColor: '#1e293b', padding: '30px', borderRadius: '12px' }}>
-            <h2>سياسة الخصوصية</h2>
-            <p>نحن نحترم خصوصيتك. جميع البيانات التي تدخلها في هذا الموقع تُحفظ محلياً في متصفحك ولا نتشاركها مع أي طرف ثالث.</p>
+          <div style={{ backgroundColor: '#1e293b', padding: '30px', borderRadius: '12px', lineHeight: '1.8' }}>
+            <h2 style={{ color: '#38bdf8' }}>سياسة الخصوصية</h2>
+            <p>نحن نولي أهمية قصوى لخصوصية زوارنا. توضح هذه الوثيقة أنواع المعلومات الشخصية التي يتم جمعها وكيفية استخدامها.</p>
+            <h3>ملفات تعريف الارتباط (Cookies) وإعلانات Google AdSense:</h3>
+            <p>يستخدم موقعنا ملفات تعريف الارتباط لتخزين المعلومات حول تفضيلات الزوار. تستخدم جهات خارجية، بما في ذلك Google، ملفات تعريف الارتباط لعرض الإعلانات بناءً على زيارات المستخدم السابقة لموقعنا أو لمواقع أخرى على الإنترنت.</p>
+            <p>يمكن للمستخدمين إلغاء استخدام ملفات تعريف الارتباط للإعلانات المخصصة عن طريق زيارة إعدادات الإعلانات في Google.</p>
           </div>
         )}
 
         {currentPage === 'terms' && (
-          <div style={{ backgroundColor: '#1e293b', padding: '30px', borderRadius: '12px' }}>
-            <h2>شروط الخدمة</h2>
-            <p>باستخدامك لموقعنا، فإنك توافق على استخدام الأدوات لأغراض شخصية ومهنية مشروعة فقط.</p>
+          <div style={{ backgroundColor: '#1e293b', padding: '30px', borderRadius: '12px', lineHeight: '1.8' }}>
+            <h2 style={{ color: '#38bdf8' }}>شروط الخدمة</h2>
+            <p>مرحباً بك في موقع منشئ السيرة الذاتية. استخدامك لموقعنا يعني موافقتك على الشروط والأحكام التالية:</p>
+            <ul style={{ paddingRight: '20px' }}>
+              <li>الأداة مُقدمة للاستخدام الشخصي والمهني بشكل مجاني بالكامل.</li>
+              <li>جميع البيانات المُدخلة يتم معالجتها وتأمينها داخل متصفحك مباشرة.</li>
+              <li>يُحظر استخدام الأداة لإنشاء سير ذاتية تحتوي على معلومات مضللة أو غير قانونية.</li>
+            </ul>
           </div>
         )}
 
         {currentPage === 'about' && (
-          <div style={{ backgroundColor: '#1e293b', padding: '30px', borderRadius: '12px' }}>
-            <h2>معلومات عنا</h2>
-            <p>منشئ السيرة الذاتية هو أداة مجانية تهدف لمساعدة الباحثين عن عمل على تصميم سير ذاتية احترافية بسهولة وسرعة.</p>
+          <div style={{ backgroundColor: '#1e293b', padding: '30px', borderRadius: '12px', lineHeight: '1.8' }}>
+            <h2 style={{ color: '#38bdf8' }}>معلومات عنا</h2>
+            <p>منشئ السيرة الذاتية هو منصة رقمية مجانية تم تطويرها لمساعدة الباحثين عن عمل والمهنيين على إنشاء سير ذاتية احترافية ومتناسقة خلال دقائق معدودة.</p>
+            <p>هدفنا هو تسهيل عملية التقديم على الوظائف وتزويد المستخدمين بأدوات معاينة واستخراج سريعة ومجانية تماماً بدون الحاجة لتسجيل أو دفع أي رسوم.</p>
           </div>
         )}
 
         {currentPage === 'contact' && (
-          <div style={{ backgroundColor: '#1e293b', padding: '30px', borderRadius: '12px' }}>
-            <h2>اتصل بنا</h2>
-            <p>إذا كان لديك أي استفسار، يمكنك التواصل معنا عبر البريد الإلكتروني: support@cv-crafter.com</p>
+          <div style={{ backgroundColor: '#1e293b', padding: '30px', borderRadius: '12px', lineHeight: '1.8' }}>
+            <h2 style={{ color: '#38bdf8' }}>اتصل بنا</h2>
+            <p>يسعدنا دائماً الاستماع إلى آرائكم واستفساراتكم حول المنصة.</p>
+            <p>يمكنكم التواصل معنا مباشرة عبر البريد الإلكتروني المعتمد:</p>
+            <div style={{ backgroundColor: '#0f172a', padding: '15px 20px', borderRadius: '8px', border: '1px solid #334155', display: 'inline-block', marginTop: '10px' }}>
+              📧 <strong>{contactEmail}</strong>
+            </div>
           </div>
         )}
 
