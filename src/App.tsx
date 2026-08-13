@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { 
   FileText, User, Briefcase, GraduationCap, Wrench, Sparkles, 
-  Download, RotateCcw, FilePlus2, Loader2, Globe 
+  Download, RotateCcw, FilePlus2, Loader2 
 } from 'lucide-react';
-import { ThemeProvider, useTheme } from './theme';
+import { ThemeProvider } from './theme';
 import { LanguageProvider, useLang } from './i18n';
 import { cn } from './utils';
 import { emptyResume, sampleResume, sampleResumeAr } from './sampleData';
@@ -16,7 +16,7 @@ import SkillsTab from './components/SkillsTab';
 import ResumePreview from './components/ResumePreview';
 import TipsSection from './components/TipsSection';
 
-// Import New Legal & Info Pages
+// Import Pages
 import { PrivacyPolicy } from './pages/PrivacyPolicy';
 import { TermsOfService } from './pages/TermsOfService';
 import { AboutUs } from './pages/AboutUs';
@@ -67,7 +67,7 @@ function TabBar({
 }
 
 function MainResumeBuilder() {
-  const { t, lang, setLang } = useLang();
+  const { t, lang } = useLang();
   const [data, setData] = useState<ResumeData>(lang === 'ar' ? sampleResumeAr : sampleResume);
   const [tab, setTab] = useState<TabKey>('summary');
   const [exporting, setExporting] = useState(false);
@@ -171,7 +171,7 @@ export function App() {
                 <div className="rounded-xl bg-brand-500 p-2 text-white">
                   <FileText className="h-5 w-5" />
                 </div>
-                <span className="text-lg font-bold">AI Resume Builder</span>
+                <span className="text-lg font-bold">منشئ السيرة الذاتية</span>
               </div>
 
               {currentPage !== 'home' && (
@@ -179,7 +179,7 @@ export function App() {
                   onClick={() => setCurrentPage('home')}
                   className="text-sm bg-brand-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-brand-600"
                 >
-                  ← العودة لصانع السيرة الذاتية
+                  ← العودة للرئيسية
                 </button>
               )}
             </div>
@@ -197,12 +197,12 @@ export function App() {
           {/* Footer */}
           <footer className="border-t border-slate-200 bg-white p-6 text-center text-sm text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400">
             <div className="flex flex-wrap justify-center gap-6 mb-4">
-              <button onClick={() => setCurrentPage('about')} className="hover:text-brand-500">About Us</button>
-              <button onClick={() => setCurrentPage('contact')} className="hover:text-brand-500">Contact Us</button>
-              <button onClick={() => setCurrentPage('privacy')} className="hover:text-brand-500">Privacy Policy</button>
-              <button onClick={() => setCurrentPage('terms')} className="hover:text-brand-500">Terms of Service</button>
+              <button onClick={() => setCurrentPage('about')} className="hover:text-brand-500">معلومات عنا</button>
+              <button onClick={() => setCurrentPage('contact')} className="hover:text-brand-500">اتصل بنا</button>
+              <button onClick={() => setCurrentPage('privacy')} className="hover:text-brand-500">سياسة الخصوصية</button>
+              <button onClick={() => setCurrentPage('terms')} className="hover:text-brand-500">شروط الخدمة</button>
             </div>
-            <p>© 2026 AI Resume Builder. All rights reserved.</p>
+            <p>© 2026 برنامج إنشاء السيرة الذاتية بالذكاء الاصطناعي. جميع الحقوق محفوظة.</p>
           </footer>
         </div>
       </LanguageProvider>
