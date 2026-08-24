@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-
+import { AboutUs } from './pages/AboutUs';
+import { ContactUs } from './pages/ContactUs';
+import { PrivacyPolicy } from './pages/PrivacyPolicy';
+import { TermsOfService } from './pages/TermsOfService';
 // هيكل بيانات المقالات
 interface Post {
   id: string;
@@ -434,10 +437,10 @@ export function App() {
         )}
 
         {/* باقي الصفحات الإدارية */}
-        {currentPage === 'privacy' && <div style={{ backgroundColor: '#1e293b', padding: '30px', borderRadius: '12px' }}><h2>سياسة الخصوصية</h2><p>نحن نضمن حماية بياناتك وعدم مشاركتها مع أي أطراف خارجية.</p></div>}
-        {currentPage === 'terms' && <div style={{ backgroundColor: '#1e293b', padding: '30px', borderRadius: '12px' }}><h2>شروط الخدمة</h2><p>الخدمة مجانية ومتاحة للاستخدام الشخصي والمهني لتصميم وتنزيل السير الذاتية.</p></div>}
-        {currentPage === 'about' && <div style={{ backgroundColor: '#1e293b', padding: '30px', borderRadius: '12px' }}><h2>عن المنصة</h2><p>أداة مجانية لمساعدة الطلاب والمهنيين على تصميم سير ذاتية احترافية بسهولة.</p></div>}
-        {currentPage === 'contact' && <div style={{ backgroundColor: '#1e293b', padding: '30px', borderRadius: '12px' }}><h2>اتصل بنا</h2><p>البريد الإلكتروني للارتباط والدعم: {contactEmail}</p></div>}
+        {currentPage === 'privacy' && <PrivacyPolicy />}
+{currentPage === 'terms' && <TermsOfService />}
+{currentPage === 'about' && <AboutUs />}
+{currentPage === 'contact' && <ContactUs />}
       </main>
 
       {/* الفوتر */}
