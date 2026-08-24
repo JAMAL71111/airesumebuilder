@@ -77,7 +77,44 @@
     </header>
 
     <main class="container">
-        <!-- أضف المحتوى الخاص بكل قسم هنا -->
+        <!-- قسم صانع السيرة الذاتية -->
+        <section id="builder" class="card">
+            <h2>صانع السيرة الذاتية الاحترافي</h2>
+            <p>سندمج أداة إدخال البيانات والمعاينة المباشرة هنا في الخطوة القادمة.</p>
+        </section>
+
+        <!-- قسم المقالات والدروس -->
+        <section id="blog" class="card hidden">
+            <h2>المقالات والدروس المهنية</h2>
+            <div class="article-post">
+                <h3>كيف تكتب سيرة ذاتية تجذب مسؤول التوظيف؟</h3>
+                <p>دليل شامل للباحثين عن عمل لتحسين الفرص الوظيفية وإبراز المهارات بشكل احترافي.</p>
+            </div>
+        </section>
+
+        <!-- قسم من نحن -->
+        <section id="about" class="card hidden">
+            <h2>من نحن</h2>
+            <p>منصة Fareestate هي منصة مجانية متخصصة في مساعدة الباحثين عن عمل على إنشاء سير ذاتية احترافية وتطوير مسارهم المهني.</p>
+        </section>
+
+        <!-- قسم اتصل بنا -->
+        <section id="contact" class="card hidden">
+            <h2>اتصل بنا</h2>
+            <p>للتواصل والاستفسارات: jmal30997@gmail.com | هاتف: +967776202648</p>
+        </section>
+
+        <!-- قسم سياسة الخصوصية -->
+        <section id="privacy" class="card hidden">
+            <h2>سياسة الخصوصية</h2>
+            <p>نحن في Fareestate نحترم خصوصيتك تماماً. لا نجمع أو نشارك بياناتك الشخصية مع أي أطراف خارجية.</p>
+        </section>
+
+        <!-- قسم الشروط والأحكام -->
+        <section id="terms" class="card hidden">
+            <h2>الشروط والأحكام</h2>
+            <p>استخدامك لمنصة Fareestate يعني موافقتك على شروط الاستخدام والخدمات المجانية المتاحة عبر الموقع.</p>
+        </section>
     </main>
 
     <footer>
@@ -86,7 +123,17 @@
 
     <script>
         function showSection(sectionId) {
-            console.log("Section clicked:", sectionId);
+            // إخفاء جميع الأقسام أولاً
+            const sections = document.querySelectorAll('main section');
+            sections.forEach(section => {
+                section.classList.add('hidden');
+            });
+
+            // إظهار القسم الذي تم النقر عليه فقط
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+            }
         }
     </script>
 </body>
