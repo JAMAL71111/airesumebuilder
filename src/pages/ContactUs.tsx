@@ -1,19 +1,17 @@
 import React from 'react';
 
-export const ContactUs: React.FC = () => {
+export function ContactUs() {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 text-gray-200">
-      <h1 className="text-3xl font-bold mb-6 text-white">Contact Us</h1>
-      
-      <p className="text-lg mb-6">
-        Have questions, feedback, or need support with our AI Resume Builder? We would love to hear from you!
+    <div style={{ backgroundColor: '#1e293b', padding: '30px', borderRadius: '16px', border: '1px solid #334155' }}>
+      <h2 style={{ color: '#38bdf8', marginBottom: '20px' }}>اتصل بنا</h2>
+      <p style={{ color: '#cbd5e1', lineHeight: '1.8', marginBottom: '20px', fontSize: '15px' }}>
+        نحن هنا لمساعدتك والاستماع إلى ملاحظاتك! إذا كان لديك أي استفسارات أو اقتراحات لتطوير المنصة، لا تتردد في التواصل معنا:
       </p>
-
-      <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
-        <h2 className="text-xl font-semibold mb-4 text-white">Get in Touch</h2>
-        <p className="mb-2"><strong>Email:</strong> support@airesumebuilder.com</p>
-        <p><strong>Response Time:</strong> We usually respond within 24-48 business hours.</p>
-      </div>
+      <ul style={{ color: '#cbd5e1', lineHeight: '1.8', fontSize: '15px', paddingRight: '20px' }}>
+        <li>**البريد الإلكتروني:** support@resumate.com</li>
+        <li>**رقم الهاتف:** 776202648</li>
+        <li>**العنوان:** صنعاء، اليمن</li>
+      </ul>
     </div>
   );
-};
+}
