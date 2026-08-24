@@ -1,30 +1,18 @@
 import React from 'react';
 
-export const PrivacyPolicy: React.FC = () => {
+export function PrivacyPolicy() {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 text-gray-200">
-      <h1 className="text-3xl font-bold mb-6 text-white">Privacy Policy</h1>
-      <p className="mb-4">Last updated: August 2026</p>
-
-      <section className="mb-6">
-        <h2 className="text-xl font-semibold mb-2 text-white">1. Information We Collect</h2>
-        <p>We respect your privacy. All information entered into our resume builder is stored locally in your browser session or processed in real-time to generate your resume. We do not store your personal resume data on our permanent servers.</p>
-      </section>
-
-      <section className="mb-6">
-        <h2 className="text-xl font-semibold mb-2 text-white">2. Cookies and Advertising</h2>
-        <p>We may use third-party advertising companies (such as Google AdSense) to serve ads when you visit our website. These companies may use cookies to serve ads based on your prior visits to our website or other websites on the Internet.</p>
-      </section>
-
-      <section className="mb-6">
-        <h2 className="text-xl font-semibold mb-2 text-white">3. Third-Party Links</h2>
-        <p>Our website may contain links to external sites. We are not responsible for the content or privacy practices of these third-party websites.</p>
-      </section>
-
-      <section className="mb-6">
-        <h2 className="text-xl font-semibold mb-2 text-white">4. Contact Us</h2>
-        <p>If you have any questions about this Privacy Policy, please reach out via our Contact page.</p>
-      </section>
+    <div style={{ backgroundColor: '#1e293b', padding: '30px', borderRadius: '16px', border: '1px solid #334155' }}>
+      <h2 style={{ color: '#38bdf8', marginBottom: '20px' }}>سياسة الخصوصية</h2>
+      <div style={{ color: '#cbd5e1', lineHeight: '1.8', fontSize: '15px' }}>
+        <p>نحن في Resumate نولي اهتماماً كبيراً بخصوصية زوارنا. توضح سياسة الخصوصية هذه أنواع المعلومات التي نتلقاها ونجمعها وكيفية استخدامها.</p>
+        
+        <h3 style={{ color: '#f8fafc', marginTop: '20px', fontSize: '18px' }}>أمان البيانات الشخصية</h3>
+        <p>لا نقوم بجمع أو حفظ أو تخزين بيانات سيرتك الذاتية على خوادمنا. تتم معالجة جميع النصوص والمعلومات التي تدخلها محلياً داخل متصفحك لضمان أقصى درجات الخصوصية والأمان.</p>
+        
+        <h3 style={{ color: '#f8fafc', marginTop: '20px', fontSize: '18px' }}>ملفات تعريف الارتباط (Cookies) وجوجل أدسنس</h3>
+        <p>قد يستخدم موقعنا إعلانات Google AdSense كطرف ثالث. تستخدم Google ملفات تعريف الارتباط (مثل ملفات تعريف ارتباط DART) لعرض إعلانات مخصصة للمستخدمين بناءً على زياراتهم لموقعنا والمواقع الأخرى على الإنترنت. يمكن للمستخدمين اختيار تعطيل استخدام ملفات تعريف ارتباط DART بزيارة سياسة خصوصية إعلانات Google.</p>
+      </div>
     </div>
   );
-};
+}
