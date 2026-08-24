@@ -80,7 +80,45 @@
         <!-- قسم صانع السيرة الذاتية -->
         <section id="builder" class="card">
             <h2>صانع السيرة الذاتية الاحترافي</h2>
-            <p>سندمج أداة إدخال البيانات والمعاينة المباشرة هنا في الخطوة القادمة.</p>
+            <p style="margin-bottom: 2rem; color: var(--gray);">أدخل بياناتك وسيتم تحديث السيرة الذاتية مباشرة.</p>
+            
+            <div class="cv-grid">
+                <!-- 1. نموذج إدخال البيانات -->
+                <div class="cv-form">
+                    <div class="form-group">
+                        <label>الاسم الكامل</label>
+                        <input type="text" id="cvNameInput" placeholder="مثال: جمال حميد الشمهاني" oninput="updateCV()">
+                    </div>
+                    <div class="form-group">
+                        <label>المسمى الوظيفي</label>
+                        <input type="text" id="cvTitleInput" placeholder="مثال: مهندس برمجيات" oninput="updateCV()">
+                    </div>
+                    <div class="form-group">
+                        <label>البريد الإلكتروني</label>
+                        <input type="email" id="cvEmailInput" placeholder="jmal30997@gmail.com" oninput="updateCV()">
+                    </div>
+                    <div class="form-group">
+                        <label>رقم الهاتف</label>
+                        <input type="text" id="cvPhoneInput" placeholder="+967776202648" oninput="updateCV()">
+                    </div>
+                    <div class="form-group">
+                        <label>نبذة عنك</label>
+                        <textarea id="cvSummaryInput" rows="4" placeholder="اكتب نبذة مختصرة عن مهاراتك وأهدافك..." oninput="updateCV()"></textarea>
+                    </div>
+                </div>
+
+                <!-- 2. شاشة المعاينة الحية -->
+                <div id="cv-preview">
+                    <h2 id="cvNameDisplay">اسمك سيظهر هنا</h2>
+                    <p style="color: var(--gray); font-weight: bold; margin-bottom: 1rem;" id="cvTitleDisplay">المسمى الوظيفي</p>
+                    <p style="font-size: 0.9rem; margin-bottom: 1rem;">
+                        📧 <span id="cvEmailDisplay">البريد الإلكتروني</span> | 
+                        📱 <span id="cvPhoneDisplay">رقم الهاتف</span>
+                    </p>
+                    <h3 style="color: var(--primary); border-bottom: 1px solid var(--primary); margin-bottom: 0.5rem;">النبذة الشخصية</h3>
+                    <p id="cvSummaryDisplay">نبذتك الشخصية ستظهر هنا بمجرد الكتابة...</p>
+                </div>
+            </div>
         </section>
 
         <!-- قسم المقالات والدروس -->
@@ -122,18 +160,25 @@
     </footer>
 
     <script>
+        // دالة التنقل بين الأقسام
         function showSection(sectionId) {
-            // إخفاء جميع الأقسام أولاً
             const sections = document.querySelectorAll('main section');
             sections.forEach(section => {
                 section.classList.add('hidden');
             });
-
-            // إظهار القسم الذي تم النقر عليه فقط
             const targetSection = document.getElementById(sectionId);
             if (targetSection) {
                 targetSection.classList.remove('hidden');
             }
+        }
+
+        // دالة التحديث المباشر للسيرة الذاتية 
+        function updateCV() {
+            document.getElementById('cvNameDisplay').innerText = document.getElementById('cvNameInput').value || 'اسمك سيظهر هنا';
+            document.getElementById('cvTitleDisplay').innerText = document.getElementById('cvTitleInput').value || 'المسمى الوظيفي';
+            document.getElementById('cvEmailDisplay').innerText = document.getElementById('cvEmailInput').value || 'البريد الإلكتروني';
+            document.getElementById('cvPhoneDisplay').innerText = document.getElementById('cvPhoneInput').value || 'رقم الهاتف';
+            document.getElementById('cvSummaryDisplay').innerText = document.getElementById('cvSummaryInput').value || 'نبذتك الشخصية ستظهر هنا بمجرد الكتابة...';
         }
     </script>
 </body>
