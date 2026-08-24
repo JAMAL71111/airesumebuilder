@@ -3,59 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fareestate | صانع السير الذاتية ومستشارك المهني</title>
-    <meta name="description" content="أداة Fareestate المجانية لإنشاء سيرة ذاتية احترافية بصيغة PDF مع دليل ومقالات مفصلة للتوظيف والتطوير المهني.">
-    <meta name="author" content="جمال حميد الشمهاني">
-    
-    <!-- وسم الأرشفة الذكية لمنع أرشفة الروابط المكررة وفق توجيهات الفيديو -->
+    <title>Fareestate | صانع السيرة الذاتية ومستشارك المهني</title>
+    <meta name="description" content="Fareestate مع دليل ومقالات منصة التوظيف والتطوير المهني المجانية إنشاء سيرة ذاتية احترافية بصيغة PDF">
+    <meta name="author" content="جمال حميد النهاري">
+
+    <!-- وسوم الأرشفة الذكية لمنع أرشفة الروابط غير الهامة ولرفع فيديوهات المواقع -->
     <meta name="robots" content="index, follow, max-image-preview:large">
 
-    <!-- كود البيانات المنظمة (Structured Data / Schema) للتعريف بمالك الموقع -->
+    <!-- تعريف بيانات الموقع (Structured Data / Schema) -->
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Fareestate",
-      "url": "https://fareestate.com",
-      "author": {
-        "@type": "Person",
-        "name": "جمال حميد الشمهاني",
-        "email": "jmal30997@gmail.com",
-        "telephone": "+967776202648"
-      }
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Fareestate",
+        "url": "https://fareestate.com",
+        "author": {
+            "@type": "Person",
+            "name": "جمال حميد النهاري",
+            "email": "jmal30997@gmail.com",
+            "telephone": "+967776202648"
+        }
     }
     </script>
 
-    <!-- ضع شفرة إعلانات Google AdSense هنا عند الاستلام -->
-    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+    <!-- كود إعلانات Google AdSense (استبدل ca-pub-XXXXXXXXXXXXXXXX بمعرفك الحقيقي عند القبول) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
 
     <style>
         :root { --primary: #2563eb; --primary-dark: #1d4ed8; --dark: #0f172a; --light: #f8fafc; --gray: #64748b; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: system-ui, -apple-system, sans-serif; background: var(--light); color: var(--dark); line-height: 1.7; }
-        
-        header { background: var(--dark); color: white; padding: 1rem 2rem; position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        body { font-family: system-ui, -apple-system, sans-serif; background: var(--light); color: var(--dark); line-height: 1.6; }
+
+        header { background: var(--dark); color: white; padding: 1rem 2rem; position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; }
         header h1 { font-size: 1.5rem; color: #60a5fa; }
         nav a { color: #e2e8f0; margin-right: 1rem; text-decoration: none; font-size: 0.95rem; font-weight: 500; cursor: pointer; }
         nav a:hover { color: #60a5fa; }
 
         .container { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }
         .card { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 2rem; }
-        
-        /* أداة بناء السيرة الذاتية */
+
+        /* أداء بناء السيرة الذاتية */
         .cv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
         @media (max-width: 768px) { .cv-grid { grid-template-columns: 1fr; } }
         .form-group { margin-bottom: 1rem; }
         label { display: block; font-weight: 600; margin-bottom: 0.3rem; }
         input, textarea { width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px; font-family: inherit; }
-        button { background: var(--primary); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; }
+        button { background: var(--primary); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: 600; }
         button:hover { background: var(--primary-dark); }
 
         /* المعاينة الحية */
         #cv-preview { background: #fff; border: 2px dashed #cbd5e1; padding: 2rem; border-radius: 8px; min-height: 400px; }
         #cv-preview h2 { color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 0.5rem; }
-        
-        /* قسم المقالات والمدونة */
+
+        /* قسم المقالات المدونة */
         .article-post { border-bottom: 1px solid #e2e8f0; padding-bottom: 1.5rem; margin-bottom: 1.5rem; }
         .article-post h3 { color: var(--primary); margin-bottom: 0.5rem; font-size: 1.25rem; }
 
@@ -65,176 +65,25 @@
 </head>
 <body>
 
-<header>
-    <h1>Fareestate</h1>
-    <nav>
-        <a onclick="showSection('builder')">صانع السيرة الذاتية</a>
-        <a onclick="showSection('blog')">المقالات والدروس</a>
-        <a onclick="showSection('about')">من نحن</a>
-        <a onclick="showSection('contact')">اتصل بنا</a>
-        <a onclick="showSection('privacy')">سياسة الخصوصية</a>
-        <a onclick="showSection('terms')">الشروط والأحكام</a>
-    </nav>
-</header>
+    <header>
+        <h1>Fareestate</h1>
+        <nav>
+            <a onclick="showSection('builder')">صانع السيرة الذاتية</a>
+            <a onclick="showSection('blog')">المقالات والدروس</a>
+            <a onclick="showSection('about')">من نحن</a>
+            <a onclick="showSection('contact')">اتصل بنا</a>
+            <a onclick="showSection('privacy')">سياسة الخصوصية</a>
+            <a onclick="showSection('terms')">الشروط والأحكام</a>
+        </nav>
+    </header>
 
-<div class="container">
+    <main class="container">
+        <!-- أضف المحتوى الخاص بكل قسم هنا -->
+    </main>
 
-    <!-- أداة بناء السيرة الذاتية -->
-    <section id="builder" class="card">
-        <h2 style="margin-bottom: 1.5rem;">إنشاء سيرة ذاتية احترافية مجاناً</h2>
-        <div class="cv-grid">
-            <form id="cv-form" oninput="updatePreview()">
-                <div class="form-group">
-                    <label>الاسم الكامل</label>
-                    <input type="text" id="name" placeholder="مثال: جمال حميد الشمهاني">
-                </div>
-                <div class="form-group">
-                    <label>المسمى الوظيفي</label>
-                    <input type="text" id="title" placeholder="مثال: مطور برمجيات / مهندس حاسوب">
-                </div>
-                <div class="form-group">
-                    <label>البريد الإلكتروني ورقم الهاتف</label>
-                    <input type="text" id="contact-info" placeholder="مثال: jmal30997@gmail.com | +967776202648">
-                </div>
-                <div class="form-group">
-                    <label>نبذة شخصية (Summary)</label>
-                    <textarea id="summary" rows="3" placeholder="مثال: متطلع لتطوير حلول برمجة مبتكرة وبناء تطبيقات ويب عالية الجودة..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label>الخبرات والمهارات</label>
-                    <textarea id="skills" rows="4" placeholder="مثال: تطوير الويب (HTML, CSS, JS)، إدارة البيانات، العمل الجماعي..."></textarea>
-                </div>
-                <button type="button" onclick="window.print()">تحميل / طباعة السيرة الذاتية (PDF)</button>
-            </form>
-
-            <div id="cv-preview">
-                <h2 id="p-name">جمال حميد الشمهاني</h2>
-                <h4 id="p-title" style="color: var(--gray); margin-bottom: 1rem;">مطور برمجيات</h4>
-                <p id="p-contact" style="font-size: 0.9rem; margin-bottom: 1rem; color: var(--gray);">jmal30997@gmail.com | +967776202648</p>
-                <hr style="margin-bottom: 1rem;">
-                <h3>النبذة التعريفية</h3>
-                <p id="p-summary" style="margin-bottom: 1rem;">متطلع لتطوير حلول برمجة مبتكرة وبناء تطبيقات ويب عالية الجودة...</p>
-                <h3>الخبرات والمهارات</h3>
-                <p id="p-skills">تطوير الويب، إدارة البيانات، العمل الجماعي، وحل المشكلات...</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- قسم المقالات الـ 20 النصية المفصلة والكاملة للقبول -->
-    <section id="blog" class="card hidden">
-        <h2 style="margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary); padding-bottom: 0.5rem;">دليل نصائح التوظيف والتطوير المهني (20 مقال شامل)</h2>
-        <div id="articles-list"></div>
-    </section>
-
-    <!-- الصفحات الإلزامية ببياناتك الحقيقية -->
-    <section id="about" class="card hidden">
-        <h2>من نحن</h2>
-        <br>
-        <p>موقع <strong>Fareestate</strong> هو منصة عربية مستقلة يديرها <strong>جمال حميد الشمهاني</strong>، تهدف إلى دعم الشباب والباحثين عن عمل من خلال تقديم أدوات مجانية لبناء السير الذاتية الاحترافية، بالإضافة إلى توفير مقالات ونصائح إرشادية حول كيفية اجتياز المقابلات الشخصية وتطوير المهارات المهنية لسوق العمل الحديث.</p>
-    </section>
-
-    <section id="contact" class="card hidden">
-        <h2>اتصل بنا</h2>
-        <br>
-        <p>يسعدنا تواصلكم المباشر مع إدارة الموقع <strong>(جمال حميد الشمهاني)</strong> لأي استفسارات أو مقترحات:</p>
-        <br>
-        <ul style="margin-bottom: 1.5rem; list-style-position: inside;">
-            <li><strong>البريد الإلكتروني:</strong> <a href="mailto:jmal30997@gmail.com" style="color: var(--primary);">jmal30997@gmail.com</a></li>
-            <li><strong>الهاتف / الواتساب:</strong> +967776202648</li>
-            <li><strong>الموقع الرسمي:</strong> fareestate.com</li>
-        </ul>
-        <hr style="margin: 1.5rem 0;">
-        <h3>أرسل رسالة مباشرة</h3>
-        <br>
-        <form onsubmit="sendWhatsApp(event)">
-            <div class="form-group">
-                <label>اسمك الكامل</label>
-                <input type="text" id="sender-name" required placeholder="أدخل اسمك هنا">
-            </div>
-            <div class="form-group">
-                <label>نص الرسالة</label>
-                <textarea id="sender-message" rows="4" required placeholder="اكتب رسالتك أو استفسارك هنا..."></textarea>
-            </div>
-            <button type="submit" style="background-color: #25D366;">إرسال الرسالة عبر الواتساب</button>
-        </form>
-    </section>
-
-    <section id="privacy" class="card hidden">
-        <h2>سياسة الخصوصية</h2>
-        <br>
-        <p>في Fareestate، نولي أهمية قصوى لخصوصية زوارنا:</p>
-        <br>
-        <p>1. <strong>البيانات الشخصية:</strong> لا نقوم بتخزين أي بيانات تدخلها في أداة السيرة الذاتية على سيرفراتنا؛ جميع البيانات تعالج داخل متصفحك فقط.</p>
-        <p>2. <strong>ملفات تعريف الارتباط (Cookies):</strong> نستخدم ملفات تعريف الارتباط لتحسين تجربة المستخدم وتحليل الحركة على الموقع.</p>
-        <p>3. <strong>إعلانات Google AdSense:</strong> تستخدم Google كطرف ثالث ملفات تعريف الارتباط لعرض الإعلانات بناءً على زيارات المستخدمين لموقعنا والمواقع الأخرى على الإنترنت.</p>
-    </section>
-
-    <section id="terms" class="card hidden">
-        <h2>الشروط والأحكام</h2>
-        <br>
-        <p>باستخدامك لموقع Fareestate، فإنك تتعهد بالالتزام بالاستخدام العادل والأخلاقي للأدوات والمحتوى المتاح، وعدم إساءة استخدام الأداة أو إعادة نشر المقالات دون الإشارة للمصدر الأصلي.</p>
-    </section>
-
-</div>
-
-<footer>
-    <p>&copy; 2026 Fareestate. جميع الحقوق محفوظة | تطوير جمال حميد الشمهاني</p>
-</footer>
-
-<script>
-    function showSection(id) {
-        document.querySelectorAll('.container > section').forEach(s => s.classList.add('hidden'));
-        document.getElementById(id).classList.remove('hidden');
-    }
-
-    function updatePreview() {
-        document.getElementById('p-name').innerText = document.getElementById('name').value || "جمال حميد الشمهاني";
-        document.getElementById('p-title').innerText = document.getElementById('title').value || "مطور برمجيات";
-        document.getElementById('p-contact').innerText = document.getElementById('contact-info').value || "jmal30997@gmail.com | +967776202648";
-        document.getElementById('p-summary').innerText = document.getElementById('summary').value || "متطلع لتطوير حلول برمجة مبتكرة وبناء تطبيقات ويب عالية الجودة...";
-        document.getElementById('p-skills').innerText = document.getElementById('skills').value || "تطوير الويب، إدارة البيانات، العمل الجماعي، وحل المشكلات...";
-    }
-
-    function sendWhatsApp(event) {
-        event.preventDefault();
-        const name = document.getElementById('sender-name').value;
-        const msg = document.getElementById('sender-message').value;
-        const phone = "967776202648";
-        const url = `https://wa.me/${phone}?text=${encodeURIComponent('الاسم: ' + name + '\nالرسالة: ' + msg)}`;
-        window.open(url, '_blank');
-    }
-
-    const articlesData = [
-        { t: "1. كيف تكتب سيرة ذاتية احترافية في 2026؟", c: "تعد السيرة الذاتية بوابتك الأولى للحصول على وظيفة أحلامك. لتصميم سيرة ذاتية ناجحة، يجب أن تركز على ترتيب الخبرات العملية زمنياً من الأحدث للأقدم، واختيار خط واضح ومقروء، وتنسيق الأقسام بشكل مرئي مريح لمسؤولي التوظيف." },
-        { t: "2. أهمية الكلمات المفتاحية في تجاوز أنظمة ATS", c: "تستخدم معظم الشركات الحديثة نظام متابعة المتقدمين (ATS). لتجاوز هذا النظام، احرص على تضمين الكلمات المفتاحية الموجودة في الإعلان الوظيفي داخل خانة المهارات والخبرات في سيرتك الذاتية." },
-        { t: "3. أهم 10 مهارات شخصية (Soft Skills) مطلوبة", c: "المهارات التقنية وحدها لا تكفي. يبحث أصحاب العمل دائماً عن مهارات مثل: التواصل الفعال، إدارة الوقت، حل المشكلات، العمل الجماعي، والمرونة في التعامل مع ضغوط العمل." },
-        { t: "4. كيف تستعد لمقابلة العمل الشخصية؟", c: "الاستعداد الجيد هو مفتاح النجاح. قم بالبحث الموسع عن الشركة ومشروعاتها قبل المقابلة، وجّه إجاباتك بناءً على أسلوب STAR (الظرف، المهمة، الإجراء، النتيجة)." },
-        { t: "5. أخطاء قاتلة تجنبها في السيرة الذاتية", c: "من أكثر الأخطاء شيوعاً: الأخطاء الإملائية، استخدام بريد إلكتروني غير احترافي، وضع صورة شخصية غير مناسبة، أو الإطالة الزائدة عن صفحتين." },
-        { t: "6. كيف تكتب رسالة تغطية (Cover Letter) مؤلفة؟", c: "رسالة التغطية هي فرصتك لشرح سبب اهتمامك بالوظيفة. اجعلها مختصرة (3 فقرات)، ووضح كيف يمكن لخبرتك أن تضيف قيمة حقيقية لفريق العمل." },
-        { t: "7. كيفية تحسين حسابك على LinkedIn للتوظيف", c: "اجعل حسابك على LinkedIn امتداداً لسيرتك الذاتية. استخدم عنواناً مهنياً واضحاً، واكتب ملخصاً جذاباً، واطلب توصيات من زملائك ومدراءك السابقين." },
-        { t: "8. طريقة التفاوض على الراتب بثقة", c: "قبل مناقشة الراتب، ابحث عن متوسط الأجور لنفس المسمى الوظيفي في منطقتك. ركز على قيمتك والنتائج التي يمكنك تحقيقها بدلاً من احتياجاتك الشخصية." },
-        { t: "9. كيف تغير مجالك المهني (Career Shift) بنجاح؟", c: "التغيير المهني يتطلب التخطيط. ابدأ بتحديد المهارات القابلة للنقل (Transferable Skills)، واحصل على شهادات معتمدة في المجال الجديد قبل الاستقالة." },
-        { t: "10. العمل عن بُعد: كيف تزيد من إنتاجيتك؟", c: "للنجاح في العمل عن بعد، قم بتخصيص مساحة عمل هادئة في المنزل، ضع جدولاً زمنياً صارماً، واستخدم أدوات إدارة المهام مثل Trello وNotion." },
-        { t: "11. كيف تتعامل مع رفض طلبات التوظيف؟", c: "الرفض جزء طبيعي من رحلة البحث عن عمل. استخدم كل رفض كفرصة للتعلم، واطلب تغذية راجعة (Feedback) إن أمكن لتطوير نقاط ضعفك." },
-        { t: "12. أهمية وبناء البورتفوليو (معرض الأعمال)", c: "في مجالات مثل البرمجة والتصميم، البورتفوليو أهم من الشهادة. احرص على عرض أفضل أعمالك السابقة مع شرح للتحديات التي واجهتك وكيف حللتها." },
-        { t: "13. كيفية بناء شبكة علاقات مهنية قوية", c: "التواصل هو أساس الفرص. احضر المؤتمرات والفعاليات في مجالك، وشارك برأيك في نقاشات LinkedIn لبناء علاقات مع خبراء المجال." },
-        { t: "14. إدارة الوقت والأولويات في بيئة العمل", c: "استخدم تقنيات مثل مصفوفة أيزنهاور لتحديد المهام العاجلة والمهمة، واستخدم تقنية Pomodoro للتركيز وتجنب التشتت." },
-        { t: "15. أهمية الشهادات المهنية في تطوير المسار", c: "الشهادات التخصصية تعزز موقفك التنافسي. استثمر في الحصول على شهادات من جهات عالمية معتمدة لتأكيد خبرتك العملية." },
-        { t: "16. كيف تتغلب على الاحتراق الوظيفي (Burnout)؟", c: "احرص على الفصل بين حياتك المهنية والشخصية، وخذ فترات راحة منتظمة، ولا تتردد في طلب المساعدة عند الشعور بالإرهاق الشديد." },
-        { t: "17. الفرق بين السيرة الذاتية (CV) والـ Resume", c: "الـ CV يكون مفصلاً وشاملاً لكل الأنشطة والأكاديميات، بينما الـ Resume يكون مختصراً (صفحة أو اثنتين) ومخصصاً لوظيفة معينة." },
-        { t: "18. مهارات الذكاء الاصطناعي وكيف تفيدك", c: "تعلم أساليب استخدام أدوات الذكاء الاصطناعي لتسريع مهامك اليومية، وكتابة المحتوى، وتحليل البيانات لرفع كفاءتك الإنتاجية." },
-        { t: "19. كيف تبدأ في مجال العمل الحر (Freelancing)؟", c: "حدد خدمتك بدقة، وابنِ معرض أعمال سريع، ثم سجل في منصات العمل الحر واستهدف المشاريع الصغيرة في البداية لبناء التقييمات." },
-        { t: "20. كيف تطور مهارة القيادة وإدارة الفرق؟", c: "القيادة تعتمد على الاستماع الفعال، تفويض المهام بثقة، ودعم أعضاء الفريق لتطوير مهاراتهم بدلاً من الإدارة الدقيقة (Micromanagement)." }
-    ];
-
-    const container = document.getElementById('articles-list');
-    articlesData.forEach((art) => {
-        const item = document.createElement('div');
-        item.className = 'article-post';
-        item.innerHTML = `<h3>${art.t}</h3><p>${art.c}</p>`;
-        container.appendChild(item);
-    });
-</script>
+    <footer>
+        <p>&copy; 2026 Fareestate. جميع الحقوق محفوظة.</p>
+    </footer>
 
 </body>
 </html>
