@@ -935,4 +935,83 @@ export function App() {
         {currentPage === 'contact' && (
           <div style={{ backgroundColor: '#1e293b', padding: '40px', borderRadius: '16px', border: '1px solid #334155', textAlign: 'center', lineHeight: '1.8' }}>
             <h2 style={{ color: '#38bdf8', marginBottom: '20px' }}>اتصل بنا (Contact Us)</h2>
-            <p style={{ fontSize: '16px', marginBottom: '30px' }}>نح
+            <p style={{ fontSize: '16px', marginBottom: '30px' }}>نحن هنا دائماً لمساعدتك! إذا كان لديك أي استفسار، ملاحظة، أو اقتراح يرجى عدم التردد في التواصل معنا. نحن نسعد بتلقي رسائلك ومساعدتك في أسرع وقت ممكن.</p>
+            
+            <a 
+              href={`https://wa.me/${whatsappNumber}`} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{ 
+                display: 'inline-block', 
+                backgroundColor: '#25D366', 
+                color: '#fff', 
+                textDecoration: 'none', 
+                padding: '15px 30px', 
+                borderRadius: '8px', 
+                fontSize: '18px', 
+                fontWeight: 'bold',
+                boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+              }}
+            >
+              💬 تواصل معنا عبر واتساب
+            </a>
+            <p style={{ color: '#94a3b8', marginTop: '20px', fontSize: '13px' }}>أوقات العمل: من الأحد إلى الخميس (9 صباحاً - 5 مساءً)</p>
+          </div>
+        )}
+
+        {/* ===================== صفحة سياسة الخصوصية ===================== */}
+        {currentPage === 'privacy' && (
+          <div style={{ backgroundColor: '#1e293b', padding: '40px', borderRadius: '16px', border: '1px solid #334155', lineHeight: '1.8' }}>
+            <h2 style={{ color: '#38bdf8', borderBottom: '2px solid #334155', paddingBottom: '10px', marginBottom: '20px' }}>سياسة الخصوصية (Privacy Policy)</h2>
+            <p>خصوصية زوارنا لها أهمية بالغة بالنسبة لنا في <strong>Resumate</strong>. توجز هذه الوثيقة أنواع المعلومات الشخصية التي نتلقاها ونجمعها وكيفية استخدامها.</p>
+            
+            <h3 style={{ color: '#f8fafc', marginTop: '20px' }}>ملفات الدخول (Log Files)</h3>
+            <p>مثل الكثير من المواقع الإلكترونية، يستخدم موقعنا ملفات الدخول. تشمل المعلومات داخل هذه الملفات عناوين بروتوكول الإنترنت (IP)، نوع المتصفح، مزود خدمة الإنترنت، التاريخ والوقت، صفحات الإحالة/الخروج، وعدد النقرات لتحليل الاتجاهات وإدارة الموقع.</p>
+
+            <h3 style={{ color: '#f8fafc', marginTop: '20px' }}>ملفات تعريف الارتباط وإعدادات الشبكة (Cookies)</h3>
+            <p>نحن نستخدم ملفات تعريف الارتباط لتخزين المعلومات حول تفضيلات الزوار، وتسجيل معلومات محددة للمستخدم حول الصفحات التي يصل إليها أو يزورها، وتخصيص محتوى صفحة الويب بناءً على نوع المتصفح الخاص بالزوار.</p>
+
+            <h3 style={{ color: '#f8fafc', marginTop: '20px' }}>جوجل أدسنس وملف تعريف الارتباط DART</h3>
+            <ul style={{ paddingRight: '20px' }}>
+              <li>جوجل كطرف ثالث، يستخدم ملفات تعريف الارتباط لعرض الإعلانات على موقعنا.</li>
+              <li>استخدام جوجل لملف تعريف الارتباط DART يمهد لخدمة الإعلانات للمستخدمين بناءً على زياراتهم لموقعنا والمواقع الأخرى على الإنترنت.</li>
+              <li>يجوز للمستخدمين اختيار عدم استخدام ملف تعريف الارتباط DART عن طريق زيارة سياسة الخصوصية الخاصة بإعلانات جوجل وشبكة المحتوى على الرابط: <a href="https://policies.google.com/technologies/ads" style={{color: '#38bdf8'}}>https://policies.google.com/technologies/ads</a></li>
+            </ul>
+
+            <h3 style={{ color: '#f8fafc', marginTop: '20px' }}>موافقتك</h3>
+            <p>باستخدامك لموقعنا، فإنك توافق على سياسة الخصوصية الخاصة بنا وتوافق على شروطها.</p>
+          </div>
+        )}
+
+        {/* ===================== صفحة شروط الاستخدام ===================== */}
+        {currentPage === 'terms' && (
+          <div style={{ backgroundColor: '#1e293b', padding: '40px', borderRadius: '16px', border: '1px solid #334155', lineHeight: '1.8' }}>
+            <h2 style={{ color: '#38bdf8', borderBottom: '2px solid #334155', paddingBottom: '10px', marginBottom: '20px' }}>اتفاقية وشروط الاستخدام (Terms of Service)</h2>
+            <p>مرحباً بك في موقع <strong>Resumate</strong>. إن استخدامك لهذا الموقع يعني موافقتك الكاملة على الشروط والأحكام التالية:</p>
+            
+            <ol style={{ paddingRight: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <li><strong>استخدام الأداة:</strong> المنصة مقدمة مجاناً لمساعدة المستخدمين على تنسيق سيرهم الذاتية. لا نضمن حصولك على وظيفة نتيجة استخدام الأداة، فالأمر يعتمد على كفاءتك ومتطلبات سوق العمل.</li>
+              <li><strong>خصوصية البيانات:</strong> الأداة تعمل في متصفحك المحلي (Client-side)، ونحن لا نقوم بحفظ أو تخزين بيانات سيرتك الذاتية أو معلوماتك الشخصية المدخلة في خوادمنا.</li>
+              <li><strong>حقوق الملكية الفكرية:</strong> جميع المقالات والمحتوى المنشور في قسم "المدونة" هو ملكية حصرية لموقع Resumate. يُمنع نسخه أو إعادة نشره لأغراض تجارية دون إذن مسبق.</li>
+              <li><strong>الروابط الخارجية وإعلانات جوجل:</strong> قد يحتوي الموقع على إعلانات مقدمة من Google AdSense أو روابط لمواقع خارجية. نحن غير مسؤولين عن محتوى تلك المواقع الخارجية أو التغييرات التي تطرأ عليها.</li>
+              <li><strong>التعديلات:</strong> نحتفظ بالحق في تعديل هذه الشروط في أي وقت. استمرارك في استخدام الموقع يعتبر قبولاً لتلك التعديلات.</li>
+            </ol>
+          </div>
+        )}
+
+      </main>
+
+      {/* الفوتر (الروابط السفلية) */}
+      <footer className="no-print" style={{ textAlign: 'center', padding: '25px', color: '#94a3b8', fontSize: '14px', borderTop: '1px solid #1e293b', marginTop: '40px' }}>
+        <div style={{ marginBottom: '10px' }}>
+          <button onClick={() => setCurrentPage('privacy')} style={{ background: 'none', border: 'none', color: currentPage === 'privacy' ? '#38bdf8' : '#94a3b8', margin: '0 10px', cursor: 'pointer', fontWeight: 'bold' }}>سياسة الخصوصية</button> |
+          <button onClick={() => setCurrentPage('terms')} style={{ background: 'none', border: 'none', color: currentPage === 'terms' ? '#38bdf8' : '#94a3b8', margin: '0 10px', cursor: 'pointer', fontWeight: 'bold' }}>شروط الاستخدام</button> |
+          <button onClick={() => setCurrentPage('contact')} style={{ background: 'none', border: 'none', color: currentPage === 'contact' ? '#38bdf8' : '#94a3b8', margin: '0 10px', cursor: 'pointer', fontWeight: 'bold' }}>اتصل بنا</button>
+        </div>
+        <p style={{ margin: 0 }}>© 2026 Resumate. جميع الحقوق محفوظة.</p>
+      </footer>
+    </div>
+  );
+}
+
+export default App;
