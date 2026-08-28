@@ -15,7 +15,7 @@ export function App() {
 
   // ⚠️ ضع رقم الواتساب الخاص بك هنا بالصيغة الدولية (بدون أصفار بالبداية أو علامة +)
   // مثال لليمن: 967733000000
-  const whatsappNumber = "967770000000"; 
+  const whatsappNumber = "967776202648"; 
 
   // بيانات السيرة الذاتية
   const [fullName, setFullName] = useState('');
