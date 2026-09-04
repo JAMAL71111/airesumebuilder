@@ -106,7 +106,7 @@ const TermsPage = () => (
   </div>
 );
 
-// --- صفحة اتصل بنا (تم تحديثها برقم الواتساب والبريد الإلكتروني بدقة) ---
+// --- صفحة اتصل بنا (تم تحديثها ببريدك الإلكتروني ورقم الواتساب الخاص بك) ---
 const ContactPage = () => (
   <div className="py-12 px-4 max-w-3xl mx-auto text-center">
     <PageTitle title="اتصل بنا" />
@@ -128,9 +128,10 @@ const ContactPage = () => (
         <div className="flex flex-col items-center p-6 bg-green-50 rounded-xl flex-1 border border-green-100">
           <MessageCircle className="w-12 h-12 text-green-500 mb-4" />
           <h3 className="font-bold text-gray-800 mb-2">واتساب</h3>
-          <a href="https://wa.me/967776202648" target="_blank" rel="noreferrer" className="text-green-600 hover:underline">
-            اضغط هنا للمراسلة
+          <a href="https://wa.me/967776202648" target="_blank" rel="noreferrer" className="text-green-600 hover:underline font-semibold" dir="ltr">
+            +967 776 202 648
           </a>
+          <span className="text-sm text-green-600 mt-2">اضغط هنا للمراسلة</span>
         </div>
       </div>
     </div>
