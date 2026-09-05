@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useParams, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 // استدعاء ملف المقالات الخاص بك
 import { articlesData } from './articlesData';
 
-export function App() {
-  // هذه الدالة لضمان صعود الصفحة للأعلى عند التنقل بين الروابط
-  const ScrollToTop = () => {
-    const { pathname } = useNavigate() as any;
-    useEffect(() => {
-      window.scrollTo(0, 0);
-    }, [pathname]);
-    return null;
-  };
+// ===================== دالة التمرير للأعلى (تم تصحيحها) =====================
+function ScrollToTop() {
+  const { pathname } = useLocation();
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
+// ===================== المكون الرئيسي (App) =====================
+export function App() {
   return (
     <Router>
+      <ScrollToTop />
       <div style={{ fontFamily: "'Tajawal', system-ui, sans-serif", backgroundColor: '#0f172a', color: '#f8fafc', minHeight: '100vh', direction: 'rtl' }}>
         
         <style>{`
@@ -176,7 +180,6 @@ function BlogPost() {
   // SEO: تغيير العنوان الديناميكي
   useEffect(() => {
     if (post) document.title = `${post.title} - Resumate`;
-    window.scrollTo(0, 0); // رفع الشاشة للأعلى عند الدخول
   }, [post]);
 
   if (!post) return <div style={{textAlign: 'center', padding: '50px', color: '#f8fafc'}}>المقال غير موجود.</div>;
@@ -205,7 +208,7 @@ function BlogPost() {
 // ===================== صفحات جوجل أدسنس الإجبارية =====================
 
 function About() {
-  useEffect(() => { document.title = "من نحن - Resumate"; window.scrollTo(0, 0); }, []);
+  useEffect(() => { document.title = "من نحن - Resumate"; }, []);
   return (
     <div style={{ backgroundColor: '#1e293b', padding: '40px', borderRadius: '16px', border: '1px solid #334155', maxWidth: '800px', margin: '0 auto', lineHeight: '1.9' }}>
       <h1 style={{ color: '#38bdf8', borderBottom: '2px solid #334155', paddingBottom: '15px', marginBottom: '25px' }}>من نحن (About Us)</h1>
@@ -216,7 +219,7 @@ function About() {
 }
 
 function Privacy() {
-  useEffect(() => { document.title = "سياسة الخصوصية - Resumate"; window.scrollTo(0, 0); }, []);
+  useEffect(() => { document.title = "سياسة الخصوصية - Resumate"; }, []);
   return (
     <div style={{ backgroundColor: '#1e293b', padding: '40px', borderRadius: '16px', border: '1px solid #334155', maxWidth: '800px', margin: '0 auto', lineHeight: '1.9' }}>
       <h1 style={{ color: '#38bdf8', borderBottom: '2px solid #334155', paddingBottom: '15px', marginBottom: '25px' }}>سياسة الخصوصية (Privacy Policy)</h1>
@@ -232,7 +235,7 @@ function Privacy() {
 }
 
 function Terms() {
-  useEffect(() => { document.title = "شروط الاستخدام - Resumate"; window.scrollTo(0, 0); }, []);
+  useEffect(() => { document.title = "شروط الاستخدام - Resumate"; }, []);
   return (
     <div style={{ backgroundColor: '#1e293b', padding: '40px', borderRadius: '16px', border: '1px solid #334155', maxWidth: '800px', margin: '0 auto', lineHeight: '1.9' }}>
       <h1 style={{ color: '#38bdf8', borderBottom: '2px solid #334155', paddingBottom: '15px', marginBottom: '25px' }}>اتفاقية وشروط الاستخدام</h1>
@@ -247,7 +250,7 @@ function Terms() {
 }
 
 function Contact() {
-  useEffect(() => { document.title = "اتصل بنا - Resumate"; window.scrollTo(0, 0); }, []);
+  useEffect(() => { document.title = "اتصل بنا - Resumate"; }, []);
   const whatsappNumber = "967776202648"; 
   return (
     <div style={{ backgroundColor: '#1e293b', padding: '50px', borderRadius: '16px', border: '1px solid #334155', maxWidth: '600px', margin: '0 auto', textAlign: 'center', lineHeight: '1.9' }}>
@@ -260,4 +263,3 @@ function Contact() {
     </div>
   );
 }
-
