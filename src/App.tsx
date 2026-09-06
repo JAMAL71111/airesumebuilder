@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 // استدعاء ملف المقالات الخاص بك
 import { articlesData } from './articlesData';
 
-// ===================== دالة التمرير للأعلى (تم تصحيحها) =====================
+// ===================== دالة التمرير للأعلى =====================
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -136,9 +136,9 @@ function BlogList() {
   const [activeCategory, setActiveCategory] = useState<string>('الكل');
   const navigate = useNavigate();
   
-  // استخراج الأقسام من ملف مقالاتك تلقائياً
-  const categories = ['الكل', ...Array.from(new Set(articlesData.map(a => a.category)))];
-  const filteredArticles = activeCategory === 'الكل' ? articlesData : articlesData.filter(a => a.category === activeCategory);
+  // استخراج الأقسام وتصحيح الأنواع البرمجية لـ TypeScript
+  const categories: string[] = ['الكل', ...Array.from(new Set(articlesData.map(a => String(a.category))))];
+  const filteredArticles = activeCategory === 'الكل' ? articlesData : articlesData.filter(a => String(a.category) === activeCategory);
 
   return (
     <div>
@@ -173,11 +173,13 @@ function BlogList() {
 
 // ===================== 3. صفحة المقال المفرد =====================
 function BlogPost() {
-  const { id } = useParams();
+  // إضافة التعريف الصارم { id: string } لضمان قبول TypeScript
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const post = articlesData.find(p => p.id === id);
+  
+  // 🔥 التعديل الأهم: إجبار النوعين على أن يكونا نصوصاً ليقبلها الفاحص الآلي
+  const post = articlesData.find(p => String(p.id) === String(id));
 
-  // SEO: تغيير العنوان الديناميكي
   useEffect(() => {
     if (post) document.title = `${post.title} - Resumate`;
   }, [post]);
@@ -263,3 +265,4 @@ function Contact() {
     </div>
   );
 }
+
