@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 // هيكل بيانات المقالات
-interface Post {
+interface Article {
   id: string;
   title: string;
   date: string;
@@ -10,10 +10,11 @@ interface Post {
 }
 
 export function Blog() {
-  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+  // استخدام الإسناد الآمن لتجنب مشكلة الـ JSX Parser في ملفات tsx
+  const [selectedPost, setSelectedPost] = useState<Article | null>(null);
 
   // قائمة المقالات التفصيلية
-  const articles: Post[] = [
+  const articles: Article[] = [
     {
       id: 'ats-optimization-guide',
       title: '1. دليلك الشامل لتجاوز أنظمة تتبع المتقدمين ATS بنجاح',
@@ -109,7 +110,7 @@ export function Blog() {
               <div key={art.id} style={{ backgroundColor: '#0f172a', padding: '20px', borderRadius: '12px', border: '1px solid #334155', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <div>
                   <span style={{ fontSize: '12px', color: '#94a3b8' }}>{art.date}</span>
-                  <h3 style={{ color: '#f8fafc', fontSize: '16px', margin: '10px 0', lineHeight: '1.4' }}>{art.title}</h3>
+                  <h3 style={{ color: '#f8fafc', fontSize: '16px', margin: '10px 0', lineHeight: '1.4' => '1.4' }}>{art.title}</h3>
                   <p style={{ color: '#cbd5e1', fontSize: '13px', lineHeight: '1.6' }}>{art.excerpt}</p>
                 </div>
                 <button 
