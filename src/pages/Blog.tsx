@@ -12,7 +12,7 @@ interface Post {
 export function Blog() {
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
-  // قائمة المقالات التفصيلية (تم استخدام المقالات الدسمة والمفيدة لـ AdSense)
+  // قائمة المقالات التفصيلية
   const articles: Post[] = [
     {
       id: 'ats-optimization-guide',
@@ -97,8 +97,6 @@ export function Blog() {
 
   return (
     <div style={{ backgroundColor: '#1e293b', padding: '30px', borderRadius: '16px', border: '1px solid #334155' }}>
-      
-      {/* إذا لم يتم اختيار مقال، اعرض قائمة المقالات */}
       {!selectedPost ? (
         <div>
           <h2 style={{ color: '#38bdf8', marginBottom: '10px' }}>المقالات والدروس المهنية</h2>
@@ -125,7 +123,6 @@ export function Blog() {
           </div>
         </div>
       ) : (
-        /* إذا تم اختيار مقال، اعرض محتواه بالكامل */
         <div>
           <button 
             onClick={() => setSelectedPost(null)} 
@@ -147,3 +144,4 @@ export function Blog() {
     </div>
   );
 }
+
