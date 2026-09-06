@@ -10,7 +10,6 @@ interface Article {
 }
 
 export function Blog() {
-  // استخدام الإسناد الآمن لتجنب مشكلة الـ JSX Parser في ملفات tsx
   const [selectedPost, setSelectedPost] = useState<Article | null>(null);
 
   // قائمة المقالات التفصيلية
@@ -23,7 +22,7 @@ export function Blog() {
       content: `تستخدم أكثر من 90% من الشركات العالمية والمحلية أنظمة خوارزمية تُعرف بـ ATS (Applicant Tracking System) لتصفية الطلبات المتقدمة للوظائف.
 
 1. اختيار كلمات مفتاحية دقيقة:
-قم بقراءة الوصف الوظيفي بتمعن، واستخرج الكلمات الرئيسية الخاصة بالمهارات والتقنيات المطلوبة واضمنها بوضوح في سيرتك.
+قم بقراءة الوصف الوظيفي بتمعن، واستخرج الكلمات الرئيسية الخاصة بالمهارات والتقطيات المطلوبة واضمنها بوضوح في سيرتك.
 
 2. التنسيق والابتعاد عن التعقيد:
 تجنب استعمال الجداول المترابطة أو الجرافيكس المعقد، حيث لا تستطيع برامج ATS قراءة النصوص داخل الصور أو الجداول غير القياسية.
@@ -110,7 +109,7 @@ export function Blog() {
               <div key={art.id} style={{ backgroundColor: '#0f172a', padding: '20px', borderRadius: '12px', border: '1px solid #334155', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <div>
                   <span style={{ fontSize: '12px', color: '#94a3b8' }}>{art.date}</span>
-                  <h3 style={{ color: '#f8fafc', fontSize: '16px', margin: '10px 0', lineHeight: '1.4' => '1.4' }}>{art.title}</h3>
+                  <h3 style={{ color: '#f8fafc', fontSize: '16px', margin: '10px 0', lineHeight: '1.4' }}>{art.title}</h3>
                   <p style={{ color: '#cbd5e1', fontSize: '13px', lineHeight: '1.6' }}>{art.excerpt}</p>
                 </div>
                 <button 
@@ -145,4 +144,3 @@ export function Blog() {
     </div>
   );
 }
-
