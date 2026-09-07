@@ -1,8 +1,8 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 // استدعاء واجهة البيانات والمقالات من الملف الخارجي
 import { articlesData, Post } from './articlesData';
 
-export function App() {
+export default function App() {
   // حالة التنقل بين صفحات الموقع
   const [currentPage, setCurrentPage] = useState<'home' | 'blog' | 'privacy' | 'terms' | 'about' | 'contact'>('home');
   
@@ -49,7 +49,6 @@ export function App() {
               >
                 المدونة والنصائح
               </button>
-              {/* يمكنك إضافة أزرار (من نحن، تواصل معنا) هنا */}
             </nav>
           </div>
         </div>
