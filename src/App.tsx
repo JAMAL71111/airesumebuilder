@@ -1,136 +1,137 @@
-import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+// استدعاء واجهة البيانات والمقالات من الملف الخارجي
+import { articlesData, Post } from './articlesData';
 
-// استدعاء الصفحات الموجودة في مجلد pages الخاص بك
-import { AboutUs } from './pages/AboutUs';
-import { Blog } from './pages/Blog';
-import { ContactUs } from './pages/ContactUs';
-import { PrivacyPolicy } from './pages/PrivacyPolicy';
-import { TermsOfService } from './pages/TermsOfService';
-
-// ===================== دالة التمرير للأعلى =====================
-function ScrollToTop() {
-  const { pathname } = useLocation();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
-  return null;
-}
-
-// ===================== المكون الرئيسي (App) =====================
 export function App() {
-  return (
-    <Router>
-      <ScrollToTop />
-      <div style={{ fontFamily: "'Tajawal', system-ui, sans-serif", backgroundColor: '#0f172a', color: '#f8fafc', minHeight: '100vh', direction: 'rtl' }}>
-        
-        <style>{`
-          @media print {
-            header, footer, .no-print { display: none !important; }
-            body, main { background-color: #ffffff !important; padding: 0 !important; margin: 0 !important; }
-            .resume-preview { border: none !important; box-shadow: none !important; width: 100% !important; padding: 0 !important; }
-          }
-          a { text-decoration: none; transition: color 0.3s ease; }
-          a:hover { color: #38bdf8 !important; }
-        `}</style>
-
-        {/* الهيدر العلوي */}
-        <header className="no-print" style={{ borderBottom: '1px solid #334155', padding: '15px 20px', backgroundColor: '#1e293b', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px' }}>
-          <Link to="/" style={{ margin: 0, fontSize: '22px', color: '#38bdf8', fontWeight: 'bold' }}>
-            ✨ Resumate
-          </Link>
-          
-          <nav style={{ display: 'flex', gap: '15px', alignItems: 'center', flexWrap: 'wrap' }}>
-            <Link to="/" style={{ color: '#e2e8f0', fontWeight: 'bold' }}>الرئيسية</Link>
-            <Link to="/blog" style={{ color: '#e2e8f0', fontWeight: 'bold' }}>المدونة</Link>
-            <Link to="/about" style={{ color: '#e2e8f0', fontWeight: 'bold' }}>من نحن</Link>
-            <Link to="/contact" style={{ color: '#e2e8f0', fontWeight: 'bold' }}>اتصل بنا</Link>
-          </nav>
-        </header>
-
-        {/* المحتوى الرئيسي للروابط */}
-        <main style={{ padding: '30px 20px', maxWidth: '1200px', margin: '0 auto', minHeight: 'calc(100vh - 160px)' }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:id" element={<Blog />} />
-            <Route path="/about" element={<AboutUs />} />
-            <Route path="/privacy" element={<PrivacyPolicy />} />
-            <Route path="/terms" element={<TermsOfService />} />
-            <Route path="/contact" element={<ContactUs />} />
-          </Routes>
-        </main>
-        
-        {/* الفوتر */}
-        <footer className="no-print" style={{ textAlign: 'center', padding: '25px', backgroundColor: '#1e293b', borderTop: '1px solid #334155', color: '#94a3b8', fontSize: '14px' }}>
-          <div style={{ marginBottom: '15px', display: 'flex', justifyContent: 'center', gap: '15px', flexWrap: 'wrap' }}>
-            <Link to="/privacy" style={{ color: '#38bdf8' }}>سياسة الخصوصية</Link> | 
-            <Link to="/terms" style={{ color: '#38bdf8' }}>شروط الاستخدام</Link> | 
-            <Link to="/about" style={{ color: '#38bdf8' }}>من نحن</Link> |
-            <Link to="/contact" style={{ color: '#38bdf8' }}>اتصل بنا</Link>
-          </div>
-          <p>© 2026 Resumate by Fareestate. جميع الحقوق محفوظة.</p>
-        </footer>
-      </div>
-    </Router>
-  );
-}
-
-// ===================== صفحة منشئ السيرة الذاتية (الرئيسية) =====================
-function Home() {
-  useEffect(() => { document.title = "Resumate - إنشاء سيرة ذاتية احترافية"; }, []);
+  // حالة التنقل بين صفحات الموقع
+  const [currentPage, setCurrentPage] = useState<'home' | 'blog' | 'privacy' | 'terms' | 'about' | 'contact'>('home');
   
-  const [fullName, setFullName] = useState('جمال حميد');
-  const [jobTitle, setJobTitle] = useState('مهندس برمجيات | Software Engineer');
-  const [email, setEmail] = useState('Jmal30997@gmail.com');
-  const [phone, setPhone] = useState('776202648');
-  const [location, setLocation] = useState('صنعاء، اليمن');
-  const [summary, setSummary] = useState('مهندس برمجيات طموح يمتلك مهارات قوية في تطوير تطبيقات الويب، بناء واجهات المستخدم وتطوير الأنظمة البرمجية الحديثة.');
-  const [skills, setSkills] = useState('React, TypeScript, HTML5/CSS3, Git & GitHub');
+  // حالة التحكم في فتح مقال معين لقراءته
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+
+  // دالة لفتح المقال
+  const handleReadMore = (post: Post) => {
+    setSelectedPost(post);
+    setCurrentPage('blog');
+  };
+
+  // دالة للعودة لقائمة المقالات
+  const handleBackToBlog = () => {
+    setSelectedPost(null);
+  };
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '30px' }}>
-      {/* لوحة إدخال البيانات */}
-      <div className="no-print" style={{ backgroundColor: '#1e293b', padding: '25px', borderRadius: '16px', border: '1px solid #334155' }}>
-        <h2 style={{ fontSize: '20px', color: '#38bdf8', marginBottom: '20px' }}>📝 بيانات السيرة الذاتية</h2>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-          <input type="text" placeholder="الاسم الكامل" value={fullName} onChange={(e) => setFullName(e.target.value)} style={{ padding: '12px', borderRadius: '8px', border: '1px solid #475569', backgroundColor: '#0f172a', color: '#fff', fontSize: '15px' }} />
-          <input type="text" placeholder="المسمى الوظيفي" value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} style={{ padding: '12px', borderRadius: '8px', border: '1px solid #475569', backgroundColor: '#0f172a', color: '#fff', fontSize: '15px' }} />
-          <input type="text" placeholder="العنوان" value={location} onChange={(e) => setLocation(e.target.value)} style={{ padding: '12px', borderRadius: '8px', border: '1px solid #475569', backgroundColor: '#0f172a', color: '#fff', fontSize: '15px' }} />
-          <input type="email" placeholder="البريد الإلكتروني" value={email} onChange={(e) => setEmail(e.target.value)} style={{ padding: '12px', borderRadius: '8px', border: '1px solid #475569', backgroundColor: '#0f172a', color: '#fff', fontSize: '15px' }} />
-          <input type="text" placeholder="رقم الهاتف" value={phone} onChange={(e) => setPhone(e.target.value)} style={{ padding: '12px', borderRadius: '8px', border: '1px solid #475569', backgroundColor: '#0f172a', color: '#fff', fontSize: '15px' }} />
-          <textarea rows={4} placeholder="الملخص المهني" value={summary} onChange={(e) => setSummary(e.target.value)} style={{ padding: '12px', borderRadius: '8px', border: '1px solid #475569', backgroundColor: '#0f172a', color: '#fff', fontSize: '15px', resize: 'vertical' }} />
-          <input type="text" placeholder="المهارات (افصل بينها بفاصلة)" value={skills} onChange={(e) => setSkills(e.target.value)} style={{ padding: '12px', borderRadius: '8px', border: '1px solid #475569', backgroundColor: '#0f172a', color: '#fff', fontSize: '15px' }} />
-        </div>
-        <button onClick={() => window.print()} style={{ marginTop: '25px', width: '100%', backgroundColor: '#0284c7', color: '#fff', border: 'none', padding: '14px', borderRadius: '8px', fontSize: '16px', fontWeight: 'bold', cursor: 'pointer' }}>
-          🖨️ طباعة / استخراج PDF
-        </button>
-      </div>
+    <div className="min-h-screen bg-gray-50 text-right font-sans" dir="rtl">
       
-      {/* المعاينة الحية */}
-      <div className="resume-preview" style={{ backgroundColor: '#ffffff', color: '#1e293b', borderRadius: '12px', display: 'grid', gridTemplateColumns: '1fr 2.5fr', minHeight: '600px', overflow: 'hidden', border: '1px solid #cbd5e1' }}>
-        <div style={{ backgroundColor: '#0f172a', color: '#f8fafc', padding: '30px 20px' }}>
-          <h3 style={{ color: '#38bdf8', fontSize: '14px', borderBottom: '1px solid #334155', paddingBottom: '8px' }}>معلومات الاتصال</h3>
-          <p style={{ fontSize: '12px', margin: '10px 0' }}>📍 {location}</p>
-          <p style={{ fontSize: '12px', margin: '10px 0' }}>📞 {phone}</p>
-          <p style={{ fontSize: '12px', margin: '10px 0', wordBreak: 'break-all' }}>📧 {email}</p>
-          
-          <h3 style={{ color: '#38bdf8', fontSize: '14px', borderBottom: '1px solid #334155', paddingBottom: '8px', marginTop: '30px' }}>المهارات الأساسية</h3>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '15px' }}>
-            {skills.split(',').map((s, i) => s.trim() && <span key={i} style={{ backgroundColor: '#1e293b', padding: '6px 10px', borderRadius: '6px', fontSize: '11px', color: '#38bdf8', border: '1px solid #334155' }}>{s.trim()}</span>)}
+      {/* 🟢 شريط التنقل العلوي (Header) */}
+      <header className="bg-white shadow-sm sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4">
+            {/* الشعار */}
+            <div 
+              className="text-2xl font-bold text-blue-600 cursor-pointer"
+              onClick={() => { setCurrentPage('home'); setSelectedPost(null); }}
+            >
+              Fareestate
+            </div>
+
+            {/* أزرار التنقل */}
+            <nav className="hidden md:flex space-x-6 space-x-reverse">
+              <button 
+                onClick={() => { setCurrentPage('home'); setSelectedPost(null); }}
+                className={`${currentPage === 'home' ? 'text-blue-600 font-bold' : 'text-gray-600 hover:text-blue-500'}`}
+              >
+                الرئيسية
+              </button>
+              <button 
+                onClick={() => { setCurrentPage('blog'); setSelectedPost(null); }}
+                className={`${currentPage === 'blog' && !selectedPost ? 'text-blue-600 font-bold' : 'text-gray-600 hover:text-blue-500'}`}
+              >
+                المدونة والنصائح
+              </button>
+              {/* يمكنك إضافة أزرار (من نحن، تواصل معنا) هنا */}
+            </nav>
           </div>
         </div>
+      </header>
+
+      {/* 🟢 محتوى الموقع */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         
-        <div style={{ padding: '40px 30px' }}>
-          <h1 style={{ margin: 0, fontSize: '32px', color: '#0f172a' }}>{fullName}</h1>
-          <p style={{ color: '#0284c7', fontSize: '16px', fontWeight: 'bold', margin: '8px 0 25px 0' }}>{jobTitle}</p>
-          
-          <h2 style={{ fontSize: '18px', color: '#0f172a', borderRight: '4px solid #0284c7', paddingRight: '12px', marginBottom: '15px' }}>الملخص المهني</h2>
-          <p style={{ fontSize: '14px', color: '#334155', lineHeight: '1.8', textAlign: 'justify' }}>{summary}</p>
-        </div>
-      </div>
+        {/* صفحة الرئيسية */}
+        {currentPage === 'home' && (
+          <div className="text-center">
+            <h1 className="text-4xl font-extrabold text-gray-900 mb-4">مرحباً بك في Fareestate</h1>
+            <p className="text-lg text-gray-600 mb-8">منصتك الأولى لإنشاء سيرة ذاتية احترافية تتخطى أنظمة الفرز الآلي.</p>
+            {/* ⚠️ ضع هنا كود أداة بناء السيرة الذاتية (النماذج والإدخال) الخاص بك ⚠️ */}
+          </div>
+        )}
+
+        {/* صفحة المدونة */}
+        {currentPage === 'blog' && (
+          <div>
+            {!selectedPost ? (
+              // 1. عرض شبكة المقالات
+              <>
+                <div className="text-center mb-12">
+                  <h2 className="text-3xl font-bold text-gray-900">نصائح مهنية وأسرار التوظيف</h2>
+                  <p className="mt-4 text-gray-600">دليلك الشامل لكتابة سيرة ذاتية احترافية واجتياز المقابلات الشخصية.</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {articlesData.map((post) => (
+                    <div key={post.id} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-shadow duration-300 flex flex-col">
+                      <div className="text-4xl mb-4">{post.icon}</div>
+                      <span className="text-sm font-semibold text-blue-600 mb-2">{post.category}</span>
+                      <h3 className="text-xl font-bold text-gray-900 mb-3">{post.title}</h3>
+                      <p className="text-gray-600 text-sm mb-6 flex-grow leading-relaxed">{post.excerpt}</p>
+                      <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-50">
+                        <span className="text-xs text-gray-400">{post.date}</span>
+                        <button 
+                          onClick={() => handleReadMore(post)}
+                          className="text-blue-600 font-medium text-sm hover:text-blue-800 flex items-center gap-1"
+                        >
+                          اقرأ المزيد ←
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              // 2. عرض المقال المفتوح (تفاصيل المقال)
+              <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-8 sm:p-12">
+                <button 
+                  onClick={handleBackToBlog}
+                  className="mb-8 text-blue-600 hover:text-blue-800 font-medium flex items-center gap-2 transition-colors"
+                >
+                  → العودة للمدونة
+                </button>
+                
+                <div className="text-center mb-10">
+                  <div className="text-6xl mb-6">{selectedPost.icon}</div>
+                  <span className="inline-block px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm font-semibold mb-4">
+                    {selectedPost.category}
+                  </span>
+                  <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 leading-tight">
+                    {selectedPost.title}
+                  </h1>
+                  <time className="text-gray-400 text-sm">{selectedPost.date}</time>
+                </div>
+
+                <div className="prose prose-lg prose-blue mx-auto text-gray-700 leading-loose">
+                  <p>{selectedPost.content}</p>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* صفحات أخرى يمكن إضافتها لاحقاً */}
+        {currentPage === 'privacy' && <div>صفحة سياسة الخصوصية</div>}
+        {currentPage === 'terms' && <div>صفحة شروط الاستخدام</div>}
+        
+      </main>
     </div>
   );
 }
