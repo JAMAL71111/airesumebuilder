@@ -29,14 +29,14 @@ export default function App() {
           <div className="flex justify-between items-center py-4">
             {/* الشعار */}
             <div 
-              className="text-2xl font-bold text-blue-600 cursor-pointer"
+              className="text-xl sm:text-2xl font-bold text-blue-600 cursor-pointer"
               onClick={() => { setCurrentPage('home'); setSelectedPost(null); }}
             >
               Fareestate
             </div>
 
-            {/* أزرار التنقل */}
-            <nav className="hidden md:flex space-x-6 space-x-reverse">
+            {/* أزرار التنقل (ظاهرة الآن على جميع الشاشات والجوال) */}
+            <nav className="flex space-x-4 space-x-reverse text-sm sm:text-base">
               <button 
                 onClick={() => { setCurrentPage('home'); setSelectedPost(null); }}
                 className={`${currentPage === 'home' ? 'text-blue-600 font-bold' : 'text-gray-600 hover:text-blue-500'}`}
@@ -134,4 +134,3 @@ export default function App() {
     </div>
   );
 }
-
