@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 // استدعاء واجهة البيانات والمقالات من الملف الخارجي
 import { articlesData, Post } from './articlesData';
 
