@@ -53,17 +53,17 @@ export default function App() {
       </header>
 
       {/* 🟢 محتوى الموقع */}
-      <main className="max-w-5xl mx-auto px-4 py-10 flex-grow w-full space-y-12">
+      <main className="max-w-5xl mx-auto px-4 py-10 flex-grow w-full space-y-12 print:p-0 print:m-0 print:max-w-full">
         
         {currentPage === 'home' && (
-          <div className="space-y-12">
+          <div className="space-y-12 print:space-y-0">
             
             <section className="text-center space-y-4 print:hidden">
               <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 leading-tight">أنشئ سيرتك الذاتية الاحترافية مجاناً</h1>
               <p className="text-slate-600 text-lg max-w-2xl mx-auto">منصتك الأولى لإنشاء سيرة ذاتية تتخطى أنظمة الفرز الآلي (ATS). أدخل بياناتك وحملها كملف PDF فوراً.</p>
             </section>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 print:block">
               {/* 📝 قسم إدخال البيانات */}
               <section className="space-y-6 print:hidden">
                 <article className="bg-white rounded-xl shadow-sm p-6 sm:p-8 border border-slate-100">
@@ -71,7 +71,7 @@ export default function App() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div className="space-y-2">
                       <label className="block text-sm font-medium text-slate-700">الاسم الكامل</label>
-                      <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="مثال: جمال حميد" className={inputClassName} />
+                      <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="مثال: جمال حميد الشمحاني" className={inputClassName} />
                     </div>
                     <div className="space-y-2">
                       <label className="block text-sm font-medium text-slate-700">المسمى الوظيفي</label>
@@ -103,11 +103,11 @@ export default function App() {
                   <div className="space-y-5">
                     <div className="space-y-2">
                       <label className="block text-sm font-medium text-slate-700">التعليم والمؤهلات</label>
-                      <textarea rows={3} value={education} onChange={(e) => setEducation(e.target.value)} placeholder="مثال: خريج ثانوية، معدل 78%" className={`${inputClassName} resize-none`}></textarea>
+                      <textarea rows={3} value={education} onChange={(e) => setEducation(e.target.value)} placeholder="مثال: خريج ثانوية عامة، معدل 78%" className={`${inputClassName} resize-none`}></textarea>
                     </div>
                     <div className="space-y-2">
-                      <label className="block text-sm font-medium text-slate-700">المهارات</label>
-                      <textarea rows={3} value={skills} onChange={(e) => setSkills(e.target.value)} placeholder="مثال: React، البرمجة، حل المشكلات" className={`${inputClassName} resize-none`}></textarea>
+                      <label className="block text-sm font-medium text-slate-700">المهارات (افصل بينها بسطر جديد)</label>
+                      <textarea rows={3} value={skills} onChange={(e) => setSkills(e.target.value)} placeholder="مثال:&#10;تطوير الويب&#10;تحليل النظم&#10;حل المشكلات" className={`${inputClassName} resize-none`}></textarea>
                     </div>
                   </div>
                 </article>
@@ -117,83 +117,127 @@ export default function App() {
                 </button>
               </section>
 
-              {/* 🖨️ قسم المعاينة والإخراج (بشكل جدول رسمي) */}
-              <section className="bg-white p-6 sm:p-8 rounded-xl shadow-sm border border-slate-200 print:shadow-none print:border-none print:p-0 print:m-0 print:block">
+              {/* 🖨️ قسم المعاينة والإخراج (القالب البصري الاحترافي) */}
+              <section className="bg-white rounded-xl shadow-sm border border-slate-200 print:shadow-none print:border-none print:p-0 print:m-0 print:block overflow-hidden h-full">
                 
-                {/* رأس السيرة الذاتية */}
-                <div className="text-center mb-6">
-                  <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight">{fullName || 'الاسم الكامل'}</h1>
-                  <h2 className="text-2xl font-bold text-slate-600">{jobTitle || 'المسمى الوظيفي'}</h2>
-                </div>
+                <div className="flex flex-col sm:flex-row print:flex-row w-full min-h-[800px] print:h-screen bg-white">
+                  
+                  {/* العمود الجانبي الأيمن (اللون الداكن) */}
+                  <aside 
+                    className="w-full sm:w-1/3 print:w-1/3 bg-[#1A2B3C] text-white p-6 sm:p-8 flex flex-col gap-8" 
+                    style={{ WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}
+                  >
+                    
+                    {/* الصورة الشخصية الافتراضية */}
+                    <div className="w-32 h-32 mx-auto bg-slate-600 rounded-full overflow-hidden border-4 border-slate-400">
+                       <svg className="w-full h-full text-slate-300 bg-slate-700 p-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"></path></svg>
+                    </div>
 
-                {/* الجدول الرسمي (Table) */}
-                <div className="overflow-x-auto">
-                  <table className="w-full border-collapse border-2 border-slate-800 print:border-slate-800 text-right text-slate-800" style={{ printColorAdjust: 'exact' }}>
-                    <tbody>
-                      
-                      {/* صف معلومات التواصل */}
-                      {(email || phone) && (
-                        <tr className="border-b-2 border-slate-800 print:border-slate-800">
-                          <th className="w-1/3 sm:w-1/4 p-4 bg-slate-100 print:bg-slate-100 border-l-2 border-slate-800 print:border-slate-800 text-blue-800 font-bold align-top text-lg">
-                            معلومات التواصل
-                          </th>
-                          <td className="p-4 align-top leading-loose">
-                            {email && <div><strong className="text-slate-900">البريد الإلكتروني:</strong> <span dir="ltr">{email}</span></div>}
-                            {phone && <div><strong className="text-slate-900">رقم الهاتف:</strong> <span dir="ltr">{phone}</span></div>}
-                          </td>
-                        </tr>
-                      )}
+                    {/* قسم النبذة (Profile) */}
+                    <div>
+                      <h3 className="text-lg font-bold tracking-widest mb-4 uppercase border-b border-slate-500 pb-2 text-slate-200">PROFILE</h3>
+                      <div className="space-y-4 text-sm">
+                        <div>
+                          <span className="block text-slate-400 text-xs uppercase mb-1">الاسم</span>
+                          <span className="font-medium text-base">{fullName || 'جمال حميد الشمحاني'}</span>
+                        </div>
+                        {/* يمكنك إضافة المزيد من الحقول هنا مستقبلاً كالجنسية وتاريخ الميلاد */}
+                      </div>
+                    </div>
 
-                      {/* صف الملخص المهني */}
+                    {/* قسم التواصل (Contact) */}
+                    <div>
+                      <h3 className="text-lg font-bold tracking-widest mb-4 uppercase border-b border-slate-500 pb-2 text-slate-200">CONTACT</h3>
+                      <div className="space-y-4 text-sm">
+                        {(email || !phone) && (
+                          <div>
+                            <span className="block text-slate-400 text-xs uppercase mb-1">البريد الإلكتروني</span>
+                            <span className="break-words font-medium">{email || 'jmal30997@gmail.com'}</span>
+                          </div>
+                        )}
+                        {phone && (
+                          <div>
+                            <span className="block text-slate-400 text-xs uppercase mb-1">الهاتف</span>
+                            <span className="font-medium inline-block" dir="ltr">{phone}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                  </aside>
+
+                  {/* العمود الرئيسي الأيسر (المحتوى الأبيض) */}
+                  <main className="w-full sm:w-2/3 print:w-2/3 bg-white p-6 sm:p-8 text-slate-800">
+                    
+                    {/* ترويسة الاسم */}
+                    <header className="mb-8 border-b-2 border-slate-200 pb-6">
+                      <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight">{fullName || 'جمال حميد الشمحاني'}</h1>
+                      <h2 className="text-xl text-slate-500 font-medium">{jobTitle || 'مهندس برمجيات'}</h2>
+                    </header>
+
+                    <div className="space-y-8">
+                      {/* الملخص المهني */}
                       {summary && (
-                        <tr className="border-b-2 border-slate-800 print:border-slate-800">
-                          <th className="w-1/3 sm:w-1/4 p-4 bg-slate-100 print:bg-slate-100 border-l-2 border-slate-800 print:border-slate-800 text-blue-800 font-bold align-top text-lg">
-                            الملخص المهني
-                          </th>
-                          <td className="p-4 align-top whitespace-pre-line text-justify leading-relaxed">
-                            {summary}
-                          </td>
-                        </tr>
+                        <section>
+                          <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2 uppercase tracking-wide">
+                            <span className="w-2 h-2 bg-slate-900 rounded-full inline-block"></span>
+                            النبذة المهنية
+                          </h3>
+                          <p className="text-slate-600 leading-relaxed whitespace-pre-line pr-4">{summary}</p>
+                        </section>
                       )}
 
-                      {/* صف الخبرات العملية */}
+                      {/* الخبرات */}
                       {experience && (
-                        <tr className="border-b-2 border-slate-800 print:border-slate-800">
-                          <th className="w-1/3 sm:w-1/4 p-4 bg-slate-100 print:bg-slate-100 border-l-2 border-slate-800 print:border-slate-800 text-blue-800 font-bold align-top text-lg">
+                        <section>
+                          <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2 uppercase tracking-wide">
+                            <span className="w-2 h-2 bg-slate-900 rounded-full inline-block"></span>
                             الخبرات العملية
-                          </th>
-                          <td className="p-4 align-top whitespace-pre-line leading-relaxed">
-                            {experience}
-                          </td>
-                        </tr>
+                          </h3>
+                          <p className="text-slate-600 leading-relaxed whitespace-pre-line pr-4">{experience}</p>
+                        </section>
                       )}
 
-                      {/* صف التعليم */}
+                      {/* التعليم */}
                       {education && (
-                        <tr className="border-b-2 border-slate-800 print:border-slate-800">
-                          <th className="w-1/3 sm:w-1/4 p-4 bg-slate-100 print:bg-slate-100 border-l-2 border-slate-800 print:border-slate-800 text-blue-800 font-bold align-top text-lg">
+                        <section>
+                          <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2 uppercase tracking-wide">
+                            <span className="w-2 h-2 bg-slate-900 rounded-full inline-block"></span>
                             التعليم والمؤهلات
-                          </th>
-                          <td className="p-4 align-top whitespace-pre-line leading-relaxed">
-                            {education}
-                          </td>
-                        </tr>
+                          </h3>
+                          <p className="text-slate-600 leading-relaxed whitespace-pre-line pr-4">{education}</p>
+                        </section>
                       )}
 
-                      {/* صف المهارات */}
+                      {/* المهارات (معروضة كنقاط مرئية شبيهة بأشرطة التقدم) */}
                       {skills && (
-                        <tr className="border-b-2 border-slate-800 print:border-slate-800">
-                          <th className="w-1/3 sm:w-1/4 p-4 bg-slate-100 print:bg-slate-100 border-l-2 border-slate-800 print:border-slate-800 text-blue-800 font-bold align-top text-lg">
+                        <section>
+                          <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2 uppercase tracking-wide">
+                            <span className="w-2 h-2 bg-slate-900 rounded-full inline-block"></span>
                             المهارات
-                          </th>
-                          <td className="p-4 align-top whitespace-pre-line leading-relaxed">
-                            {skills}
-                          </td>
-                        </tr>
+                          </h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pr-4">
+                            {skills.split('\n').map((skill, index) => {
+                              if (!skill.trim()) return null;
+                              return (
+                                <div key={index} className="flex justify-between items-center bg-slate-50 p-2 rounded border border-slate-100">
+                                  <span className="text-slate-700 font-medium text-sm">{skill.trim()}</span>
+                                  {/* شكل بسيط يحاكي شريط المستوى */}
+                                  <div className="flex gap-1">
+                                    <div className="w-3 h-1.5 bg-slate-800 rounded-sm"></div>
+                                    <div className="w-3 h-1.5 bg-slate-800 rounded-sm"></div>
+                                    <div className="w-3 h-1.5 bg-slate-800 rounded-sm"></div>
+                                    <div className="w-3 h-1.5 bg-slate-300 rounded-sm"></div>
+                                  </div>
+                                </div>
+                              )
+                            })}
+                          </div>
+                        </section>
                       )}
+                    </div>
 
-                    </tbody>
-                  </table>
+                  </main>
                 </div>
               </section>
             </div>
@@ -206,9 +250,9 @@ export default function App() {
                 <p className="text-slate-600 text-sm">بياناتك تُعالج محلياً داخل متصفحك ولا تُحفظ في أي خوادم.</p>
               </article>
               <article className="bg-white rounded-xl shadow-sm p-6 border border-slate-100 text-center">
-                <span className="text-xs font-bold text-blue-700 mb-2 block">مميزات الأداة</span>
-                <h3 className="text-lg font-bold text-slate-800 mb-2">تخطى أنظمة الفرز</h3>
-                <p className="text-slate-600 text-sm">قالب مهيأ لاجتياز أنظمة الفرز الآلي (ATS) بنجاح.</p>
+                <span className="text-xs font-bold text-blue-700 mb-2 block">تصميم بصري</span>
+                <h3 className="text-lg font-bold text-slate-800 mb-2">هوية احترافية</h3>
+                <p className="text-slate-600 text-sm">قالب مقسم بعمودين يبرز مهاراتك بشكل أنيق وجذاب للشركات.</p>
               </article>
               <article className="bg-white rounded-xl shadow-sm p-6 border border-slate-100 text-center">
                 <span className="text-xs font-bold text-blue-700 mb-2 block">مميزات الأداة</span>
@@ -309,4 +353,3 @@ export default function App() {
     </div>
   );
 }
-
