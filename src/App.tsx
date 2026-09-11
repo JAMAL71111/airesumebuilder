@@ -167,15 +167,15 @@ export default function App() {
                 </button>
               </section>
 
-              {/* قسم المعاينة (يطابق الصورة الثانية) */}
-              <section className="bg-white rounded-xl shadow-sm border border-slate-200 print:shadow-none print:border-none print:p-0 print:m-0 print:block overflow-hidden h-full text-left" dir="ltr">
-                <div className="w-full bg-white pt-8 pb-4 pl-12 pr-8 print:pt-12 print:pl-16 border-b-[16px] border-[#1A2B3C] mb-6">
+              {/* قسم المعاينة (يطابق الصورة الثانية) - تم التعديل ليكون صفحة واحدة */}
+              <section className="bg-white rounded-xl shadow-sm border border-slate-200 print:shadow-none print:border-none print:p-0 print:m-0 print:flex print:flex-col h-full text-left print:w-[210mm] print:h-[297mm] print:overflow-hidden print:mx-auto" dir="ltr">
+                <div className="w-full bg-white pt-8 pb-4 pl-12 pr-8 print:pt-8 print:pb-2 print:pl-16 border-b-[16px] border-[#1A2B3C] mb-6 print:mb-0">
                    <h1 className="text-5xl font-light text-slate-800 mb-1 tracking-widest uppercase">{fullName || 'AWAAD M. AWAAD'}</h1>
                    <h2 className="text-xl text-slate-600 font-medium tracking-[0.2em] uppercase">{jobTitle || 'ARCHITECT'}</h2>
                 </div>
 
-                <div className="flex flex-row w-full min-h-[900px] bg-white">
-                  <aside className="w-[35%] bg-[#1A2B3C] text-white p-8 flex flex-col gap-8 print:w-[35%]" style={{ WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
+                <div className="flex flex-row w-full min-h-[900px] print:min-h-0 print:flex-1 bg-white print:overflow-hidden">
+                  <aside className="w-[35%] bg-[#1A2B3C] text-white p-8 flex flex-col gap-8 print:gap-6 print:w-[35%] print:h-full" style={{ WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
                     <div className="w-40 h-48 mx-auto bg-slate-400 overflow-hidden shadow-lg border border-slate-500 relative">
                        {photo ? (
                          <img src={photo} alt="Profile" className="w-full h-full object-cover" />
@@ -185,37 +185,37 @@ export default function App() {
                     </div>
 
                     <div>
-                      <h3 className="text-xl font-bold mb-4 uppercase text-white">PROFILE</h3>
-                      <div className="space-y-4 text-sm font-light">
+                      <h3 className="text-xl font-bold mb-4 uppercase text-white print:mb-2">PROFILE</h3>
+                      <div className="space-y-4 text-sm font-light print:space-y-2">
                         <div>
-                          <span className="block text-slate-300 font-bold mb-1">Name</span>
+                          <span className="block text-slate-300 font-bold mb-1 print:mb-0">Name</span>
                           <span className="text-slate-100">{fullName || 'Awaad Mohamed Awaad Abbas'}</span>
                         </div>
                         {dobNationality && (
                           <div>
-                            <span className="block text-slate-300 font-bold mb-1">Date of Birth & Nationality</span>
+                            <span className="block text-slate-300 font-bold mb-1 print:mb-0">Date of Birth & Nationality</span>
                             <span className="text-slate-100 whitespace-pre-line">{dobNationality}</span>
                           </div>
                         )}
                       </div>
                     </div>
 
-                    <div className="space-y-4 text-sm font-light">
+                    <div className="space-y-4 text-sm font-light print:space-y-2">
                       {address && (
                         <div>
-                          <h3 className="text-lg font-bold text-white mb-1 uppercase">ADDRESS</h3>
+                          <h3 className="text-lg font-bold text-white mb-1 uppercase print:mb-0">ADDRESS</h3>
                           <span className="text-slate-100">{address}</span>
                         </div>
                       )}
                       {phone && (
                         <div>
-                          <h3 className="text-lg font-bold text-white mb-1 uppercase">Mobile</h3>
+                          <h3 className="text-lg font-bold text-white mb-1 uppercase print:mb-0">Mobile</h3>
                           <span className="text-slate-100 block">{phone}</span>
                         </div>
                       )}
                       {email && (
                         <div>
-                          <h3 className="text-lg font-bold text-white mb-1 uppercase">Email</h3>
+                          <h3 className="text-lg font-bold text-white mb-1 uppercase print:mb-0">Email</h3>
                           <span className="text-slate-100 break-all block">{email}</span>
                         </div>
                       )}
@@ -223,24 +223,24 @@ export default function App() {
 
                     {languages && (
                       <div>
-                        <h3 className="text-lg font-bold text-white mb-2 uppercase">Language</h3>
+                        <h3 className="text-lg font-bold text-white mb-2 uppercase print:mb-1">Language</h3>
                         <div className="text-sm font-light text-slate-100 whitespace-pre-line leading-relaxed">{languages}</div>
                       </div>
                     )}
 
                     {socialMedia && (
                       <div>
-                        <h3 className="text-lg font-bold text-white mb-2 uppercase">Social Media</h3>
+                        <h3 className="text-lg font-bold text-white mb-2 uppercase print:mb-1">Social Media</h3>
                         <div className="text-sm font-light text-slate-100 whitespace-pre-line break-all leading-relaxed">{socialMedia}</div>
                       </div>
                     )}
                   </aside>
 
-                  <main className="w-[65%] bg-white p-8 pl-10 text-slate-800 print:w-[65%]">
-                    <div className="space-y-8">
+                  <main className="w-[65%] bg-white p-8 pl-10 text-slate-800 print:w-[65%] print:h-full print:pt-6">
+                    <div className="space-y-8 print:space-y-5">
                       {education && (
                         <section>
-                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2">
+                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:mb-2">
                             <span className="text-[#1A2B3C]">🎓</span> EDUCATION AND QUALIFICATIONS
                           </h3>
                           <p className="text-slate-600 text-sm leading-loose whitespace-pre-line pl-6">{education}</p>
@@ -249,7 +249,7 @@ export default function App() {
 
                       {experience && (
                         <section>
-                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2">
+                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:mb-2">
                             <span className="text-[#1A2B3C]">💼</span> EMPLOYMENT
                           </h3>
                           <p className="text-slate-600 text-sm leading-loose whitespace-pre-line pl-6">{experience}</p>
@@ -258,7 +258,7 @@ export default function App() {
 
                       {training && (
                         <section>
-                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2">
+                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:mb-2">
                             <span className="text-[#1A2B3C]">📋</span> PROFESSIONAL TRAINING
                           </h3>
                           <p className="text-slate-600 text-sm leading-loose whitespace-pre-line pl-6">{training}</p>
@@ -267,14 +267,14 @@ export default function App() {
 
                       {skills && (
                         <section>
-                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2">
+                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:mb-2">
                             <span className="text-[#1A2B3C]">⚙️</span> SKILLS
                           </h3>
                           <div className="grid grid-cols-2 gap-x-8 gap-y-3 pl-6">
                             {skills.split('\n').map((skill, index) => {
                               if (!skill.trim()) return null;
                               return (
-                                <div key={index} className="flex justify-between items-center mb-2">
+                                <div key={index} className="flex justify-between items-center mb-2 print:mb-1">
                                   <span className="text-slate-700 text-xs font-bold uppercase tracking-wide w-1/2">{skill.trim()}</span>
                                   <div className="w-1/2 h-1.5 bg-slate-200 flex rounded overflow-hidden">
                                     <div className="bg-[#1A2B3C] h-full" style={{ width: '85%' }}></div>
@@ -288,7 +288,7 @@ export default function App() {
 
                       {interests && (
                         <section>
-                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2">
+                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:mb-2">
                             <span className="text-[#1A2B3C]">🎯</span> INTERESTS
                           </h3>
                           <ul className="list-disc list-inside text-slate-600 text-sm leading-loose pl-6">
