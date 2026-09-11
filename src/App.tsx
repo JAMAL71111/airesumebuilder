@@ -50,54 +50,64 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col justify-between selection:bg-blue-100 selection:text-blue-900" dir="rtl" style={{ fontFamily: "'Tajawal', sans-serif" }}>
       
-      {/* 🔴 كود التثبيت الإجباري لضبط الطباعة على صفحة واحدة فقط كالصورة تماماً */}
+      {/* 🔴 الحل النهائي والقطعي لمشكلة الصفحة الثانية والنقص */}
       <style>
         {`
           @media print {
             @page {
-              margin: 0;
+              margin: 0; /* إزالة هوامش المتصفح الافتراضية بالكامل */
+              size: auto; /* السماح بتكيف الكود مع A4 أو Letter حسب اختيار المستخدم */
             }
             html, body {
               margin: 0 !important;
               padding: 0 !important;
-              height: 100vh !important;
-              width: 100vw !important;
-              overflow: hidden !important; 
+              width: 100% !important;
+              height: 100% !important;
               background-color: white !important;
+              overflow: hidden !important; /* منع ظهور أي سكرول أو صفحة إضافية */
             }
             
-            /* إخفاء أي عناصر أخرى تتسبب في صفحات إضافية */
             body > *:not(#root) { display: none !important; }
 
-            /* قفل حجم السيرة الذاتية على مقاس الورقة المحددة أياً كانت (A4, Letter...) */
+            /* جعل السيرة الذاتية تتصرف كصورة واحدة مرنة تناسب حجم الورقة */
             .cv-print-area {
-              position: fixed !important;
+              position: absolute !important;
               top: 0 !important;
               left: 0 !important;
               width: 100vw !important;
-              height: 100vh !important;
+              height: 100vh !important; /* ربط الارتفاع بحجم الورقة بالضبط */
+              max-height: 100vh !important;
               margin: 0 !important;
               padding: 0 !important;
               box-sizing: border-box !important;
-              overflow: hidden !important;
               display: flex !important;
               flex-direction: column !important;
+              page-break-inside: avoid !important; /* منع الانقسام قطعياً */
+              page-break-before: avoid !important;
+              page-break-after: avoid !important;
               z-index: 99999 !important;
-              page-break-inside: avoid !important;
             }
 
-            /* تقليل الأحجام لتفادي القص عند الطباعة على ورق أقصر مثل Letter */
+            /* تقليل الخطوط بنسبة مئوية مرنة vh/vw لضمان عدم نقص أي نص واستيعاب المحتوى الكثيف */
             .cv-print-area {
-              font-size: 0.85rem !important;
-            }
-            .cv-print-area * {
-              line-height: 1.4 !important;
+              font-size: clamp(8px, 1.5vh, 12px) !important; 
             }
             
-            /* إعطاء مرونة للصفوف الداخلية لتمتد بشكل طبيعي بدون فيضان */
-            .cv-print-main-row {
-              flex: 1 !important;
-              overflow: hidden !important;
+            .cv-print-area h1, .cv-print-area h2, .cv-print-area h3 {
+              line-height: 1.1 !important;
+              margin-bottom: 0.5vh !important;
+            }
+            
+            .cv-print-area p, .cv-print-area span, .cv-print-area li, .cv-print-area div {
+              line-height: 1.3 !important;
+            }
+
+            .print-padding-fix {
+              padding: 2vh 3vw !important;
+            }
+
+            .print-gap-fix {
+              gap: 1.5vh !important;
             }
           }
         `}
@@ -133,7 +143,7 @@ export default function App() {
             </section>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 print:block">
-              {/* قسم إدخال البيانات */}
+              {/* قسم إدخال البيانات (يختفي عند الطباعة) */}
               <section className="space-y-6 print:hidden">
                 <article className="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
                   <h2 className="text-xl font-bold text-slate-900 mb-6 border-b pb-2">البيانات الشخصية</h2>
@@ -220,27 +230,31 @@ export default function App() {
                 </button>
               </section>
 
-              {/* قسم المعاينة - تم تطبيق الكلاسات الجديدة */}
-              <section className="cv-print-area bg-white rounded-xl shadow-sm border border-slate-200 flex flex-col text-left w-full mx-auto" dir="ltr">
-                <div className="w-full bg-white pt-8 pb-4 pl-12 pr-8 print:pt-4 print:pb-2 print:pl-8 border-b-[16px] border-[#1A2B3C] mb-6 print:mb-0 print:border-b-[8px] print:flex-shrink-0">
-                   <h1 className="text-5xl font-light text-slate-800 mb-1 tracking-widest uppercase print:text-3xl">{fullName || 'AWAAD M. AWAAD'}</h1>
-                   <h2 className="text-xl text-slate-600 font-medium tracking-[0.2em] uppercase print:text-lg">{jobTitle || 'ARCHITECT'}</h2>
+              {/* 🔴 قسم المعاينة الذي سيُطبع كصورة واحدة مرنة تناسب أي مقاس ورق */}
+              <section className="cv-print-area bg-white rounded-xl shadow-sm border border-slate-200 w-full mx-auto" dir="ltr">
+                
+                {/* الهيدر العلوي */}
+                <div className="w-full bg-white pt-8 pb-4 pl-12 pr-8 print-padding-fix border-b-[16px] border-[#1A2B3C] mb-6 print:mb-0 print:border-b-[1vh] print:flex-shrink-0">
+                   <h1 className="text-5xl font-light text-slate-800 mb-1 tracking-widest uppercase print:text-[3.5vh] print:mb-[0.5vh] leading-none">{fullName || 'AWAAD M. AWAAD'}</h1>
+                   <h2 className="text-xl text-slate-600 font-medium tracking-[0.2em] uppercase print:text-[1.8vh] leading-none">{jobTitle || 'ARCHITECT'}</h2>
                 </div>
 
-                <div className="cv-print-main-row flex flex-row w-full min-h-[900px] print:min-h-0 print:h-full bg-white print:overflow-hidden print:flex-grow">
-                  {/* أضفت print:p-4 و print:gap-4 لتصغير الهوامش وتفادي القطع */}
-                  <aside className="w-[35%] bg-[#1A2B3C] text-white p-8 flex flex-col gap-8 print:gap-4 print:p-4 print:w-[35%] print:h-full" style={{ WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
-                    <div className="w-40 h-48 print:w-28 print:h-36 mx-auto bg-slate-400 overflow-hidden shadow-lg border border-slate-500 relative flex-shrink-0">
+                {/* المحتوى السفلي (مقسم لعمودين) */}
+                <div className="flex flex-row w-full min-h-[900px] print:min-h-0 print:flex-grow bg-white print:overflow-hidden">
+                  
+                  {/* الشريط الجانبي الغامق */}
+                  <aside className="w-[35%] bg-[#1A2B3C] text-white p-8 print-padding-fix flex flex-col gap-8 print-gap-fix print:h-full" style={{ WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
+                    <div className="w-40 h-48 print:w-[10vw] print:h-[13vw] mx-auto bg-slate-400 overflow-hidden shadow-lg border border-slate-500 relative flex-shrink-0">
                        {photo ? (
                          <img src={photo} alt="Profile" className="w-full h-full object-cover" />
                        ) : (
-                         <div className="w-full h-full flex items-center justify-center text-slate-200 text-sm print:text-xs">Upload Photo</div>
+                         <div className="w-full h-full flex items-center justify-center text-slate-200 text-sm print:text-[1vh]">Upload Photo</div>
                        )}
                     </div>
 
                     <div>
-                      <h3 className="text-xl font-bold mb-4 uppercase text-white print:mb-2 print:text-lg">PROFILE</h3>
-                      <div className="space-y-4 text-sm font-light print:space-y-2 print:text-xs">
+                      <h3 className="text-xl font-bold mb-4 uppercase text-white print:text-[2vh] print:mb-[1vh]">PROFILE</h3>
+                      <div className="space-y-4 text-sm font-light print:space-y-[1vh] print:text-[1.4vh]">
                         <div>
                           <span className="block text-slate-300 font-bold mb-1 print:mb-0">Name</span>
                           <span className="text-slate-100">{fullName || 'Awaad Mohamed Awaad Abbas'}</span>
@@ -254,22 +268,22 @@ export default function App() {
                       </div>
                     </div>
 
-                    <div className="space-y-4 text-sm font-light print:space-y-2 print:text-xs">
+                    <div className="space-y-4 text-sm font-light print:space-y-[1vh] print:text-[1.4vh]">
                       {address && (
                         <div>
-                          <h3 className="text-lg font-bold text-white mb-1 uppercase print:mb-0 print:text-base">ADDRESS</h3>
+                          <h3 className="text-lg font-bold text-white mb-1 uppercase print:text-[1.8vh] print:mb-[0.5vh]">ADDRESS</h3>
                           <span className="text-slate-100">{address}</span>
                         </div>
                       )}
                       {phone && (
                         <div>
-                          <h3 className="text-lg font-bold text-white mb-1 uppercase print:mb-0 print:text-base">Mobile</h3>
+                          <h3 className="text-lg font-bold text-white mb-1 uppercase print:text-[1.8vh] print:mb-[0.5vh]">Mobile</h3>
                           <span className="text-slate-100 block">{phone}</span>
                         </div>
                       )}
                       {email && (
                         <div>
-                          <h3 className="text-lg font-bold text-white mb-1 uppercase print:mb-0 print:text-base">Email</h3>
+                          <h3 className="text-lg font-bold text-white mb-1 uppercase print:text-[1.8vh] print:mb-[0.5vh]">Email</h3>
                           <span className="text-slate-100 break-all block">{email}</span>
                         </div>
                       )}
@@ -277,61 +291,61 @@ export default function App() {
 
                     {languages && (
                       <div>
-                        <h3 className="text-lg font-bold text-white mb-2 uppercase print:mb-1 print:text-base">Language</h3>
-                        <div className="text-sm font-light text-slate-100 whitespace-pre-line leading-relaxed print:text-xs print:leading-normal">{languages}</div>
+                        <h3 className="text-lg font-bold text-white mb-2 uppercase print:text-[1.8vh] print:mb-[1vh]">Language</h3>
+                        <div className="text-sm font-light text-slate-100 whitespace-pre-line print:text-[1.4vh]">{languages}</div>
                       </div>
                     )}
 
                     {socialMedia && (
                       <div>
-                        <h3 className="text-lg font-bold text-white mb-2 uppercase print:mb-1 print:text-base">Social Media</h3>
-                        <div className="text-sm font-light text-slate-100 whitespace-pre-line break-all leading-relaxed print:text-xs print:leading-normal">{socialMedia}</div>
+                        <h3 className="text-lg font-bold text-white mb-2 uppercase print:text-[1.8vh] print:mb-[1vh]">Social Media</h3>
+                        <div className="text-sm font-light text-slate-100 whitespace-pre-line break-all print:text-[1.4vh]">{socialMedia}</div>
                       </div>
                     )}
                   </aside>
 
-                  {/* أضفت print:p-4 و print:pl-6 لتصغير الهوامش في القسم الرئيسي */}
-                  <main className="w-[65%] bg-white p-8 pl-10 text-slate-800 print:w-[65%] print:h-full print:p-4 print:pl-6">
-                    <div className="space-y-8 print:space-y-4">
+                  {/* القسم الرئيسي الفاتح */}
+                  <main className="w-[65%] bg-white p-8 pl-10 print-padding-fix text-slate-800 print:h-full">
+                    <div className="space-y-8 print:space-y-[2vh]">
                       {education && (
                         <section>
-                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:mb-2 print:text-base">
+                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:text-[1.8vh] print:mb-[1vh]">
                             <span className="text-[#1A2B3C]">🎓</span> EDUCATION AND QUALIFICATIONS
                           </h3>
-                          <p className="text-slate-600 text-sm leading-loose whitespace-pre-line pl-6 print:text-xs print:leading-relaxed print:pl-4">{education}</p>
+                          <p className="text-slate-600 text-sm leading-loose whitespace-pre-line pl-6 print:text-[1.4vh] print:pl-[2vw]">{education}</p>
                         </section>
                       )}
 
                       {experience && (
                         <section>
-                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:mb-2 print:text-base">
+                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:text-[1.8vh] print:mb-[1vh]">
                             <span className="text-[#1A2B3C]">💼</span> EMPLOYMENT
                           </h3>
-                          <p className="text-slate-600 text-sm leading-loose whitespace-pre-line pl-6 print:text-xs print:leading-relaxed print:pl-4">{experience}</p>
+                          <p className="text-slate-600 text-sm leading-loose whitespace-pre-line pl-6 print:text-[1.4vh] print:pl-[2vw]">{experience}</p>
                         </section>
                       )}
 
                       {training && (
                         <section>
-                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:mb-2 print:text-base">
+                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:text-[1.8vh] print:mb-[1vh]">
                             <span className="text-[#1A2B3C]">📋</span> PROFESSIONAL TRAINING
                           </h3>
-                          <p className="text-slate-600 text-sm leading-loose whitespace-pre-line pl-6 print:text-xs print:leading-relaxed print:pl-4">{training}</p>
+                          <p className="text-slate-600 text-sm leading-loose whitespace-pre-line pl-6 print:text-[1.4vh] print:pl-[2vw]">{training}</p>
                         </section>
                       )}
 
                       {skills && (
                         <section>
-                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:mb-2 print:text-base">
+                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:text-[1.8vh] print:mb-[1vh]">
                             <span className="text-[#1A2B3C]">⚙️</span> SKILLS
                           </h3>
-                          <div className="grid grid-cols-2 gap-x-8 gap-y-3 pl-6 print:gap-y-2 print:gap-x-4 print:pl-4">
+                          <div className="grid grid-cols-2 gap-x-8 gap-y-3 pl-6 print:pl-[2vw] print:gap-x-[2vw] print:gap-y-[1vh]">
                             {skills.split('\n').map((skill, index) => {
                               if (!skill.trim()) return null;
                               return (
-                                <div key={index} className="flex justify-between items-center mb-2 print:mb-1">
-                                  <span className="text-slate-700 text-xs font-bold uppercase tracking-wide w-1/2 print:text-[10px]">{skill.trim()}</span>
-                                  <div className="w-1/2 h-1.5 bg-slate-200 flex rounded overflow-hidden">
+                                <div key={index} className="flex justify-between items-center mb-2 print:mb-0">
+                                  <span className="text-slate-700 text-xs font-bold uppercase tracking-wide w-1/2 print:text-[1.2vh]">{skill.trim()}</span>
+                                  <div className="w-1/2 h-1.5 bg-slate-200 flex rounded overflow-hidden print:h-[0.8vh]">
                                     <div className="bg-[#1A2B3C] h-full" style={{ width: '85%' }}></div>
                                   </div>
                                 </div>
@@ -343,10 +357,10 @@ export default function App() {
 
                       {interests && (
                         <section>
-                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:mb-2 print:text-base">
+                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:text-[1.8vh] print:mb-[1vh]">
                             <span className="text-[#1A2B3C]">🎯</span> INTERESTS
                           </h3>
-                          <ul className="list-disc list-inside text-slate-600 text-sm leading-loose pl-6 print:text-xs print:leading-relaxed print:pl-4">
+                          <ul className="list-disc list-inside text-slate-600 text-sm leading-loose pl-6 print:text-[1.4vh] print:pl-[2vw]">
                             {interests.split('\n').map((interest, i) => (
                               interest.trim() ? <li key={i}>{interest.trim()}</li> : null
                             ))}
@@ -361,6 +375,7 @@ export default function App() {
           </div>
         )}
 
+        {/* باقي الصفحات (المدونة، من نحن، إلخ) تبقى كما هي بدون تغيير */}
         {/* صفحة المدونة */}
         {currentPage === 'blog' && (
           <div>
