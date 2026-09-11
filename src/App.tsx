@@ -14,7 +14,7 @@ export default function App() {
   const [education, setEducation] = useState('');
   const [skills, setSkills] = useState('');
   
-  // حالات الإضافات (للمطابقة التامة مع الصورة الثانية)
+  // حالات الإضافات 
   const [photo, setPhoto] = useState<string>('');
   const [dobNationality, setDobNationality] = useState('');
   const [address, setAddress] = useState('');
@@ -50,7 +50,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col justify-between selection:bg-blue-100 selection:text-blue-900" dir="rtl" style={{ fontFamily: "'Tajawal', sans-serif" }}>
       
-      {/* 🔴 كود إجباري لضبط الطباعة على صفحة واحدة بدون هوامش */}
+      {/* 🔴 تم تعديل هذا القسم بالكامل لضمان خروج الـ CV كصورة واحدة في صفحة A4 بدون أي نقص */}
       <style>
         {`
           @media print {
@@ -58,9 +58,44 @@ export default function App() {
               size: A4;
               margin: 0mm;
             }
-            body {
-              margin: 0;
-              padding: 0;
+            body, html {
+              margin: 0 !important;
+              padding: 0 !important;
+              background-color: white !important;
+              -webkit-print-color-adjust: exact;
+              print-color-adjust: exact;
+            }
+            
+            /* إجبار المعاينة لتكون صفحة A4 واحدة ثابتة كالصورة */
+            .cv-print-area {
+              position: absolute !important;
+              top: 0 !important;
+              left: 0 !important;
+              width: 210mm !important;
+              height: 296.5mm !important; /* أقل قليلاً من 297 لمنع ظهور صفحة بيضاء ثانية */
+              margin: 0 !important;
+              padding: 0 !important;
+              box-shadow: none !important;
+              border: none !important;
+              page-break-after: avoid !important;
+              page-break-before: avoid !important;
+              page-break-inside: avoid !important;
+              overflow: hidden !important; 
+              z-index: 9999;
+            }
+
+            /* تقليل المسافات والخطوط بنسبة بسيطة لضمان استيعاب كل النصوص بدون نقص */
+            .cv-print-area {
+              font-size: 0.95rem !important;
+            }
+            .cv-print-area .p-8 {
+              padding: 1.5rem !important; 
+            }
+            .cv-print-area .gap-8 {
+              gap: 1rem !important;
+            }
+            .cv-print-area .space-y-8 > :not([hidden]) ~ :not([hidden]) {
+              margin-top: 1rem !important;
             }
           }
         `}
@@ -85,17 +120,17 @@ export default function App() {
       </header>
 
       {/* 🟢 محتوى الموقع الرئيسي */}
-      <main className="max-w-5xl mx-auto px-4 py-10 flex-grow w-full space-y-12 print:p-0 print:m-0 print:max-w-full print:h-[100vh]">
+      <main className="max-w-5xl mx-auto px-4 py-10 flex-grow w-full space-y-12 print:p-0 print:m-0 print:block">
         
         {/* صفحة الرئيسية */}
         {currentPage === 'home' && (
-          <div className="space-y-12 print:space-y-0 print:h-[100vh]">
+          <div className="space-y-12 print:space-y-0 print:block">
             <section className="text-center space-y-4 print:hidden">
               <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 leading-tight">أنشئ سيرتك الذاتية الاحترافية مجاناً</h1>
               <p className="text-slate-600 text-lg max-w-2xl mx-auto">أدخل بياناتك بالأسفل وشاهد سيرتك الذاتية تُبنى أمامك خطوة بخطوة.</p>
             </section>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 print:block print:h-[100vh]">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 print:block">
               {/* قسم إدخال البيانات */}
               <section className="space-y-6 print:hidden">
                 <article className="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
@@ -183,15 +218,15 @@ export default function App() {
                 </button>
               </section>
 
-              {/* قسم المعاينة - تم التعديل الجذري لضمان صفحة واحدة إجبارياً */}
-              <section className="bg-white rounded-xl shadow-sm border border-slate-200 print:shadow-none print:border-none print:p-0 print:m-0 print:flex print:flex-col text-left print:w-full print:h-[100vh] print:max-h-[100vh] print:overflow-hidden print:mx-auto" dir="ltr">
+              {/* 🔴 تم إضافة الكلاس cv-print-area وتفعيل فليكس كولوم لضمان التوافق */}
+              <section className="cv-print-area bg-white rounded-xl shadow-sm border border-slate-200 flex flex-col text-left w-full mx-auto" dir="ltr">
                 <div className="w-full bg-white pt-8 pb-4 pl-12 pr-8 print:pt-6 print:pb-2 print:pl-10 border-b-[16px] border-[#1A2B3C] mb-6 print:mb-0 print:flex-shrink-0">
                    <h1 className="text-5xl font-light text-slate-800 mb-1 tracking-widest uppercase">{fullName || 'AWAAD M. AWAAD'}</h1>
                    <h2 className="text-xl text-slate-600 font-medium tracking-[0.2em] uppercase">{jobTitle || 'ARCHITECT'}</h2>
                 </div>
 
                 <div className="flex flex-row w-full min-h-[900px] print:min-h-0 print:h-full bg-white print:overflow-hidden print:flex-grow">
-                  <aside className="w-[35%] bg-[#1A2B3C] text-white p-8 flex flex-col gap-8 print:gap-4 print:p-6 print:w-[35%] print:h-full" style={{ WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
+                  <aside className="w-[35%] bg-[#1A2B3C] text-white p-8 flex flex-col gap-8 print:w-[35%] print:h-full" style={{ WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
                     <div className="w-40 h-48 print:w-32 print:h-40 mx-auto bg-slate-400 overflow-hidden shadow-lg border border-slate-500 relative flex-shrink-0">
                        {photo ? (
                          <img src={photo} alt="Profile" className="w-full h-full object-cover" />
@@ -252,7 +287,7 @@ export default function App() {
                     )}
                   </aside>
 
-                  <main className="w-[65%] bg-white p-8 pl-10 text-slate-800 print:w-[65%] print:h-full print:p-6 print:pl-8">
+                  <main className="w-[65%] bg-white p-8 pl-10 text-slate-800 print:w-[65%] print:h-full print:pl-8">
                     <div className="space-y-8 print:space-y-4">
                       {education && (
                         <section>
@@ -417,4 +452,3 @@ export default function App() {
     </div>
   );
 }
-
