@@ -14,7 +14,7 @@ export default function App() {
   const [education, setEducation] = useState('');
   const [skills, setSkills] = useState('');
   
-  // حالات الإضافات 
+  // حالات الإضافات
   const [photo, setPhoto] = useState<string>('');
   const [dobNationality, setDobNationality] = useState('');
   const [address, setAddress] = useState('');
@@ -50,52 +50,54 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col justify-between selection:bg-blue-100 selection:text-blue-900" dir="rtl" style={{ fontFamily: "'Tajawal', sans-serif" }}>
       
-      {/* 🔴 تم تعديل هذا القسم بالكامل لضمان خروج الـ CV كصورة واحدة في صفحة A4 بدون أي نقص */}
+      {/* 🔴 كود التثبيت الإجباري لضبط الطباعة على صفحة واحدة فقط كالصورة تماماً */}
       <style>
         {`
           @media print {
             @page {
-              size: A4;
-              margin: 0mm;
+              margin: 0;
             }
-            body, html {
+            html, body {
               margin: 0 !important;
               padding: 0 !important;
+              height: 100vh !important;
+              width: 100vw !important;
+              overflow: hidden !important; 
               background-color: white !important;
-              -webkit-print-color-adjust: exact;
-              print-color-adjust: exact;
             }
             
-            /* إجبار المعاينة لتكون صفحة A4 واحدة ثابتة كالصورة */
+            /* إخفاء أي عناصر أخرى تتسبب في صفحات إضافية */
+            body > *:not(#root) { display: none !important; }
+
+            /* قفل حجم السيرة الذاتية على مقاس الورقة المحددة أياً كانت (A4, Letter...) */
             .cv-print-area {
-              position: absolute !important;
+              position: fixed !important;
               top: 0 !important;
               left: 0 !important;
-              width: 210mm !important;
-              height: 296.5mm !important; /* أقل قليلاً من 297 لمنع ظهور صفحة بيضاء ثانية */
+              width: 100vw !important;
+              height: 100vh !important;
               margin: 0 !important;
               padding: 0 !important;
-              box-shadow: none !important;
-              border: none !important;
-              page-break-after: avoid !important;
-              page-break-before: avoid !important;
+              box-sizing: border-box !important;
+              overflow: hidden !important;
+              display: flex !important;
+              flex-direction: column !important;
+              z-index: 99999 !important;
               page-break-inside: avoid !important;
-              overflow: hidden !important; 
-              z-index: 9999;
             }
 
-            /* تقليل المسافات والخطوط بنسبة بسيطة لضمان استيعاب كل النصوص بدون نقص */
+            /* تقليل الأحجام لتفادي القص عند الطباعة على ورق أقصر مثل Letter */
             .cv-print-area {
-              font-size: 0.95rem !important;
+              font-size: 0.85rem !important;
             }
-            .cv-print-area .p-8 {
-              padding: 1.5rem !important; 
+            .cv-print-area * {
+              line-height: 1.4 !important;
             }
-            .cv-print-area .gap-8 {
-              gap: 1rem !important;
-            }
-            .cv-print-area .space-y-8 > :not([hidden]) ~ :not([hidden]) {
-              margin-top: 1rem !important;
+            
+            /* إعطاء مرونة للصفوف الداخلية لتمتد بشكل طبيعي بدون فيضان */
+            .cv-print-main-row {
+              flex: 1 !important;
+              overflow: hidden !important;
             }
           }
         `}
@@ -218,26 +220,27 @@ export default function App() {
                 </button>
               </section>
 
-              {/* 🔴 تم إضافة الكلاس cv-print-area وتفعيل فليكس كولوم لضمان التوافق */}
+              {/* قسم المعاينة - تم تطبيق الكلاسات الجديدة */}
               <section className="cv-print-area bg-white rounded-xl shadow-sm border border-slate-200 flex flex-col text-left w-full mx-auto" dir="ltr">
-                <div className="w-full bg-white pt-8 pb-4 pl-12 pr-8 print:pt-6 print:pb-2 print:pl-10 border-b-[16px] border-[#1A2B3C] mb-6 print:mb-0 print:flex-shrink-0">
-                   <h1 className="text-5xl font-light text-slate-800 mb-1 tracking-widest uppercase">{fullName || 'AWAAD M. AWAAD'}</h1>
-                   <h2 className="text-xl text-slate-600 font-medium tracking-[0.2em] uppercase">{jobTitle || 'ARCHITECT'}</h2>
+                <div className="w-full bg-white pt-8 pb-4 pl-12 pr-8 print:pt-4 print:pb-2 print:pl-8 border-b-[16px] border-[#1A2B3C] mb-6 print:mb-0 print:border-b-[8px] print:flex-shrink-0">
+                   <h1 className="text-5xl font-light text-slate-800 mb-1 tracking-widest uppercase print:text-3xl">{fullName || 'AWAAD M. AWAAD'}</h1>
+                   <h2 className="text-xl text-slate-600 font-medium tracking-[0.2em] uppercase print:text-lg">{jobTitle || 'ARCHITECT'}</h2>
                 </div>
 
-                <div className="flex flex-row w-full min-h-[900px] print:min-h-0 print:h-full bg-white print:overflow-hidden print:flex-grow">
-                  <aside className="w-[35%] bg-[#1A2B3C] text-white p-8 flex flex-col gap-8 print:w-[35%] print:h-full" style={{ WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
-                    <div className="w-40 h-48 print:w-32 print:h-40 mx-auto bg-slate-400 overflow-hidden shadow-lg border border-slate-500 relative flex-shrink-0">
+                <div className="cv-print-main-row flex flex-row w-full min-h-[900px] print:min-h-0 print:h-full bg-white print:overflow-hidden print:flex-grow">
+                  {/* أضفت print:p-4 و print:gap-4 لتصغير الهوامش وتفادي القطع */}
+                  <aside className="w-[35%] bg-[#1A2B3C] text-white p-8 flex flex-col gap-8 print:gap-4 print:p-4 print:w-[35%] print:h-full" style={{ WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
+                    <div className="w-40 h-48 print:w-28 print:h-36 mx-auto bg-slate-400 overflow-hidden shadow-lg border border-slate-500 relative flex-shrink-0">
                        {photo ? (
                          <img src={photo} alt="Profile" className="w-full h-full object-cover" />
                        ) : (
-                         <div className="w-full h-full flex items-center justify-center text-slate-200 text-sm">Upload Photo</div>
+                         <div className="w-full h-full flex items-center justify-center text-slate-200 text-sm print:text-xs">Upload Photo</div>
                        )}
                     </div>
 
                     <div>
                       <h3 className="text-xl font-bold mb-4 uppercase text-white print:mb-2 print:text-lg">PROFILE</h3>
-                      <div className="space-y-4 text-sm font-light print:space-y-1 print:text-xs">
+                      <div className="space-y-4 text-sm font-light print:space-y-2 print:text-xs">
                         <div>
                           <span className="block text-slate-300 font-bold mb-1 print:mb-0">Name</span>
                           <span className="text-slate-100">{fullName || 'Awaad Mohamed Awaad Abbas'}</span>
@@ -287,41 +290,42 @@ export default function App() {
                     )}
                   </aside>
 
-                  <main className="w-[65%] bg-white p-8 pl-10 text-slate-800 print:w-[65%] print:h-full print:pl-8">
+                  {/* أضفت print:p-4 و print:pl-6 لتصغير الهوامش في القسم الرئيسي */}
+                  <main className="w-[65%] bg-white p-8 pl-10 text-slate-800 print:w-[65%] print:h-full print:p-4 print:pl-6">
                     <div className="space-y-8 print:space-y-4">
                       {education && (
                         <section>
-                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:mb-2 print:text-lg">
+                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:mb-2 print:text-base">
                             <span className="text-[#1A2B3C]">🎓</span> EDUCATION AND QUALIFICATIONS
                           </h3>
-                          <p className="text-slate-600 text-sm leading-loose whitespace-pre-line pl-6 print:text-xs print:leading-relaxed">{education}</p>
+                          <p className="text-slate-600 text-sm leading-loose whitespace-pre-line pl-6 print:text-xs print:leading-relaxed print:pl-4">{education}</p>
                         </section>
                       )}
 
                       {experience && (
                         <section>
-                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:mb-2 print:text-lg">
+                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:mb-2 print:text-base">
                             <span className="text-[#1A2B3C]">💼</span> EMPLOYMENT
                           </h3>
-                          <p className="text-slate-600 text-sm leading-loose whitespace-pre-line pl-6 print:text-xs print:leading-relaxed">{experience}</p>
+                          <p className="text-slate-600 text-sm leading-loose whitespace-pre-line pl-6 print:text-xs print:leading-relaxed print:pl-4">{experience}</p>
                         </section>
                       )}
 
                       {training && (
                         <section>
-                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:mb-2 print:text-lg">
+                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:mb-2 print:text-base">
                             <span className="text-[#1A2B3C]">📋</span> PROFESSIONAL TRAINING
                           </h3>
-                          <p className="text-slate-600 text-sm leading-loose whitespace-pre-line pl-6 print:text-xs print:leading-relaxed">{training}</p>
+                          <p className="text-slate-600 text-sm leading-loose whitespace-pre-line pl-6 print:text-xs print:leading-relaxed print:pl-4">{training}</p>
                         </section>
                       )}
 
                       {skills && (
                         <section>
-                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:mb-2 print:text-lg">
+                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:mb-2 print:text-base">
                             <span className="text-[#1A2B3C]">⚙️</span> SKILLS
                           </h3>
-                          <div className="grid grid-cols-2 gap-x-8 gap-y-3 pl-6 print:gap-y-2">
+                          <div className="grid grid-cols-2 gap-x-8 gap-y-3 pl-6 print:gap-y-2 print:gap-x-4 print:pl-4">
                             {skills.split('\n').map((skill, index) => {
                               if (!skill.trim()) return null;
                               return (
@@ -339,10 +343,10 @@ export default function App() {
 
                       {interests && (
                         <section>
-                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:mb-2 print:text-lg">
+                          <h3 className="text-xl font-medium text-slate-700 mb-4 uppercase tracking-widest flex items-center gap-2 print:mb-2 print:text-base">
                             <span className="text-[#1A2B3C]">🎯</span> INTERESTS
                           </h3>
-                          <ul className="list-disc list-inside text-slate-600 text-sm leading-loose pl-6 print:text-xs print:leading-relaxed">
+                          <ul className="list-disc list-inside text-slate-600 text-sm leading-loose pl-6 print:text-xs print:leading-relaxed print:pl-4">
                             {interests.split('\n').map((interest, i) => (
                               interest.trim() ? <li key={i}>{interest.trim()}</li> : null
                             ))}
