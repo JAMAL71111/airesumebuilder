@@ -118,10 +118,27 @@ export default function App() {
                   <h2 className="text-xl font-bold text-slate-800 mb-6 border-b border-slate-100 pb-4 flex items-center gap-3">
                     <span className="bg-blue-50 p-2.5 rounded-xl text-xl">👤</span> البيانات الشخصية
                   </h2>
+                  
+                  {/* 🟢 الحل الجديد لزر الصورة الشخصية */}
                   <div className="mb-5 space-y-2">
                     <label className="block text-sm font-bold text-slate-700">الصورة الشخصية</label>
-                    <input type="file" accept="image/*" onChange={handlePhotoUpload} className="w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-5 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors cursor-pointer" />
+                    <div className="relative">
+                      <input 
+                        type="file" 
+                        id="photo-upload" 
+                        accept="image/*" 
+                        onChange={handlePhotoUpload} 
+                        className="hidden" 
+                      />
+                      <label 
+                        htmlFor="photo-upload" 
+                        className="flex items-center justify-center w-full p-3.5 bg-blue-50 border-2 border-blue-200 border-dashed rounded-xl text-blue-700 font-bold cursor-pointer hover:bg-blue-100 transition-colors text-sm"
+                      >
+                        {photo ? '✅ تم اختيار الصورة بنجاح - اضغط لتغييرها' : '📸 اختر صورة شخصية'}
+                      </label>
+                    </div>
                   </div>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div className="space-y-2">
                       <label className="block text-sm font-bold text-slate-700">الاسم الكامل</label>
