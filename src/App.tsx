@@ -78,7 +78,8 @@ export default function App() {
       <header className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 print:hidden border-b border-slate-100">
         <div className="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
           <div 
-            className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-indigo-700 tracking-tight cursor-pointer hover:opacity-80 transition-opacity"
+            translate="no"
+            className="notranslate text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-indigo-700 tracking-tight cursor-pointer hover:opacity-80 transition-opacity"
             onClick={() => { setCurrentPage('home'); setSelectedPost(null); }}
           >
             Fareestate
