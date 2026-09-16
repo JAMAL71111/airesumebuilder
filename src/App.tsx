@@ -44,7 +44,7 @@ export default function App() {
   };
 
   // حقول الإدخال بتصميم عصري وتفاعلي
-  const inputClassName = "w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 focus:bg-white hover:border-blue-300 transition-all duration-300 shadow-sm";
+  const inputClassName = "w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 focus:bg-white hover:border-blue-300 transition-all duration-300 shadow-sm";
   
   // تصميم موحد للبطاقات التفاعلية
   const cardClassName = "bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 sm:p-8 border border-slate-100 relative overflow-hidden group";
@@ -133,7 +133,7 @@ export default function App() {
                     </div>
                     <div className="space-y-2 md:col-span-2">
                       <label className="block text-sm font-bold text-slate-700">تاريخ الميلاد والجنسية</label>
-                      <input type="text" value={dobNationality} onChange={(e) => setDobNationality(e.target.value)} placeholder="مثال: Sep. 1991 - Sudanese" className={inputClassName} />
+                      <input type="text" value={dobNationality} onChange={(e) => setDobNationality(e.target.value)} placeholder="مثال: سبتمبر 1991 - يمني" className={inputClassName} />
                     </div>
                   </div>
                 </article>
@@ -192,176 +192,185 @@ export default function App() {
                   <div className="space-y-5">
                     <div className="space-y-2">
                       <label className="block text-sm font-bold text-slate-700">المهارات (افصل بسطر جديد)</label>
-                      <textarea rows={3} value={skills} onChange={(e) => setSkills(e.target.value)} placeholder="Microsoft Word&#10;AutoCAD" className={`${inputClassName} resize-none`}></textarea>
+                      <textarea rows={3} value={skills} onChange={(e) => setSkills(e.target.value)} placeholder="مايكروسوفت وورد&#10;أوتوكاد" className={`${inputClassName} resize-none`}></textarea>
                     </div>
                     <div className="space-y-2">
                       <label className="block text-sm font-bold text-slate-700">اللغات (افصل بسطر جديد)</label>
-                      <textarea rows={2} value={languages} onChange={(e) => setLanguages(e.target.value)} placeholder="Arabic / fluent&#10;English / V. good" className={`${inputClassName} resize-none`}></textarea>
+                      <textarea rows={2} value={languages} onChange={(e) => setLanguages(e.target.value)} placeholder="العربية / اللغة الأم&#10;الإنجليزية / جيد جداً" className={`${inputClassName} resize-none`}></textarea>
                     </div>
                     <div className="space-y-2">
                       <label className="block text-sm font-bold text-slate-700">الاهتمامات (افصل بسطر جديد)</label>
-                      <textarea rows={2} value={interests} onChange={(e) => setInterests(e.target.value)} placeholder="Reading&#10;Sketching" className={`${inputClassName} resize-none`}></textarea>
+                      <textarea rows={2} value={interests} onChange={(e) => setInterests(e.target.value)} placeholder="القراءة&#10;الرسم" className={`${inputClassName} resize-none`}></textarea>
                     </div>
                   </div>
                 </article>
 
-                {/* زر تحميل السيرة الذاتية التفاعلي */}
+              </section>
+
+              {/* 👁️ القسم الأيسر (المعاينة الحية - Sticky) */}
+              <section className="w-full lg:w-[55%] print:w-full lg:sticky lg:top-24 z-10 transition-transform duration-500 flex flex-col gap-6">
+                
+                {/* 
+                  Responsive preview container using aspect ratio or transform scale to avoid overflow on mobile 
+                  Adding an overflow-x-auto wrapper for mobile
+                */}
+                <div className="w-full overflow-x-auto pb-4 custom-scrollbar rounded-2xl shadow-xl hover:shadow-2xl transition-shadow border border-slate-200/60 print:border-none print:shadow-none print:overflow-visible print:pb-0">
+                  <div className="cv-print-area bg-white w-full min-w-[700px] lg:min-w-0 mx-auto overflow-hidden" dir="ltr">
+                    
+                    {/* الهيدر العلوي */}
+                    <div className="print-header w-full bg-white pt-8 pb-4 pl-12 pr-8 border-b-[16px] border-[#1A2B3C] mb-6 print:mb-0">
+                       <h1 className="text-5xl font-light text-slate-800 mb-1 tracking-widest uppercase">{fullName || 'عواد محمد عواد'}</h1>
+                       <h2 className="text-xl text-slate-600 font-medium tracking-[0.2em] uppercase">{jobTitle || 'مهندس معماري'}</h2>
+                    </div>
+
+                    {/* المحتوى السفلي (مقسم لعمودين) */}
+                    <div className="cv-print-main-row flex flex-row w-full min-h-[900px] bg-white">
+                      
+                      {/* الشريط الجانبي الغامق */}
+                      <aside className="cv-sidebar w-[35%] bg-[#1A2B3C] text-white p-8 flex flex-col gap-8" style={{ WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
+                        <div className="print-pic w-40 h-48 mx-auto bg-slate-400 overflow-hidden shadow-lg border border-slate-500 relative flex-shrink-0 group">
+                           {photo ? (
+                             <img src={photo} alt="Profile" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                           ) : (
+                             <div className="w-full h-full flex flex-col items-center justify-center text-slate-300 text-sm gap-2">
+                               <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2-2v12a2 2 0 002 2z" /></svg>
+                               رفع الصورة
+                             </div>
+                           )}
+                        </div>
+
+                        <div>
+                          <h3 className="text-xl font-bold mb-4 uppercase text-white tracking-widest">النبذة الشخصية</h3>
+                          <div className="space-y-4 text-sm font-light">
+                            <div>
+                              <span className="block text-slate-400 font-bold mb-1 print:mb-0 text-xs uppercase">الاسم</span>
+                              <span className="text-slate-100">{fullName || 'عواد محمد عواد عباس'}</span>
+                            </div>
+                            {dobNationality && (
+                              <div>
+                                <span className="block text-slate-400 font-bold mb-1 print:mb-0 text-xs uppercase">تاريخ الميلاد والجنسية</span>
+                                <span className="text-slate-100 whitespace-pre-line">{dobNationality}</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="space-y-4 text-sm font-light">
+                          {address && (
+                            <div>
+                              <h3 className="text-lg font-bold text-white mb-1 uppercase tracking-widest">العنوان</h3>
+                              <span className="text-slate-100">{address}</span>
+                            </div>
+                          )}
+                          {phone && (
+                            <div>
+                              <h3 className="text-lg font-bold text-white mb-1 uppercase tracking-widest">رقم الهاتف</h3>
+                              <span className="text-slate-100 block">{phone}</span>
+                            </div>
+                          )}
+                          {email && (
+                            <div>
+                              <h3 className="text-lg font-bold text-white mb-1 uppercase tracking-widest">البريد الإلكتروني</h3>
+                              <span className="text-slate-100 break-all block">{email}</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {languages && (
+                          <div>
+                            <h3 className="text-lg font-bold text-white mb-2 uppercase tracking-widest">اللغات</h3>
+                            <div className="text-sm font-light text-slate-100 whitespace-pre-line">{languages}</div>
+                          </div>
+                        )}
+
+                        {socialMedia && (
+                          <div>
+                            <h3 className="text-lg font-bold text-white mb-2 uppercase tracking-widest">منصات التواصل</h3>
+                            <div className="text-sm font-light text-slate-100 whitespace-pre-line break-all">{socialMedia}</div>
+                          </div>
+                        )}
+                      </aside>
+
+                      {/* القسم الرئيسي الفاتح */}
+                      <main className="cv-main-content w-[65%] bg-white p-8 pl-10 text-slate-800">
+                        <div className="space-y-8 print:space-y-4">
+                          {education && (
+                            <section>
+                              <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
+                                <span className="text-[#1A2B3C]">🎓</span> التعليم والمؤهلات
+                              </h3>
+                              <p className="text-slate-600 text-sm leading-loose whitespace-pre-line pl-8 border-l-2 border-slate-100 ml-3">{education}</p>
+                            </section>
+                          )}
+
+                          {experience && (
+                            <section>
+                              <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
+                                <span className="text-[#1A2B3C]">💼</span> الخبرات العملية
+                              </h3>
+                              <p className="text-slate-600 text-sm leading-loose whitespace-pre-line pl-8 border-l-2 border-slate-100 ml-3">{experience}</p>
+                            </section>
+                          )}
+
+                          {training && (
+                            <section>
+                              <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
+                                <span className="text-[#1A2B3C]">📋</span> التدريب المهني
+                              </h3>
+                              <p className="text-slate-600 text-sm leading-loose whitespace-pre-line pl-8 border-l-2 border-slate-100 ml-3">{training}</p>
+                            </section>
+                          )}
+
+                          {skills && (
+                            <section>
+                              <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
+                                <span className="text-[#1A2B3C]">⚙️</span> المهارات
+                              </h3>
+                              <div className="grid grid-cols-2 gap-x-8 gap-y-4 pl-6 print:pl-4 print:gap-x-4 ml-3">
+                                {skills.split('\n').map((skill, index) => {
+                                  if (!skill.trim()) return null;
+                                  return (
+                                    <div key={index} className="flex flex-col gap-1.5 mb-2 print:mb-0">
+                                      <span className="text-slate-700 text-xs font-bold uppercase tracking-wide">{skill.trim()}</span>
+                                      <div className="w-full h-1.5 bg-slate-100 flex rounded-full overflow-hidden print:h-1">
+                                        <div className="bg-[#1A2B3C] h-full rounded-full" style={{ width: '85%' }}></div>
+                                      </div>
+                                    </div>
+                                  )
+                                })}
+                              </div>
+                            </section>
+                          )}
+
+                          {interests && (
+                            <section>
+                              <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
+                                <span className="text-[#1A2B3C]">🎯</span> الاهتمامات
+                              </h3>
+                              <ul className="list-disc list-inside text-slate-600 text-sm leading-loose pl-8 ml-3 marker:text-blue-500">
+                                {interests.split('\n').map((interest, i) => (
+                                  interest.trim() ? <li key={i}>{interest.trim()}</li> : null
+                                ))}
+                              </ul>
+                            </section>
+                          )}
+                        </div>
+                      </main>
+                    </div>
+                  </div>
+                </div>
+
+                {/* زر تحميل السيرة الذاتية التفاعلي - تم نقله إلى أسفل المعاينة ليتوافق مع المنطق التجريبي */}
                 <button 
                   onClick={handlePrintPDF} 
-                  className="w-full flex justify-center items-center gap-3 py-4 px-6 text-xl font-extrabold rounded-2xl text-white bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-[0_10px_20px_rgba(37,99,235,0.3)] hover:shadow-[0_15px_30px_rgba(37,99,235,0.4)] hover:-translate-y-1 active:translate-y-0 transition-all duration-300"
+                  className="w-full flex justify-center items-center gap-3 py-4 px-6 text-xl font-extrabold rounded-2xl text-white bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-[0_10px_20px_rgba(37,99,235,0.3)] hover:shadow-[0_15px_30px_rgba(37,99,235,0.4)] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 print:hidden"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
                   </svg>
                   تحميل السيرة الذاتية (PDF)
                 </button>
-              </section>
 
-              {/* 👁️ القسم الأيسر (المعاينة الحية - Sticky) */}
-              <section className="w-full lg:w-[55%] print:w-full lg:sticky lg:top-24 z-10 transition-transform duration-500">
-                <div className="cv-print-area bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-shadow border border-slate-200/60 w-full mx-auto overflow-hidden" dir="ltr">
-                  
-                  {/* الهيدر العلوي */}
-                  <div className="print-header w-full bg-white pt-8 pb-4 pl-12 pr-8 border-b-[16px] border-[#1A2B3C] mb-6 print:mb-0">
-                     <h1 className="text-5xl font-light text-slate-800 mb-1 tracking-widest uppercase">{fullName || 'AWAAD M. AWAAD'}</h1>
-                     <h2 className="text-xl text-slate-600 font-medium tracking-[0.2em] uppercase">{jobTitle || 'ARCHITECT'}</h2>
-                  </div>
-
-                  {/* المحتوى السفلي (مقسم لعمودين) */}
-                  <div className="cv-print-main-row flex flex-row w-full min-h-[900px] bg-white">
-                    
-                    {/* الشريط الجانبي الغامق */}
-                    <aside className="cv-sidebar w-[35%] bg-[#1A2B3C] text-white p-8 flex flex-col gap-8" style={{ WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
-                      <div className="print-pic w-40 h-48 mx-auto bg-slate-400 overflow-hidden shadow-lg border border-slate-500 relative flex-shrink-0 group">
-                         {photo ? (
-                           <img src={photo} alt="Profile" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                         ) : (
-                           <div className="w-full h-full flex flex-col items-center justify-center text-slate-300 text-sm gap-2">
-                             <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2-2v12a2 2 0 002 2z" /></svg>
-                             Upload Photo
-                           </div>
-                         )}
-                      </div>
-
-                      <div>
-                        <h3 className="text-xl font-bold mb-4 uppercase text-white tracking-widest">PROFILE</h3>
-                        <div className="space-y-4 text-sm font-light">
-                          <div>
-                            <span className="block text-slate-400 font-bold mb-1 print:mb-0 text-xs uppercase">Name</span>
-                            <span className="text-slate-100">{fullName || 'Awaad Mohamed Awaad Abbas'}</span>
-                          </div>
-                          {dobNationality && (
-                            <div>
-                              <span className="block text-slate-400 font-bold mb-1 print:mb-0 text-xs uppercase">Date of Birth & Nationality</span>
-                              <span className="text-slate-100 whitespace-pre-line">{dobNationality}</span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="space-y-4 text-sm font-light">
-                        {address && (
-                          <div>
-                            <h3 className="text-lg font-bold text-white mb-1 uppercase tracking-widest">ADDRESS</h3>
-                            <span className="text-slate-100">{address}</span>
-                          </div>
-                        )}
-                        {phone && (
-                          <div>
-                            <h3 className="text-lg font-bold text-white mb-1 uppercase tracking-widest">Mobile</h3>
-                            <span className="text-slate-100 block">{phone}</span>
-                          </div>
-                        )}
-                        {email && (
-                          <div>
-                            <h3 className="text-lg font-bold text-white mb-1 uppercase tracking-widest">Email</h3>
-                            <span className="text-slate-100 break-all block">{email}</span>
-                          </div>
-                        )}
-                      </div>
-
-                      {languages && (
-                        <div>
-                          <h3 className="text-lg font-bold text-white mb-2 uppercase tracking-widest">Language</h3>
-                          <div className="text-sm font-light text-slate-100 whitespace-pre-line">{languages}</div>
-                        </div>
-                      )}
-
-                      {socialMedia && (
-                        <div>
-                          <h3 className="text-lg font-bold text-white mb-2 uppercase tracking-widest">Social Media</h3>
-                          <div className="text-sm font-light text-slate-100 whitespace-pre-line break-all">{socialMedia}</div>
-                        </div>
-                      )}
-                    </aside>
-
-                    {/* القسم الرئيسي الفاتح */}
-                    <main className="cv-main-content w-[65%] bg-white p-8 pl-10 text-slate-800">
-                      <div className="space-y-8 print:space-y-4">
-                        {education && (
-                          <section>
-                            <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
-                              <span className="text-[#1A2B3C]">🎓</span> EDUCATION AND QUALIFICATIONS
-                            </h3>
-                            <p className="text-slate-600 text-sm leading-loose whitespace-pre-line pl-8 border-l-2 border-slate-100 ml-3">{education}</p>
-                          </section>
-                        )}
-
-                        {experience && (
-                          <section>
-                            <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
-                              <span className="text-[#1A2B3C]">💼</span> EMPLOYMENT
-                            </h3>
-                            <p className="text-slate-600 text-sm leading-loose whitespace-pre-line pl-8 border-l-2 border-slate-100 ml-3">{experience}</p>
-                          </section>
-                        )}
-
-                        {training && (
-                          <section>
-                            <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
-                              <span className="text-[#1A2B3C]">📋</span> PROFESSIONAL TRAINING
-                            </h3>
-                            <p className="text-slate-600 text-sm leading-loose whitespace-pre-line pl-8 border-l-2 border-slate-100 ml-3">{training}</p>
-                          </section>
-                        )}
-
-                        {skills && (
-                          <section>
-                            <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
-                              <span className="text-[#1A2B3C]">⚙️</span> SKILLS
-                            </h3>
-                            <div className="grid grid-cols-2 gap-x-8 gap-y-4 pl-6 print:pl-4 print:gap-x-4 ml-3">
-                              {skills.split('\n').map((skill, index) => {
-                                if (!skill.trim()) return null;
-                                return (
-                                  <div key={index} className="flex flex-col gap-1.5 mb-2 print:mb-0">
-                                    <span className="text-slate-700 text-xs font-bold uppercase tracking-wide">{skill.trim()}</span>
-                                    <div className="w-full h-1.5 bg-slate-100 flex rounded-full overflow-hidden print:h-1">
-                                      <div className="bg-[#1A2B3C] h-full rounded-full" style={{ width: '85%' }}></div>
-                                    </div>
-                                  </div>
-                                )
-                              })}
-                            </div>
-                          </section>
-                        )}
-
-                        {interests && (
-                          <section>
-                            <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
-                              <span className="text-[#1A2B3C]">🎯</span> INTERESTS
-                            </h3>
-                            <ul className="list-disc list-inside text-slate-600 text-sm leading-loose pl-8 ml-3 marker:text-blue-500">
-                              {interests.split('\n').map((interest, i) => (
-                                interest.trim() ? <li key={i}>{interest.trim()}</li> : null
-                              ))}
-                            </ul>
-                          </section>
-                        )}
-                      </div>
-                    </main>
-                  </div>
-                </div>
               </section>
             </div>
           </div>
