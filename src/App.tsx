@@ -1,7 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { articlesData, Post } from './articlesData';
 
 export default function App() {
+  // 🔵 إضافة كود Google Analytics تلقائياً عند تحميل التطبيق
+  useEffect(() => {
+    const gaScript = document.createElement('script');
+    gaScript.async = true;
+    gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-Y4KB4KK320';
+    document.head.appendChild(gaScript);
+
+    const gaConfigScript = document.createElement('script');
+    gaConfigScript.innerHTML = `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-Y4KB4KK320');
+    `;
+    document.head.appendChild(gaConfigScript);
+  }, []);
+
   const [currentPage, setCurrentPage] = useState<'home' | 'blog' | 'privacy' | 'terms' | 'about' | 'contact'>('home');
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
@@ -228,10 +245,6 @@ export default function App() {
               {/* 👁️ القسم الأيسر (المعاينة الحية - Sticky) */}
               <section className="w-full lg:w-[55%] print:w-full lg:sticky lg:top-24 z-10 transition-transform duration-500 flex flex-col gap-6">
                 
-                {/* 
-                  Responsive preview container using aspect ratio or transform scale to avoid overflow on mobile 
-                  Adding an overflow-x-auto wrapper for mobile
-                */}
                 <div className="w-full overflow-x-auto pb-4 custom-scrollbar rounded-2xl shadow-xl hover:shadow-2xl transition-shadow border border-slate-200/60 print:border-none print:shadow-none print:overflow-visible print:pb-0">
                   <div className="cv-print-area bg-white w-full min-w-[700px] lg:min-w-0 mx-auto overflow-hidden" dir="ltr">
                     
@@ -378,7 +391,7 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* زر تحميل السيرة الذاتية التفاعلي - تم نقله إلى أسفل المعاينة ليتوافق مع المنطق التجريبي */}
+                {/* زر تحميل السيرة الذاتية التفاعلي */}
                 <button 
                   onClick={handlePrintPDF} 
                   className="w-full flex justify-center items-center gap-3 py-4 px-6 text-xl font-extrabold rounded-2xl text-white bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-[0_10px_20px_rgba(37,99,235,0.3)] hover:shadow-[0_15px_30px_rgba(37,99,235,0.4)] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 print:hidden"
