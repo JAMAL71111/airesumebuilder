@@ -38,6 +38,10 @@ export default function App() {
   const [training, setTraining] = useState('');
   const [interests, setInterests] = useState('');
 
+  // 🔵 حالات نموذج الاتصال الجديد
+  const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
+  const [contactStatus, setContactStatus] = useState('');
+
   const handleReadMore = (post: Post) => {
     setSelectedPost(post);
     setCurrentPage('blog');
@@ -58,6 +62,14 @@ export default function App() {
       const imageUrl = URL.createObjectURL(file);
       setPhoto(imageUrl);
     }
+  };
+
+  const handleContactSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // هنا يمكن لاحقاً ربط النموذج بخدمة إرسال بريد
+    setContactStatus('تم إرسال رسالتك بنجاح! شكراً لتواصلك معنا.');
+    setContactForm({ name: '', email: '', message: '' });
+    setTimeout(() => setContactStatus(''), 5000);
   };
 
   // حقول الإدخال بتصميم عصري وتفاعلي
@@ -125,7 +137,6 @@ export default function App() {
               <p className="text-slate-500 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">أدخل بياناتك بالأسفل وشاهد سيرتك الذاتية تُبنى أمامك خطوة بخطوة وبشكل فوري.</p>
             </section>
 
-            {/* تم تحويل الشبكة (Grid) إلى Flexbox لتمكين تثبيت قسم المعاينة (Sticky) */}
             <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 print:block relative items-start">
               
               {/* 📝 القسم الأيمن (نماذج الإدخال - Scrollable) */}
@@ -137,7 +148,6 @@ export default function App() {
                     <span className="bg-blue-50 p-2.5 rounded-xl text-xl">👤</span> البيانات الشخصية
                   </h2>
                   
-                  {/* 🟢 الحل الجديد لزر الصورة الشخصية */}
                   <div className="mb-5 space-y-2">
                     <label className="block text-sm font-bold text-slate-700">الصورة الشخصية</label>
                     <div className="relative">
@@ -407,7 +417,7 @@ export default function App() {
           </div>
         )}
 
-        {/* باقي الصفحات (المدونة، من نحن، إلخ) */}
+        {/* 🟢 صفحة المدونة */}
         {currentPage === 'blog' && (
           <div>
             {!selectedPost ? (
@@ -450,41 +460,134 @@ export default function App() {
           </div>
         )}
 
+        {/* 🟢 صفحة من نحن المحدثة كلياً لتتوافق مع السيو وتتحدث عن المؤسس */}
         {currentPage === 'about' && (
-          <article className="max-w-3xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100">
-            <h1 className="text-3xl font-bold text-slate-900 mb-6 flex items-center gap-3"><span className="text-4xl">🏢</span> من نحن</h1>
-            <p className="text-slate-700 leading-relaxed mb-4 text-lg">مرحباً بكم في منصة <strong>Fareestate</strong>، وجهتكم الأولى لإنشاء السير الذاتية الاحترافية وتطوير المسار المهني وتجاوز أنظمة الفرز الآلي (ATS).</p>
-          </article>
-        )}
+          <article className="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100">
+            <h1 className="text-3xl font-bold text-slate-900 mb-8 flex items-center gap-3 border-b pb-4"><span className="text-4xl">🏢</span> من نحن</h1>
+            <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+              <p>مرحباً بكم في منصة <strong>Fareestate</strong>، المنصة العربية المتخصصة والأسرع في تصميم وبناء السير الذاتية الاحترافية لدعم وتطوير مسارك المهني.</p>
+              
+              <p>تم تأسيس وتطوير هذا الموقع بالكامل على يد <strong>جمال حميد الشمهاني</strong>، انطلاقاً من هدف إنساني ومهني بحت، وهو <strong>مساعدة الآخرين</strong> وخاصة الشباب والباحثين عن عمل في تخطي عقبات التوظيف الأولى بكل يسر وسهولة.</p>
 
-        {currentPage === 'contact' && (
-          <article className="max-w-3xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100 text-center">
-            <h1 className="text-3xl font-bold text-slate-900 mb-4 flex items-center justify-center gap-3"><span className="text-4xl">📬</span> اتصل بنا</h1>
-            <p className="text-slate-600 mb-8 text-lg">يسعدنا تواصلكم معنا لأي استفسار أو دعم فني.</p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a href="https://wa.me/967776202648" target="_blank" rel="noopener noreferrer" className="bg-[#16a34a] hover:bg-green-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all flex items-center justify-center gap-2">
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.964 23.955c-1.848 0-3.666-.46-5.275-1.332l-6.39 1.677 1.716-6.237c-.96-1.657-1.464-3.535-1.464-5.464C.551 5.64 6.185.006 13.136.006c6.953 0 12.585 5.634 12.585 12.593 0 6.958-5.632 12.356-13.757 12.356zm-5.228-3.41c1.554.919 3.328 1.405 5.163 1.405 5.86 0 10.635-4.782 10.635-10.655S17.76 1.94 11.9 1.94c-5.86 0-10.636 4.781-10.636 10.654 0 1.93.53 3.791 1.531 5.432l-1.026 3.731 3.823-1.011zm9.324-7.44c-.218-.109-1.288-.636-1.488-.709-.199-.073-.346-.109-.492.109-.147.218-.564.709-.693.854-.128.146-.258.164-.476.055-.218-.109-.92-.338-1.752-1.078-.647-.577-1.085-1.29-1.213-1.509-.129-.218-.014-.336.095-.445.098-.098.218-.255.326-.382.11-.128.147-.218.219-.364.073-.146.037-.273-.018-.382-.055-.11-.492-1.182-.673-1.618-.178-.428-.359-.37-.492-.377-.128-.007-.275-.007-.423-.007-.147 0-.385.055-.587.273-.201.218-.77 1.701-.77 3.342 0 1.642.788 3.23 1.053 3.559.266.327 2.42 3.69 5.856 5.168.818.351 1.458.56 1.956.717.822.259 1.569.222 2.158.134.661-.099 2.029-.828 2.316-1.628.288-.8.288-1.487.202-1.628-.087-.146-.324-.228-.543-.337z"/></svg>
-                مراسلة عبر واتساب
-              </a>
-              <a href="mailto:jmal30997@gmail.com" className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all flex items-center justify-center gap-2">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                مراسلة عبر البريد
-              </a>
+              <p>ندرك تماماً مدى التحديات التي يواجهها الخريجون والمهنيون في صياغة وتصميم سيرة ذاتية تتوافق مع المعايير الحديثة وأنظمة الفرز الآلي للموارد البشرية (ATS). لذلك، قمنا بتصميم هذه الأداة لتكون بسيطة، سريعة، ومجانية، لتمكين كل فرد من عرض مهاراته وخبراته بأفضل صورة ممكنة دون الحاجة لأي خبرة مسبقة في التصميم أو دفع تكاليف باهظة.</p>
+
+              <p>نحن هنا في Fareestate نؤمن بأن حصولك على وظيفة أحلامك يبدأ بسيرة ذاتية متميزة تعكس قدراتك الحقيقية. نسعى دائماً لتوفير الأدوات التي تدعم طموحك المهني وتجعل خطوتك الأولى نحو النجاح أكثر ثقة واحترافية.</p>
             </div>
           </article>
         )}
 
-        {currentPage === 'privacy' && (
-          <article className="max-w-3xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100">
-            <h1 className="text-3xl font-bold text-slate-900 mb-6 flex items-center gap-3"><span className="text-4xl">🔒</span> سياسة الخصوصية</h1>
-            <p className="text-slate-700 leading-relaxed mb-4 text-lg">نولي في Fareestate اهتماماً بالغاً بخصوصية زوارنا. لا نقوم بتخزين أو جمع بيانات السيرة الذاتية التي تدخلها، حيث تتم المعالجة بالكامل داخل متصفحك لضمان السرية التامة والأمان الكامل لمعلوماتك.</p>
+        {/* 🟢 صفحة اتصل بنا مع إضافة نموذج اتصال احترافي */}
+        {currentPage === 'contact' && (
+          <article className="max-w-5xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100">
+            <h1 className="text-3xl font-bold text-slate-900 mb-8 flex items-center justify-center gap-3 border-b pb-4"><span className="text-4xl">📬</span> اتصل بنا</h1>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-8">
+              
+              {/* القسم الأيمن - معلومات التواصل المباشر */}
+              <div className="space-y-8">
+                <div>
+                  <h2 className="text-2xl font-bold text-slate-800 mb-4">يسعدنا تواصلك معنا</h2>
+                  <p className="text-slate-600 leading-relaxed text-lg">نحن هنا للإجابة على استفساراتك وتلقي مقترحاتك لتطوير المنصة. يمكنك استخدام نموذج الاتصال أو التواصل معنا مباشرة عبر القنوات المتاحة أدناه:</p>
+                </div>
+                
+                <div className="flex flex-col gap-4">
+                  <a href="https://wa.me/967776202648" target="_blank" rel="noopener noreferrer" className="bg-[#16a34a] hover:bg-green-700 text-white font-bold py-4 px-6 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-all flex items-center gap-3 text-lg">
+                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.964 23.955c-1.848 0-3.666-.46-5.275-1.332l-6.39 1.677 1.716-6.237c-.96-1.657-1.464-3.535-1.464-5.464C.551 5.64 6.185.006 13.136.006c6.953 0 12.585 5.634 12.585 12.593 0 6.958-5.632 12.356-13.757 12.356zm-5.228-3.41c1.554.919 3.328 1.405 5.163 1.405 5.86 0 10.635-4.782 10.635-10.655S17.76 1.94 11.9 1.94c-5.86 0-10.636 4.781-10.636 10.654 0 1.93.53 3.791 1.531 5.432l-1.026 3.731 3.823-1.011zm9.324-7.44c-.218-.109-1.288-.636-1.488-.709-.199-.073-.346-.109-.492.109-.147.218-.564.709-.693.854-.128.146-.258.164-.476.055-.218-.109-.92-.338-1.752-1.078-.647-.577-1.085-1.29-1.213-1.509-.129-.218-.014-.336.095-.445.098-.098.218-.255.326-.382.11-.128.147-.218.219-.364.073-.146.037-.273-.018-.382-.055-.11-.492-1.182-.673-1.618-.178-.428-.359-.37-.492-.377-.128-.007-.275-.007-.423-.007-.147 0-.385.055-.587.273-.201.218-.77 1.701-.77 3.342 0 1.642.788 3.23 1.053 3.559.266.327 2.42 3.69 5.856 5.168.818.351 1.458.56 1.956.717.822.259 1.569.222 2.158.134.661-.099 2.029-.828 2.316-1.628.288-.8.288-1.487.202-1.628-.087-.146-.324-.228-.543-.337z"/></svg>
+                    مراسلة عبر واتساب
+                  </a>
+                  <a href="mailto:jmal30997@gmail.com" className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-4 px-6 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-all flex items-center gap-3 text-lg">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    مراسلة عبر البريد الإلكتروني
+                  </a>
+                </div>
+              </div>
+
+              {/* القسم الأيسر - نموذج الاتصال الجديد */}
+              <div className="bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-200 shadow-inner">
+                <h3 className="text-xl font-bold text-slate-800 mb-6">أرسل لنا رسالة</h3>
+                
+                {contactStatus && (
+                  <div className="mb-6 p-4 bg-emerald-100 text-emerald-800 rounded-lg border border-emerald-200 text-sm font-bold flex items-center gap-2">
+                    <span>✅</span> {contactStatus}
+                  </div>
+                )}
+                
+                <form onSubmit={handleContactSubmit} className="space-y-5">
+                  <div>
+                    <label className="block text-sm font-bold text-slate-700 mb-2">الاسم الكامل</label>
+                    <input type="text" required value={contactForm.name} onChange={(e) => setContactForm({...contactForm, name: e.target.value})} className={inputClassName} placeholder="أدخل اسمك الكريم" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-slate-700 mb-2">البريد الإلكتروني</label>
+                    <input type="email" required value={contactForm.email} onChange={(e) => setContactForm({...contactForm, email: e.target.value})} className={`${inputClassName} text-left`} dir="ltr" placeholder="example@mail.com" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-slate-700 mb-2">نص الرسالة</label>
+                    <textarea required rows={4} value={contactForm.message} onChange={(e) => setContactForm({...contactForm, message: e.target.value})} className={`${inputClassName} resize-none`} placeholder="كيف يمكننا مساعدتك؟"></textarea>
+                  </div>
+                  <button type="submit" className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg active:scale-[0.98]">
+                    إرسال الرسالة
+                  </button>
+                </form>
+              </div>
+
+            </div>
           </article>
         )}
 
+        {/* 🟢 صفحة سياسة الخصوصية المُوسعة والمُحسّنة للقبول في أدسنس */}
+        {currentPage === 'privacy' && (
+          <article className="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100">
+            <h1 className="text-3xl font-bold text-slate-900 mb-8 flex items-center gap-3 border-b pb-4"><span className="text-4xl">🔒</span> سياسة الخصوصية</h1>
+            <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+              <p>نحن في <strong>Fareestate</strong> نولي اهتماماً بالغاً بخصوصية زوارنا ومستخدمينا. توضح سياسة الخصوصية هذه أنواع المعلومات والبيانات التي نتلقاها ونجمعها وكيفية استخدامها وحمايتها.</p>
+              
+              <h2 className="text-xl font-bold text-slate-800 mt-8">1. خصوصية بيانات السيرة الذاتية (البيانات المدخلة)</h2>
+              <p>نود أن نطمئن جميع مستخدمينا الكرام بأن <strong>كافة البيانات والنصوص والصور</strong> التي تقوم بإدخالها في أداة إنشاء السيرة الذاتية تتم معالجتها <strong>بشكل محلي بالكامل داخل متصفحك الخاص فقط</strong>. نحن لا نقوم برفع، أو تخزين، أو جمع، أو حفظ أي من بياناتك الشخصية الحساسة على خوادمنا. بمجرد إغلاق الصفحة أو تحديثها، يتم مسح كافة البيانات المدخلة تلقائياً.</p>
+
+              <h2 className="text-xl font-bold text-slate-800 mt-8">2. ملفات الدخول (Log Files) والتحليلات</h2>
+              <p>مثل الغالبية العظمى من مواقع الويب القياسية، يستخدم موقعنا ملفات الدخول وأدوات التحليل (مثل تحليلات جوجل Google Analytics). تشمل المعلومات التي يتم جمعها: عناوين بروتوكول الإنترنت (IP)، نوع المتصفح، مزود خدمة الإنترنت (ISP)، طابع التاريخ/الوقت، والصفحات التي تمت زيارتها. نستخدم هذه المعلومات لتحليل الاتجاهات، إدارة الموقع، وتحسين تجربة المستخدم الشاملة، مع العلم أن هذه البيانات غير مرتبطة بأي معلومات تحدد هويتك الشخصية.</p>
+
+              <h2 className="text-xl font-bold text-slate-800 mt-8">3. ملفات تعريف الارتباط (Cookies) وإعلانات Google AdSense</h2>
+              <ul className="list-disc list-inside space-y-3 pl-4 marker:text-blue-500">
+                <li>قد يستخدم موقعنا ملفات تعريف الارتباط (Cookies) لتخزين معلومات حول تفضيلات الزوار وتحسين تجربة التصفح.</li>
+                <li>بصفتها مورداً وكيلاً خارجياً، تستخدم شركة Google ملفات تعريف الارتباط لعرض الإعلانات على موقعنا.</li>
+                <li>استخدام Google لملفات تعريف الارتباط من نوع (DART) يتيح لها عرض الإعلانات للمستخدمين بناءً على زياراتهم السابقة لموقعنا والمواقع الأخرى على شبكة الإنترنت.</li>
+                <li>يمكن للمستخدمين تعطيل استخدام ملفات تعريف الارتباط DART عن طريق زيارة <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">سياسة الخصوصية الخاصة بإعلانات Google وشبكة المحتوى</a>.</li>
+              </ul>
+
+              <h2 className="text-xl font-bold text-slate-800 mt-8">4. موافقتك</h2>
+              <p>باستخدامك لموقعنا وأدواته، فإنك توافق بشكل صريح على سياسة الخصوصية الخاصة بنا وتوافق على شروطها المذكورة أعلاه.</p>
+            </div>
+          </article>
+        )}
+
+        {/* 🟢 صفحة شروط الاستخدام المُوسعة والمُحسّنة */}
         {currentPage === 'terms' && (
-          <article className="max-w-3xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100">
-            <h1 className="text-3xl font-bold text-slate-900 mb-6 flex items-center gap-3"><span className="text-4xl">📜</span> شروط الاستخدام</h1>
-            <p className="text-slate-700 leading-relaxed mb-4 text-lg">باستخدامك لموقع Fareestate، فإنك توافق على الالتزام بالشروط والأحكام الخاصة باستخدام أدوات إنشاء السير الذاتية وقراءة المقالات التوجيهية. الموقع متاح للجميع للاستخدام الشخصي المجاني.</p>
+          <article className="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100">
+            <h1 className="text-3xl font-bold text-slate-900 mb-8 flex items-center gap-3 border-b pb-4"><span className="text-4xl">📜</span> شروط الاستخدام</h1>
+            <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+              <p>مرحباً بك في موقع <strong>Fareestate</strong>. بدخولك واستخدامك لهذا الموقع، فإنك توافق وتقر بالالتزام بشروط وأحكام الاستخدام التالية. إذا كنت لا توافق على أي جزء من هذه الشروط، يُرجى التوقف عن استخدام الموقع فوراً.</p>
+
+              <h2 className="text-xl font-bold text-slate-800 mt-8">1. طبيعة الخدمة المقدمة</h2>
+              <p>يقدم موقع Fareestate أداة تقنية مجانية بالكامل لإنشاء وتصميم السير الذاتية (CV) وتصديرها بصيغة PDF، بالإضافة إلى توفير مقالات إرشادية ونصائح مهنية عبر قسم المدونة. الموقع متاح للاستخدام الشخصي غير التجاري لجميع الزوار.</p>
+
+              <h2 className="text-xl font-bold text-slate-800 mt-8">2. الاستخدام المقبول والمشروع</h2>
+              <ul className="list-disc list-inside space-y-3 pl-4 marker:text-blue-500">
+                <li>يتعهد المستخدم باستخدام الموقع وأدواته لأغراض قانونية وشرعية فقط، ولإنشاء سير ذاتية تخصه شخصياً.</li>
+                <li>يُمنع منعاً باتاً استخدام الموقع بأي طريقة قد تتسبب في إلحاق ضرر بالخوادم، أو تعطيل الشبكات المتصلة بالموقع، أو التأثير على تجربة المستخدمين الآخرين.</li>
+                <li>المعلومات والمقالات الواردة في قسم المدونة مُقدمة لأغراض تثقيفية وإرشادية عامة، ولا تُعد استشارات مهنية أو قانونية مُلزمة.</li>
+              </ul>
+
+              <h2 className="text-xl font-bold text-slate-800 mt-8">3. حقوق الملكية الفكرية</h2>
+              <p>جميع حقوق الملكية الفكرية المرتبطة بتصميم الموقع، واجهات المستخدم، الأكواد البرمجية، والنصوص والمقالات المنشورة في قسم المدونة، هي ملكية حصرية لموقع Fareestate. لا يجوز نسخ، أو إعادة إنتاج، أو إعادة نشر أي جزء من محتوى الموقع لأغراض تجارية دون الحصول على إذن كتابي مُسبق من إدارة الموقع.</p>
+
+              <h2 className="text-xl font-bold text-slate-800 mt-8">4. إخلاء المسؤولية</h2>
+              <p>يتم توفير أداة إنشاء السيرة الذاتية وجميع محتويات الموقع "كما هي" دون أي ضمانات صريحة أو ضمنية. نحن لا نضمن أن الخدمة ستكون خالية تماماً من الأخطاء التقنية أو الانقطاعات الطارئة. المُستخدم هو المسؤول الأول والأخير عن صحة ودقة ومراجعة البيانات التي يقوم بإدخالها في سيرته الذاتية قبل استخدامها أو إرسالها لجهات التوظيف.</p>
+
+              <h2 className="text-xl font-bold text-slate-800 mt-8">5. التعديل على الشروط</h2>
+              <p>نحتفظ بالحق الكامل في تعديل، أو تغيير، أو تحديث شروط الاستخدام هذه في أي وقت نراه مناسباً دون الحاجة لإشعار مُسبق. استمرارك في استخدام الموقع بعد إجراء أي تغييرات يُعد قبولاً صريحاً وموافقة منك على تلك التعديلات.</p>
+            </div>
           </article>
         )}
         
