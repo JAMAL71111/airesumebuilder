@@ -53,6 +53,28 @@ const translations = {
   }
 };
 
+// --- Helper Functions for Category Styling (Added) ---
+const getCategoryColor = (category: string) => {
+  const colors: { [key: string]: string } = {
+    // English categories
+    'CV Writing': 'bg-blue-100 text-blue-800 border-blue-200',
+    'Interviews': 'bg-purple-100 text-purple-800 border-purple-200',
+    'Career Path': 'bg-emerald-100 text-emerald-800 border-emerald-200',
+    'ATS Systems': 'bg-amber-100 text-amber-800 border-amber-200',
+    'Job Search': 'bg-rose-100 text-rose-800 border-rose-200',
+    'Freelance': 'bg-cyan-100 text-cyan-800 border-cyan-200',
+    
+    // Arabic categories (Fallback to the same colors based on translation or direct match)
+    'كتابة السيرة الذاتية': 'bg-blue-100 text-blue-800 border-blue-200',
+    'المقابلات الشخصية': 'bg-purple-100 text-purple-800 border-purple-200',
+    'المسار المهني': 'bg-emerald-100 text-emerald-800 border-emerald-200',
+    'أنظمة ATS': 'bg-amber-100 text-amber-800 border-amber-200',
+    'البحث عن عمل': 'bg-rose-100 text-rose-800 border-rose-200',
+    'العمل الحر': 'bg-cyan-100 text-cyan-800 border-cyan-200',
+  };
+  return colors[category] || 'bg-slate-100 text-slate-800 border-slate-200';
+};
+
 export default function App() {
   // 🔵 لغة الموقع بالكامل
   const [lang, setLang] = useState<'ar' | 'en'>('ar');
@@ -479,7 +501,7 @@ export default function App() {
           </div>
         )}
 
-        {/* 🟢 صفحة المدونة */}
+        {/* 🟢 صفحة المدونة (تم تعديلها لدمج الخصائص الجديدة) */}
         {currentPage === 'blog' && (
           <div>
             {!selectedPost ? (
@@ -489,12 +511,24 @@ export default function App() {
                   <p className="text-slate-600 text-lg max-w-2xl mx-auto">{t.blog.sub}</p>
                 </section>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {articlesData.map((post) => (
+                  {/* فلترة المقالات لعرض المقالات المطابقة للغة الموقع الحالية فقط */}
+                  {articlesData
+                    .filter((post) => post.lang === lang)
+                    .map((post) => (
                     <article key={post.id} className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 p-8 flex flex-col h-full group cursor-pointer" onClick={() => handleReadMore(post)}>
                       <div className="text-5xl mb-6 transform group-hover:scale-110 transition-transform duration-300">{post.icon}</div>
-                      <span className="text-xs font-bold text-blue-600 bg-blue-50 w-fit px-3 py-1 rounded-full mb-4">{post[lang].category}</span>
-                      <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-700 transition-colors">{post[lang].title}</h3>
-                      <p className="text-slate-600 text-sm mb-6 flex-grow leading-relaxed">{post[lang].excerpt}</p>
+                      {/* استخدام دالة getCategoryColor لتنسيق الفئة */}
+                      <span className={`text-xs font-bold w-fit px-3 py-1 rounded-full mb-4 border ${getCategoryColor(post.category)}`}>
+                        {post.category}
+                      </span>
+                      {/* استخدام post.title بدلاً من title */}
+                      <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-700 transition-colors line-clamp-2" title={post.title}>
+                        {post.title}
+                      </h3>
+                      {/* استخدام post.excerpt بدلاً من excerpt */}
+                      <p className="text-slate-600 text-sm mb-6 flex-grow leading-relaxed line-clamp-3">
+                        {post.excerpt}
+                      </p>
                       <div className="flex justify-between items-center mt-auto pt-4 border-t border-slate-50 text-sm">
                         <span className="text-slate-400 font-medium">{post.date}</span>
                         <button className="text-blue-700 font-bold group-hover:translate-x-[-4px] transition-transform flex items-center gap-1">{t.actions.readMore} &larr;</button>
@@ -510,12 +544,16 @@ export default function App() {
                 </button>
                 <header className="text-center mb-10">
                   <div className="text-6xl mb-6">{selectedPost.icon}</div>
-                  <span className="inline-block px-4 py-1.5 bg-blue-50 text-blue-700 rounded-full text-sm font-bold mb-4">{selectedPost[lang].category}</span>
-                  <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 mb-6 leading-tight">{selectedPost[lang].title}</h1>
+                  {/* تطبيق نفس تنسيق الفئة في صفحة قراءة المقال */}
+                  <span className={`inline-block px-4 py-1.5 rounded-full text-sm font-bold mb-4 border ${getCategoryColor(selectedPost.category)}`}>
+                    {selectedPost.category}
+                  </span>
+                  {/* استخدام selectedPost.title بدلاً من title */}
+                  <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 mb-6 leading-tight">{selectedPost.title}</h1>
                   <time className="text-slate-400 text-sm font-medium">{selectedPost.date}</time>
                 </header>
-                <div className="prose prose-lg prose-blue mx-auto text-slate-700 leading-loose whitespace-pre-line">
-                  <p>{selectedPost[lang].content}</p>
+                <div className="prose prose-lg prose-blue mx-auto text-slate-700 leading-loose">
+                  <p>{selectedPost.content}</p>
                 </div>
               </article>
             )}
