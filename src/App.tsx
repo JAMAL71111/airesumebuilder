@@ -22,9 +22,31 @@ const translations = {
     },
     actions: { download: 'تحميل السيرة الذاتية (PDF)', backBlog: 'العودة للمدونة', readMore: 'اقرأ المزيد' },
     blog: { title: 'نصائح مهنية وأسرار التوظيف', sub: 'دليلك الشامل لكتابة سيرة ذاتية احترافية واجتياز المقابلات الشخصية.' },
-    about: { title: 'من نحن', content1: 'مرحباً بكم في منصة Fareestate، المنصة المتخصصة في تصميم وبناء السير الذاتية الاحترافية لدعم مسارك المهني.', content2: 'تم تأسيس وتطوير هذا الموقع بهدف مساعدة الآخرين وخاصة الشباب والباحثين عن عمل في تخطي عقبات التوظيف وأنظمة الفرز الآلي (ATS) بكل يسر وسهولة ومجاناً بالكامل.' },
+    about: { 
+      title: 'من نحن', 
+      content1: 'أهلاً بك في Fareestate، المنصة الرائدة والمجانية بالكامل لتصميم وبناء السير الذاتية الاحترافية. تأسس موقعنا بهدف تمكين الشباب والباحثين عن عمل في الوطن العربي والعالم من إنشاء سير ذاتية تتوافق مع المعايير العالمية وأنظمة الفرز الآلي (ATS) التي تستخدمها كبرى الشركات.', 
+      content2: 'نحن نؤمن بأن حصولك على الوظيفة المثالية يبدأ بسيرة ذاتية قوية ومقنعة، ولذلك حرصنا على توفير أدوات ذكية، سريعة، وسهلة الاستخدام دون أي رسوم خفية أو تعقيدات. فريقنا يكرس جهوده لتحديث المنصة باستمرار وتقديم أفضل النصائح المهنية لمساعدتك على النجاح في مسيرتك المهنية وبناء مستقبلك بكل ثقة.' 
+    },
     contactInfo: { title: 'اتصل بنا', sub: 'نحن هنا للإجابة على استفساراتك وتلقي مقترحاتك لتطوير المنصة.', formTitle: 'أرسل لنا رسالة', name: 'الاسم الكامل', email: 'البريد الإلكتروني', msg: 'نص الرسالة', send: 'إرسال الرسالة', success: 'تم إرسال رسالتك بنجاح! شكراً لتواصلك معنا.', wa: 'مراسلة عبر واتساب', mail: 'مراسلة عبر البريد' },
-    legal: { privacy: 'سياسة الخصوصية', terms: 'شروط الاستخدام', privacyText: 'نحن في Fareestate نولي اهتماماً بالغاً بخصوصية زوارنا. لا نقوم بتخزين أو جمع بيانات السيرة الذاتية التي تدخلها، حيث تتم المعالجة بالكامل محلياً داخل متصفحك. كما نستخدم ملفات تعريف الارتباط (Cookies) الخاصة بـ Google AdSense لتحسين تجربة الإعلانات.', termsText: 'باستخدامك لموقع Fareestate، فإنك توافق على الالتزام بالشروط والأحكام الخاصة باستخدام أدواتنا المجانية. جميع الحقوق محفوظة.' },
+    legal: { 
+      privacy: 'سياسة الخصوصية', 
+      privacyIntro: 'خصوصية زوارنا لها أهمية بالغة بالنسبة لنا في Fareestate. توجز هذه الوثيقة أنواع المعلومات الشخصية التي نتلقاها ونجمعها وكيفية استخدامها.', 
+      privacySections: [
+        { title: 'ملفات الدخول (Log Files)', content: 'مثل الكثير من المواقع الإلكترونية، يستخدم موقعنا ملفات الدخول. تشمل المعلومات داخل هذه الملفات عناوين بروتوكول الإنترنت (IP)، نوع المتصفح، مزود خدمة الإنترنت، التاريخ والوقت، صفحات الإحالة/الخروج، وعدد النقرات لتحليل الاتجاهات وإدارة الموقع.' },
+        { title: 'ملفات تعريف الارتباط وإعدادات الشبكة (Cookies)', content: 'نحن نستخدم ملفات تعريف الارتباط لتخزين المعلومات حول تفضيلات الزوار، وتسجيل معلومات محددة للمستخدم حول الصفحات التي يصل إليها أو يزورها، وتخصيص محتوى صفحة الويب بناءً على نوع المتصفح الخاص بالزوار.' },
+        { title: 'جوجل أدسنس وملف تعريف الارتباط DART', content: 'جوجل كطرف ثالث، يستخدم ملفات تعريف الارتباط لعرض الإعلانات على موقعنا.\nاستخدام جوجل لملف تعريف الارتباط DART يمهد لخدمة الإعلانات للمستخدمين بناءً على زياراتهم لموقعنا والمواقع الأخرى على الإنترنت.\nيجوز للمستخدمين اختيار عدم استخدام ملف تعريف الارتباط DART عن طريق زيارة سياسة الخصوصية الخاصة بإعلانات جوجل وشبكة المحتوى على الرابط: https://policies.google.com/technologies/ads' },
+        { title: 'موافقتك', content: 'باستخدامك لموقعنا، فإنك توافق على سياسة الخصوصية الخاصة بنا وتوافق على شروطها.' }
+      ],
+      terms: 'شروط الاستخدام', 
+      termsIntro: 'مرحباً بك في منصة Fareestate. باستخدامك لهذا الموقع، فإنك توافق على الالتزام بالشروط والأحكام التالية. يُرجى قراءتها بعناية قبل استخدام أدواتنا المجانية.',
+      termsSections: [
+        { title: '1. قبول الشروط', content: 'بمجرد وصولك واستخدامك لمنصة Fareestate لإنشاء السير الذاتية أو تصفح المدونة، فإنك تقر بقراءتك وفهمك لهذه الشروط وموافقتك التامة عليها. إذا كنت لا توافق على أي جزء منها، يُرجى التوقف عن استخدام الموقع فوراً.' },
+        { title: '2. استخدام الخدمة', content: 'نوفر أدوات متقدمة ومجانية لإنشاء وتصميم السير الذاتية. يُمنع منعاً باتاً استخدام الموقع لأي أغراض غير قانونية، أو محاولة اختراق الأنظمة، أو استغلال الخدمات بطريقة آلية تضر بالخوادم أو بالمستخدمين الآخرين.' },
+        { title: '3. حقوق الملكية الفكرية', content: 'جميع المحتويات، التصاميم، الأكواد البرمجية، والنصوص المتوفرة على Fareestate هي ملكية حصرية لإدارة الموقع. لا يُسمح بنسخ أو إعادة توزيع أو بيع أي جزء من الموقع أو السير الذاتية الناتجة كقوالب فارغة لأغراض تجارية دون إذن كتابي مسبق.' },
+        { title: '4. إخلاء المسؤولية', content: 'نحن نسعى جاهدين لتقديم خدمة ممتازة ودقيقة، ولكننا لا نضمن خلو الموقع من الأخطاء التقنية أو التوقفات المؤقتة. الخدمة تُقدم "كما هي"، ولا نتحمل أي مسؤولية عن أي أضرار مباشرة أو غير مباشرة ناتجة عن استخدام السير الذاتية المنشأة عبر موقعنا في عمليات التوظيف والفرز.' },
+        { title: '5. التعديلات والتحديثات', content: 'نحتفظ بالحق الكامل في تعديل أو تغيير شروط الاستخدام أو إيقاف أي جزء من الخدمة في أي وقت دون إشعار مسبق. استمرارك في استخدام الموقع بعد إجراء أي تغييرات يُعد قبولاً نهائياً منك للشروط المحدثة.' }
+      ]
+    },
     footer: '© 2026 FAREESTATE. جميع الحقوق محفوظة.'
   },
   en: {
@@ -46,9 +68,31 @@ const translations = {
     },
     actions: { download: 'Download CV (PDF)', backBlog: 'Back to Blog', readMore: 'Read More' },
     blog: { title: 'Career Tips & Hiring Secrets', sub: 'Your comprehensive guide to writing a professional CV and passing interviews.' },
-    about: { title: 'About Us', content1: 'Welcome to Fareestate, the specialized platform for designing and building professional CVs to support your career path.', content2: 'This website was founded with the aim of helping others, especially youth and job seekers, to overcome hiring obstacles and Applicant Tracking Systems (ATS) easily and entirely for free.' },
+    about: { 
+      title: 'About Us', 
+      content1: 'Welcome to Fareestate, the leading and entirely free platform for designing and building professional CVs. Our website was founded with the mission to empower youth and job seekers across the Arab world and globally to create resumes that comply with international standards and Applicant Tracking Systems (ATS) used by top companies.', 
+      content2: 'We believe that landing your dream job starts with a strong and convincing CV, which is why we have ensured to provide smart, fast, and user-friendly tools with no hidden fees or complexities. Our team is dedicated to continuously updating the platform and providing the best career advice to help you succeed in your professional journey and build your future with confidence.' 
+    },
     contactInfo: { title: 'Contact Us', sub: 'We are here to answer your inquiries and receive your suggestions to improve the platform.', formTitle: 'Send us a message', name: 'Full Name', email: 'Email Address', msg: 'Message', send: 'Send Message', success: 'Your message has been sent successfully! Thank you.', wa: 'Contact via WhatsApp', mail: 'Contact via Email' },
-    legal: { privacy: 'Privacy Policy', terms: 'Terms of Use', privacyText: 'At Fareestate, we take your privacy seriously. We do not store or collect the CV data you enter; processing is done entirely locally in your browser. We also use Google AdSense cookies to improve the advertising experience.', termsText: 'By using Fareestate, you agree to abide by the terms and conditions for using our free tools. All rights reserved.' },
+    legal: { 
+      privacy: 'Privacy Policy', 
+      privacyIntro: 'The privacy of our visitors is of extreme importance to us at Fareestate. This document outlines the types of personal information received and collected by us and how it is used.', 
+      privacySections: [
+        { title: 'Log Files', content: 'Like many other Web sites, our site makes use of log files. The information inside the log files includes internet protocol (IP) addresses, type of browser, Internet Service Provider (ISP), date/time stamp, referring/exit pages, and number of clicks to analyze trends and administer the site.' },
+        { title: 'Cookies', content: 'We use cookies to store information about visitors preferences, record user-specific information on which pages the user access or visit, customize Web page content based on visitors browser type.' },
+        { title: 'Google AdSense and DART Cookie', content: 'Google, as a third party vendor, uses cookies to serve ads on our site.\nGoogle\'s use of the DART cookie enables it to serve ads to users based on their visit to our site and other sites on the Internet.\nUsers may opt out of the use of the DART cookie by visiting the Google ad and content network privacy policy at the following URL: https://policies.google.com/technologies/ads' },
+        { title: 'Consent', content: 'By using our website, you hereby consent to our privacy policy and agree to its terms.' }
+      ],
+      terms: 'Terms of Use', 
+      termsIntro: 'Welcome to the Fareestate platform. By using this website, you agree to comply with the following terms and conditions. Please read them carefully before using our free tools.',
+      termsSections: [
+        { title: '1. Acceptance of Terms', content: 'By accessing and using the Fareestate platform to create CVs or browse the blog, you acknowledge that you have read, understood, and completely agree to these terms. If you do not agree to any part of them, please stop using the site immediately.' },
+        { title: '2. Use of Service', content: 'We provide advanced and free tools for creating and designing CVs. It is strictly prohibited to use the site for any illegal purposes, attempt to hack the systems, or exploit the services in an automated way that harms the servers or other users.' },
+        { title: '3. Intellectual Property Rights', content: 'All content, designs, programming codes, and texts available on Fareestate are the exclusive property of the site management. Copying, redistributing, or selling any part of the site or the generated CVs as blank templates for commercial purposes without prior written permission is not allowed.' },
+        { title: '4. Disclaimer', content: 'We strive to provide excellent and accurate service, but we do not guarantee that the site will be free of technical errors or temporary interruptions. The service is provided "as is", and we bear no responsibility for any direct or indirect damages resulting from the use of CVs created via our site in hiring and screening processes.' },
+        { title: '5. Modifications and Updates', content: 'We reserve full right to modify or change the terms of use or suspend any part of the service at any time without prior notice. Your continued use of the site after any changes are made constitutes your final acceptance of the updated terms.' }
+      ]
+    },
     footer: '© 2026 FAREESTATE. All rights reserved.'
   }
 };
@@ -227,7 +271,6 @@ export default function App() {
 
             <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 print:block relative items-start">
               
-              {/* 📝 القسم الأيمن (نماذج الإدخال) */}
               <section className="w-full lg:w-[45%] space-y-6 print:hidden">
                 
                 <div className="bg-white rounded-2xl shadow-sm p-5 sm:p-6 border border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4 relative overflow-hidden group">
@@ -499,7 +542,7 @@ export default function App() {
           </div>
         )}
 
-        {/* 🟢 صفحة المدونة (تم تعديلها وعرض المدونات بدون فلتر وعرض اللغة المطابقة للموقع) */}
+        {/* 🟢 صفحة المدونة */}
         {currentPage === 'blog' && (
           <div>
             {!selectedPost ? (
@@ -509,7 +552,6 @@ export default function App() {
                   <p className="text-slate-600 text-lg max-w-2xl mx-auto">{t.blog.sub}</p>
                 </section>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {/* إزالة الفلتر تماماً لضمان ظهور الـ 80 مدونة وتحديد المحتوى بناءً على اللغة */}
                   {articlesData.map((post) => {
                     const currentContent = lang === 'ar' ? post.ar : post.en;
                     return (
@@ -593,93 +635,4 @@ export default function App() {
               <div className="bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-200 shadow-inner">
                 <h3 className="text-xl font-bold text-slate-800 mb-6">{t.contactInfo.formTitle}</h3>
                 {contactStatus && (
-                  <div className="mb-6 p-4 bg-emerald-100 text-emerald-800 rounded-lg border border-emerald-200 text-sm font-bold flex items-center gap-2">
-                    <span>✅</span> {contactStatus}
-                  </div>
-                )}
-                <form onSubmit={handleContactSubmit} className="space-y-5">
-                  <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">{t.contactInfo.name}</label>
-                    <input type="text" required disabled={showSendOptions} value={contactForm.name} onChange={(e) => setContactForm({...contactForm, name: e.target.value})} className={inputClassName} />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">{t.contactInfo.email}</label>
-                    <input type="email" required disabled={showSendOptions} value={contactForm.email} onChange={(e) => setContactForm({...contactForm, email: e.target.value})} className={`${inputClassName} text-left`} dir="ltr" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">{t.contactInfo.msg}</label>
-                    <textarea required disabled={showSendOptions} rows={4} value={contactForm.message} onChange={(e) => setContactForm({...contactForm, message: e.target.value})} className={`${inputClassName} resize-none`}></textarea>
-                  </div>
-                  
-                  {!showSendOptions ? (
-                    <button type="submit" className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg active:scale-[0.98]">
-                      {t.contactInfo.send}
-                    </button>
-                  ) : (
-                    <div className="flex flex-col gap-3 p-4 bg-white border border-blue-100 shadow-sm rounded-xl animate-fade-in-up">
-                      <p className="text-sm font-bold text-slate-800 text-center mb-1">
-                        {lang === 'en' ? 'Choose how to send the message:' : 'اختر طريقة إرسال الرسالة:'}
-                      </p>
-                      
-                      <a
-                        href={`https://wa.me/967776202648?text=${encodeURIComponent(`الاسم: ${contactForm.name}\nالبريد: ${contactForm.email}\nالرسالة:\n${contactForm.message}`)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={handleSendChoice}
-                        className="w-full bg-[#16a34a] hover:bg-green-700 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-md transition-all"
-                      >
-                        {t.contactInfo.wa}
-                      </a>
-                      
-                      <a
-                        href={`mailto:fareestate@gmail.com?subject=${encodeURIComponent(`رسالة من ${contactForm.name}`)}&body=${encodeURIComponent(`الاسم: ${contactForm.name}\nالبريد: ${contactForm.email}\nالرسالة:\n${contactForm.message}`)}`}
-                        onClick={handleSendChoice}
-                        className="w-full bg-blue-600 hover:bg-blue-800 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-md transition-all"
-                      >
-                        {t.contactInfo.mail}
-                      </a>
-                      
-                      <button type="button" onClick={() => setShowSendOptions(false)} className="mt-2 text-sm text-slate-500 hover:text-slate-800 font-bold transition-colors">
-                        {lang === 'en' ? 'Cancel' : 'إلغاء'}
-                      </button>
-                    </div>
-                  )}
-
-                </form>
-              </div>
-            </div>
-          </article>
-        )}
-
-        {/* 🟢 صفحة سياسة الخصوصية */}
-        {currentPage === 'privacy' && (
-          <article className="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100">
-            <h1 className="text-3xl font-bold text-slate-900 mb-8 flex items-center gap-3 border-b pb-4"><span className="text-4xl">🔒</span> {t.legal.privacy}</h1>
-            <p className="text-slate-700 leading-relaxed text-lg">{t.legal.privacyText}</p>
-          </article>
-        )}
-
-        {/* 🟢 صفحة شروط الاستخدام */}
-        {currentPage === 'terms' && (
-          <article className="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100">
-            <h1 className="text-3xl font-bold text-slate-900 mb-8 flex items-center gap-3 border-b pb-4"><span className="text-4xl">📜</span> {t.legal.terms}</h1>
-            <p className="text-slate-700 leading-relaxed text-lg">{t.legal.termsText}</p>
-          </article>
-        )}
-        
-      </main>
-
-      {/* 🟢 التذييل */}
-      <footer className="mt-auto py-10 border-t border-slate-200 text-center space-y-6 print:hidden bg-white">
-        <p className="text-slate-400 text-sm font-semibold tracking-wide">{t.footer}</p>
-        <div className="flex flex-wrap justify-center gap-6 text-sm text-slate-500 font-bold">
-          <button onClick={() => { setCurrentPage('privacy'); setSelectedPost(null); }} className="hover:text-blue-600 transition-colors">{t.legal.privacy}</button>
-          <button onClick={() => { setCurrentPage('terms'); setSelectedPost(null); }} className="hover:text-blue-600 transition-colors">{t.legal.terms}</button>
-          <button onClick={() => { setCurrentPage('about'); setSelectedPost(null); }} className="hover:text-blue-600 transition-colors">{t.nav.about}</button>
-          <button onClick={() => { setCurrentPage('contact'); setSelectedPost(null); }} className="hover:text-blue-600 transition-colors">{t.nav.contact}</button>
-        </div>
-      </footer>
-
-    </div>
-  );
-}
+                  <div className="mb-6 p-4 bg-emerald-100 text-emerald-800 rounded-lg border bord
