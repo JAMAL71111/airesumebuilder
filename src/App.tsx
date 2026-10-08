@@ -53,7 +53,7 @@ const translations = {
   }
 };
 
-// --- Helper Functions for Category Styling (Added) ---
+// --- Helper Functions for Category Styling ---
 const getCategoryColor = (category: string) => {
   const colors: { [key: string]: string } = {
     // English categories
@@ -64,7 +64,7 @@ const getCategoryColor = (category: string) => {
     'Job Search': 'bg-rose-100 text-rose-800 border-rose-200',
     'Freelance': 'bg-cyan-100 text-cyan-800 border-cyan-200',
     
-    // Arabic categories (Fallback to the same colors based on translation or direct match)
+    // Arabic categories
     'كتابة السيرة الذاتية': 'bg-blue-100 text-blue-800 border-blue-200',
     'المقابلات الشخصية': 'bg-purple-100 text-purple-800 border-purple-200',
     'المسار المهني': 'bg-emerald-100 text-emerald-800 border-emerald-200',
@@ -78,13 +78,13 @@ const getCategoryColor = (category: string) => {
 export default function App() {
   // 🔵 لغة الموقع بالكامل
   const [lang, setLang] = useState<'ar' | 'en'>('ar');
-  // 🔵 لغة السيرة الذاتية المستخرجة (يمكن أن تكون السيرة إنجليزية بينما الموقع عربي)
+  // 🔵 لغة السيرة الذاتية المستخرجة
   const [cvLang, setCvLang] = useState<'ar' | 'en'>('ar');
   
-  const t = translations[lang]; // اختصار للوصول للنصوص
-  const cvT = translations[cvLang].cv; // نصوص السيرة الذاتية
+  const t = translations[lang];
+  const cvT = translations[cvLang].cv;
 
-  // 🔵 إضافة كود Google Analytics تلقائياً
+  // 🔵 إضافة كود Google Analytics
   useEffect(() => {
     const gaScript = document.createElement('script');
     gaScript.async = true;
@@ -123,7 +123,7 @@ export default function App() {
   // حالات نموذج الاتصال
   const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
   const [contactStatus, setContactStatus] = useState('');
-  const [showSendOptions, setShowSendOptions] = useState(false); // إضافة حالة الخيارات
+  const [showSendOptions, setShowSendOptions] = useState(false);
 
   const handleReadMore = (post: Post) => {
     setSelectedPost(post);
@@ -149,12 +149,10 @@ export default function App() {
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // إظهار خيارات الإرسال بدلاً من الإرسال المباشر الوهمي
     setShowSendOptions(true);
   };
 
   const handleSendChoice = () => {
-    // دالة لتنفيذ عملية الإرسال وإظهار رسالة النجاح وتفريغ الحقول
     setShowSendOptions(false);
     setContactStatus(t.contactInfo.success);
     setContactForm({ name: '', email: '', message: '' });
@@ -189,7 +187,7 @@ export default function App() {
         `}
       </style>
 
-      {/* 🟢 شريط التنقل العلوي مع زر تغيير اللغة */}
+      {/* 🟢 شريط التنقل العلوي */}
       <header className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 print:hidden border-b border-slate-100">
         <div className="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
           <div 
@@ -205,7 +203,6 @@ export default function App() {
             <button onClick={() => { setCurrentPage('about'); setSelectedPost(null); }} className={`transition-all hover:text-blue-700 ${currentPage === 'about' ? 'text-blue-700 border-b-2 border-blue-700 pb-1' : ''}`}>{t.nav.about}</button>
             <button onClick={() => { setCurrentPage('contact'); setSelectedPost(null); }} className={`transition-all hover:text-blue-700 ${currentPage === 'contact' ? 'text-blue-700 border-b-2 border-blue-700 pb-1' : ''}`}>{t.nav.contact}</button>
             
-            {/* مبدل اللغة للموقع */}
             <div className="ms-4 flex bg-slate-100 rounded-lg p-1 border border-slate-200">
               <button onClick={() => setLang('ar')} className={`px-3 py-1 text-xs font-bold rounded-md transition-colors ${lang === 'ar' ? 'bg-white text-blue-700 shadow-sm' : 'text-slate-500'}`}>عربي</button>
               <button onClick={() => setLang('en')} className={`px-3 py-1 text-xs font-bold rounded-md transition-colors ${lang === 'en' ? 'bg-white text-blue-700 shadow-sm' : 'text-slate-500'}`}>EN</button>
@@ -220,7 +217,6 @@ export default function App() {
         {currentPage === 'home' && (
           <div className="space-y-12 print:space-y-0 print:block">
             
-            {/* قسم الترحيب */}
             <section className="text-center space-y-5 print:hidden relative z-10 pt-4 pb-8">
               <div className="inline-block px-5 py-2 bg-blue-50 border border-blue-100 text-blue-700 rounded-full text-sm font-bold shadow-sm animate-fade-in-up">{t.hero.badge}</div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-tight tracking-tight">
@@ -234,7 +230,6 @@ export default function App() {
               {/* 📝 القسم الأيمن (نماذج الإدخال) */}
               <section className="w-full lg:w-[45%] space-y-6 print:hidden">
                 
-                {/* 🌐 اختيار لغة السيرة الذاتية (مفصول عن لغة الموقع) */}
                 <div className="bg-white rounded-2xl shadow-sm p-5 sm:p-6 border border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4 relative overflow-hidden group">
                   <div className="absolute top-0 right-0 w-1.5 h-full bg-indigo-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top"></div>
                   <span className="font-bold text-slate-800 text-lg">{t.form.cvLangTitle}</span>
@@ -345,23 +340,19 @@ export default function App() {
 
               </section>
 
-              {/* 👁️ القسم الأيسر (المعاينة الحية للسيرة الذاتية - تتبع cvLang) */}
+              {/* 👁️ القسم الأيسر (المعاينة الحية للسيرة الذاتية) */}
               <section className="w-full lg:w-[55%] print:w-full lg:sticky lg:top-24 z-10 transition-transform duration-500 flex flex-col gap-6">
                 
                 <div className="w-full overflow-x-auto pb-4 custom-scrollbar rounded-2xl shadow-xl hover:shadow-2xl transition-shadow border border-slate-200/60 print:border-none print:shadow-none print:overflow-visible print:pb-0">
-                  {/* تحديد اتجاه السيرة الذاتية بناءً على اختيار cvLang */}
                   <div className={`cv-print-area bg-white w-full min-w-[700px] lg:min-w-0 mx-auto overflow-hidden ${cvLang === 'en' ? 'text-left font-sans' : 'text-right'}`} dir={translations[cvLang].dir}>
                     
-                    {/* الهيدر العلوي */}
                     <div className="print-header w-full bg-white pt-8 pb-4 px-10 border-b-[16px] border-[#1A2B3C] mb-6 print:mb-0">
                        <h1 className="text-5xl font-light text-slate-800 mb-1 tracking-widest uppercase">{fullName || cvT.name}</h1>
                        <h2 className="text-xl text-slate-600 font-medium tracking-[0.2em] uppercase">{jobTitle || (cvLang === 'en' ? 'Job Title' : 'المسمى الوظيفي')}</h2>
                     </div>
 
-                    {/* المحتوى السفلي */}
                     <div className="cv-print-main-row flex flex-row w-full min-h-[900px] bg-white">
                       
-                      {/* الشريط الجانبي الغامق */}
                       <aside className="cv-sidebar w-[35%] bg-[#1A2B3C] text-white p-8 flex flex-col gap-8" style={{ WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
                         <div className="print-pic w-40 h-48 mx-auto bg-slate-400 overflow-hidden shadow-lg border border-slate-500 relative flex-shrink-0 group">
                            {photo ? (
@@ -425,7 +416,6 @@ export default function App() {
                         )}
                       </aside>
 
-                      {/* القسم الرئيسي الفاتح - استخدام خصائص منطقية ps, ms, border-s */}
                       <main className="cv-main-content w-[65%] bg-white p-8 ps-10 text-slate-800">
                         <div className="space-y-8 print:space-y-4">
                           {education && (
@@ -509,7 +499,7 @@ export default function App() {
           </div>
         )}
 
-        {/* 🟢 صفحة المدونة (تم تعديلها لدمج الخصائص الجديدة) */}
+        {/* 🟢 صفحة المدونة (تم تعديلها وعرض المدونات بدون فلتر وعرض اللغة المطابقة للموقع) */}
         {currentPage === 'blog' && (
           <div>
             {!selectedPost ? (
@@ -519,28 +509,28 @@ export default function App() {
                   <p className="text-slate-600 text-lg max-w-2xl mx-auto">{t.blog.sub}</p>
                 </section>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {/* فلترة المقالات لعرض المقالات المطابقة للغة الموقع الحالية فقط */}
-                  {articlesData
-                    .filter((post) => post.lang === lang)
-                    .map((post) => (
-                    <article key={post.id} className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 p-8 flex flex-col h-full group cursor-pointer" onClick={() => handleReadMore(post)}>
-                      <div className="text-5xl mb-6 transform group-hover:scale-110 transition-transform duration-300">{post.icon}</div>
-                      {/* استخدام دالة getCategoryColor لتنسيق الفئة */}
-                      <span className={`text-xs font-bold w-fit px-3 py-1 rounded-full mb-4 border ${getCategoryColor(post.category)}`}>
-                        {post.category}
-                      </span>
-                      <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-700 transition-colors line-clamp-2" title={post.title}>
-                        {post.title}
-                      </h3>
-                      <p className="text-slate-600 text-sm mb-6 flex-grow leading-relaxed line-clamp-3">
-                        {post.excerpt}
-                      </p>
-                      <div className="flex justify-between items-center mt-auto pt-4 border-t border-slate-50 text-sm">
-                        <span className="text-slate-400 font-medium">{post.date}</span>
-                        <button className="text-blue-700 font-bold group-hover:translate-x-[-4px] transition-transform flex items-center gap-1">{t.actions.readMore} &larr;</button>
-                      </div>
-                    </article>
-                  ))}
+                  {/* إزالة الفلتر تماماً لضمان ظهور الـ 80 مدونة وتحديد المحتوى بناءً على اللغة */}
+                  {articlesData.map((post) => {
+                    const currentContent = lang === 'ar' ? post.ar : post.en;
+                    return (
+                      <article key={post.id} className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 p-8 flex flex-col h-full group cursor-pointer" onClick={() => handleReadMore(post)}>
+                        <div className="text-5xl mb-6 transform group-hover:scale-110 transition-transform duration-300">{post.icon}</div>
+                        <span className={`text-xs font-bold w-fit px-3 py-1 rounded-full mb-4 border ${getCategoryColor(currentContent.category)}`}>
+                          {currentContent.category}
+                        </span>
+                        <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-700 transition-colors line-clamp-2" title={currentContent.title}>
+                          {currentContent.title}
+                        </h3>
+                        <p className="text-slate-600 text-sm mb-6 flex-grow leading-relaxed line-clamp-3">
+                          {currentContent.excerpt}
+                        </p>
+                        <div className="flex justify-between items-center mt-auto pt-4 border-t border-slate-50 text-sm">
+                          <span className="text-slate-400 font-medium">{post.date}</span>
+                          <button className="text-blue-700 font-bold group-hover:translate-x-[-4px] transition-transform flex items-center gap-1">{t.actions.readMore} &larr;</button>
+                        </div>
+                      </article>
+                    );
+                  })}
                 </div>
               </>
             ) : (
@@ -550,14 +540,16 @@ export default function App() {
                 </button>
                 <header className="text-center mb-10">
                   <div className="text-6xl mb-6">{selectedPost.icon}</div>
-                  <span className={`inline-block px-4 py-1.5 rounded-full text-sm font-bold mb-4 border ${getCategoryColor(selectedPost.category)}`}>
-                    {selectedPost.category}
+                  <span className={`inline-block px-4 py-1.5 rounded-full text-sm font-bold mb-4 border ${getCategoryColor(lang === 'ar' ? selectedPost.ar.category : selectedPost.en.category)}`}>
+                    {lang === 'ar' ? selectedPost.ar.category : selectedPost.en.category}
                   </span>
-                  <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 mb-6 leading-tight">{selectedPost.title}</h1>
+                  <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 mb-6 leading-tight">
+                    {lang === 'ar' ? selectedPost.ar.title : selectedPost.en.title}
+                  </h1>
                   <time className="text-slate-400 text-sm font-medium">{selectedPost.date}</time>
                 </header>
-                <div className="prose prose-lg prose-blue mx-auto text-slate-700 leading-loose">
-                  <p>{selectedPost.content}</p>
+                <div className="prose prose-lg prose-blue mx-auto text-slate-700 leading-loose whitespace-pre-line">
+                  {lang === 'ar' ? selectedPost.ar.content : selectedPost.en.content}
                 </div>
               </article>
             )}
@@ -619,7 +611,6 @@ export default function App() {
                     <textarea required disabled={showSendOptions} rows={4} value={contactForm.message} onChange={(e) => setContactForm({...contactForm, message: e.target.value})} className={`${inputClassName} resize-none`}></textarea>
                   </div>
                   
-                  {/* التعديل الجديد: إظهار خيارات الإرسال المباشرة بعد ضغط "إرسال الرسالة" */}
                   {!showSendOptions ? (
                     <button type="submit" className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg active:scale-[0.98]">
                       {t.contactInfo.send}
