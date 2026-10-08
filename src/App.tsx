@@ -635,4 +635,120 @@ export default function App() {
               <div className="bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-200 shadow-inner">
                 <h3 className="text-xl font-bold text-slate-800 mb-6">{t.contactInfo.formTitle}</h3>
                 {contactStatus && (
-                  <div className="mb-6 p-4 bg-emerald-100 text-emerald-800 rounded-lg border bord
+                  <div className="mb-6 p-4 bg-emerald-100 text-emerald-800 rounded-lg border border-emerald-200 text-sm font-bold flex items-center gap-2">
+                    <span>✅</span> {contactStatus}
+                  </div>
+                )}
+                <form onSubmit={handleContactSubmit} className="space-y-5">
+                  <div>
+                    <label className="block text-sm font-bold text-slate-700 mb-2">{t.contactInfo.name}</label>
+                    <input type="text" required disabled={showSendOptions} value={contactForm.name} onChange={(e) => setContactForm({...contactForm, name: e.target.value})} className={inputClassName} />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-slate-700 mb-2">{t.contactInfo.email}</label>
+                    <input type="email" required disabled={showSendOptions} value={contactForm.email} onChange={(e) => setContactForm({...contactForm, email: e.target.value})} className={`${inputClassName} text-left`} dir="ltr" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-slate-700 mb-2">{t.contactInfo.msg}</label>
+                    <textarea required disabled={showSendOptions} rows={4} value={contactForm.message} onChange={(e) => setContactForm({...contactForm, message: e.target.value})} className={`${inputClassName} resize-none`}></textarea>
+                  </div>
+                  
+                  {!showSendOptions ? (
+                    <button type="submit" className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg active:scale-[0.98]">
+                      {t.contactInfo.send}
+                    </button>
+                  ) : (
+                    <div className="flex flex-col gap-3 p-4 bg-white border border-blue-100 shadow-sm rounded-xl animate-fade-in-up">
+                      <p className="text-sm font-bold text-slate-800 text-center mb-1">
+                        {lang === 'en' ? 'Choose how to send the message:' : 'اختر طريقة إرسال الرسالة:'}
+                      </p>
+                      
+                      <a
+                        href={`https://wa.me/967776202648?text=${encodeURIComponent(`الاسم: ${contactForm.name}\nالبريد: ${contactForm.email}\nالرسالة:\n${contactForm.message}`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={handleSendChoice}
+                        className="w-full bg-[#16a34a] hover:bg-green-700 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-md transition-all"
+                      >
+                        {t.contactInfo.wa}
+                      </a>
+                      
+                      <a
+                        href={`mailto:fareestate@gmail.com?subject=${encodeURIComponent(`رسالة من ${contactForm.name}`)}&body=${encodeURIComponent(`الاسم: ${contactForm.name}\nالبريد: ${contactForm.email}\nالرسالة:\n${contactForm.message}`)}`}
+                        onClick={handleSendChoice}
+                        className="w-full bg-blue-600 hover:bg-blue-800 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-md transition-all"
+                      >
+                        {t.contactInfo.mail}
+                      </a>
+                      
+                      <button type="button" onClick={() => setShowSendOptions(false)} className="mt-2 text-sm text-slate-500 hover:text-slate-800 font-bold transition-colors">
+                        {lang === 'en' ? 'Cancel' : 'إلغاء'}
+                      </button>
+                    </div>
+                  )}
+
+                </form>
+              </div>
+            </div>
+          </article>
+        )}
+
+        {/* 🟢 صفحة سياسة الخصوصية الاحترافية والمتوافقة مع أدسنس */}
+        {currentPage === 'privacy' && (
+          <article className="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100">
+            <h1 className="text-3xl font-bold text-slate-900 mb-8 flex items-center gap-3 border-b pb-4"><span className="text-4xl">🔒</span> {t.legal.privacy}</h1>
+            <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+              <p>{t.legal.privacyIntro}</p>
+              {t.legal.privacySections.map((sec, idx) => (
+                <div key={idx} className="space-y-2 mt-6">
+                  <h2 className="text-xl font-bold text-slate-800">{sec.title}</h2>
+                  <p className="whitespace-pre-line text-slate-600">
+                    {/* تحويل الرابط النصي إلى رابط قابل للنقر آلياً */}
+                    {sec.content.split(/(https:\/\/[^\s]+)/).map((part, i) => 
+                      part.startsWith('https://') ? (
+                        <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline break-all font-semibold" dir="ltr">
+                          {part}
+                        </a>
+                      ) : (
+                        <span key={i}>{part}</span>
+                      )
+                    )}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </article>
+        )}
+
+        {/* 🟢 صفحة شروط الاستخدام (تم تحويلها لشكل احترافي مقسم لبنود) */}
+        {currentPage === 'terms' && (
+          <article className="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100">
+            <h1 className="text-3xl font-bold text-slate-900 mb-8 flex items-center gap-3 border-b pb-4"><span className="text-4xl">📜</span> {t.legal.terms}</h1>
+            <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+              <p>{t.legal.termsIntro}</p>
+              {t.legal.termsSections.map((sec, idx) => (
+                <div key={idx} className="space-y-2 mt-6">
+                  <h2 className="text-xl font-bold text-slate-800">{sec.title}</h2>
+                  <p className="whitespace-pre-line text-slate-600">{sec.content}</p>
+                </div>
+              ))}
+            </div>
+          </article>
+        )}
+        
+      </main>
+
+      {/* 🟢 التذييل */}
+      <footer className="mt-auto py-10 border-t border-slate-200 text-center space-y-6 print:hidden bg-white">
+        <p className="text-slate-400 text-sm font-semibold tracking-wide">{t.footer}</p>
+        <div className="flex flex-wrap justify-center gap-6 text-sm text-slate-500 font-bold">
+          <button onClick={() => { setCurrentPage('privacy'); setSelectedPost(null); }} className="hover:text-blue-600 transition-colors">{t.legal.privacy}</button>
+          <button onClick={() => { setCurrentPage('terms'); setSelectedPost(null); }} className="hover:text-blue-600 transition-colors">{t.legal.terms}</button>
+          <button onClick={() => { setCurrentPage('about'); setSelectedPost(null); }} className="hover:text-blue-600 transition-colors">{t.nav.about}</button>
+          <button onClick={() => { setCurrentPage('contact'); setSelectedPost(null); }} className="hover:text-blue-600 transition-colors">{t.nav.contact}</button>
+        </div>
+      </footer>
+
+    </div>
+  );
+}
