@@ -350,4 +350,345 @@ export default function App() {
                 
                 <div className="w-full overflow-x-auto pb-4 custom-scrollbar rounded-2xl shadow-xl hover:shadow-2xl transition-shadow border border-slate-200/60 print:border-none print:shadow-none print:overflow-visible print:pb-0">
                   {/* تحديد اتجاه السيرة الذاتية بناءً على اختيار cvLang */}
-                  <div className={
+                  <div className={`cv-print-area bg-white w-full min-w-[700px] lg:min-w-0 mx-auto overflow-hidden ${cvLang === 'en' ? 'text-left font-sans' : 'text-right'}`} dir={translations[cvLang].dir}>
+                    
+                    {/* الهيدر العلوي */}
+                    <div className="print-header w-full bg-white pt-8 pb-4 px-10 border-b-[16px] border-[#1A2B3C] mb-6 print:mb-0">
+                       <h1 className="text-5xl font-light text-slate-800 mb-1 tracking-widest uppercase">{fullName || cvT.name}</h1>
+                       <h2 className="text-xl text-slate-600 font-medium tracking-[0.2em] uppercase">{jobTitle || (cvLang === 'en' ? 'Job Title' : 'المسمى الوظيفي')}</h2>
+                    </div>
+
+                    {/* المحتوى السفلي */}
+                    <div className="cv-print-main-row flex flex-row w-full min-h-[900px] bg-white">
+                      
+                      {/* الشريط الجانبي الغامق */}
+                      <aside className="cv-sidebar w-[35%] bg-[#1A2B3C] text-white p-8 flex flex-col gap-8" style={{ WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
+                        <div className="print-pic w-40 h-48 mx-auto bg-slate-400 overflow-hidden shadow-lg border border-slate-500 relative flex-shrink-0 group">
+                           {photo ? (
+                             <img src={photo} alt="Profile" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                           ) : (
+                             <div className="w-full h-full flex flex-col items-center justify-center text-slate-300 text-sm gap-2">
+                               <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2-2v12a2 2 0 002 2z" /></svg>
+                             </div>
+                           )}
+                        </div>
+
+                        <div>
+                          <h3 className="text-xl font-bold mb-4 uppercase text-white tracking-widest">{cvT.profile}</h3>
+                          <div className="space-y-4 text-sm font-light">
+                            <div>
+                              <span className="block text-slate-400 font-bold mb-1 print:mb-0 text-xs uppercase">{cvT.name}</span>
+                              <span className="text-slate-100">{fullName || cvT.name}</span>
+                            </div>
+                            {dobNationality && (
+                              <div>
+                                <span className="block text-slate-400 font-bold mb-1 print:mb-0 text-xs uppercase">{cvT.dobNat}</span>
+                                <span className="text-slate-100 whitespace-pre-line">{dobNationality}</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="space-y-4 text-sm font-light">
+                          {address && (
+                            <div>
+                              <h3 className="text-lg font-bold text-white mb-1 uppercase tracking-widest">{cvT.address}</h3>
+                              <span className="text-slate-100">{address}</span>
+                            </div>
+                          )}
+                          {phone && (
+                            <div>
+                              <h3 className="text-lg font-bold text-white mb-1 uppercase tracking-widest">{cvT.phone}</h3>
+                              <span className="text-slate-100 block" dir="ltr">{phone}</span>
+                            </div>
+                          )}
+                          {email && (
+                            <div>
+                              <h3 className="text-lg font-bold text-white mb-1 uppercase tracking-widest">{cvT.email}</h3>
+                              <span className="text-slate-100 break-all block">{email}</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {languages && (
+                          <div>
+                            <h3 className="text-lg font-bold text-white mb-2 uppercase tracking-widest">{cvT.langs}</h3>
+                            <div className="text-sm font-light text-slate-100 whitespace-pre-line">{languages}</div>
+                          </div>
+                        )}
+
+                        {socialMedia && (
+                          <div>
+                            <h3 className="text-lg font-bold text-white mb-2 uppercase tracking-widest">{cvT.social}</h3>
+                            <div className="text-sm font-light text-slate-100 whitespace-pre-line break-all" dir="ltr">{socialMedia}</div>
+                          </div>
+                        )}
+                      </aside>
+
+                      {/* القسم الرئيسي الفاتح - استخدام خصائص منطقية ps, ms, border-s */}
+                      <main className="cv-main-content w-[65%] bg-white p-8 ps-10 text-slate-800">
+                        <div className="space-y-8 print:space-y-4">
+                          {education && (
+                            <section>
+                              <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
+                                <span className="text-[#1A2B3C]">🎓</span> {cvT.edu}
+                              </h3>
+                              <p className="text-slate-600 text-sm leading-loose whitespace-pre-line ps-8 border-s-2 border-slate-100 ms-3">{education}</p>
+                            </section>
+                          )}
+
+                          {experience && (
+                            <section>
+                              <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
+                                <span className="text-[#1A2B3C]">💼</span> {cvT.exp}
+                              </h3>
+                              <p className="text-slate-600 text-sm leading-loose whitespace-pre-line ps-8 border-s-2 border-slate-100 ms-3">{experience}</p>
+                            </section>
+                          )}
+
+                          {training && (
+                            <section>
+                              <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
+                                <span className="text-[#1A2B3C]">📋</span> {cvT.train}
+                              </h3>
+                              <p className="text-slate-600 text-sm leading-loose whitespace-pre-line ps-8 border-s-2 border-slate-100 ms-3">{training}</p>
+                            </section>
+                          )}
+
+                          {skills && (
+                            <section>
+                              <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
+                                <span className="text-[#1A2B3C]">⚙️</span> {cvT.skills}
+                              </h3>
+                              <div className="grid grid-cols-2 gap-x-8 gap-y-4 ps-6 print:ps-4 print:gap-x-4 ms-3">
+                                {skills.split('\n').map((skill, index) => {
+                                  if (!skill.trim()) return null;
+                                  return (
+                                    <div key={index} className="flex flex-col gap-1.5 mb-2 print:mb-0">
+                                      <span className="text-slate-700 text-xs font-bold uppercase tracking-wide">{skill.trim()}</span>
+                                      <div className="w-full h-1.5 bg-slate-100 flex rounded-full overflow-hidden print:h-1">
+                                        <div className="bg-[#1A2B3C] h-full rounded-full" style={{ width: '85%' }}></div>
+                                      </div>
+                                    </div>
+                                  )
+                                })}
+                              </div>
+                            </section>
+                          )}
+
+                          {interests && (
+                            <section>
+                              <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
+                                <span className="text-[#1A2B3C]">🎯</span> {cvT.interests}
+                              </h3>
+                              <ul className="list-disc list-inside text-slate-600 text-sm leading-loose ps-8 ms-3 marker:text-blue-500">
+                                {interests.split('\n').map((interest, i) => (
+                                  interest.trim() ? <li key={i}>{interest.trim()}</li> : null
+                                ))}
+                              </ul>
+                            </section>
+                          )}
+                        </div>
+                      </main>
+                    </div>
+                  </div>
+                </div>
+
+                <button 
+                  onClick={handlePrintPDF} 
+                  className="w-full flex justify-center items-center gap-3 py-4 px-6 text-xl font-extrabold rounded-2xl text-white bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-[0_10px_20px_rgba(37,99,235,0.3)] hover:shadow-[0_15px_30px_rgba(37,99,235,0.4)] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 print:hidden"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                  </svg>
+                  {t.actions.download}
+                </button>
+
+              </section>
+            </div>
+          </div>
+        )}
+
+        {/* 🟢 صفحة المدونة (تم تعديلها لدمج الخصائص الجديدة) */}
+        {currentPage === 'blog' && (
+          <div>
+            {!selectedPost ? (
+              <>
+                <section className="text-center space-y-4 mb-12">
+                  <h1 className="text-3xl sm:text-4xl font-bold text-slate-900">{t.blog.title}</h1>
+                  <p className="text-slate-600 text-lg max-w-2xl mx-auto">{t.blog.sub}</p>
+                </section>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {/* فلترة المقالات لعرض المقالات المطابقة للغة الموقع الحالية فقط */}
+                  {articlesData
+                    .filter((post) => post.lang === lang)
+                    .map((post) => (
+                    <article key={post.id} className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 p-8 flex flex-col h-full group cursor-pointer" onClick={() => handleReadMore(post)}>
+                      <div className="text-5xl mb-6 transform group-hover:scale-110 transition-transform duration-300">{post.icon}</div>
+                      {/* استخدام دالة getCategoryColor لتنسيق الفئة */}
+                      <span className={`text-xs font-bold w-fit px-3 py-1 rounded-full mb-4 border ${getCategoryColor(post.category)}`}>
+                        {post.category}
+                      </span>
+                      <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-700 transition-colors line-clamp-2" title={post.title}>
+                        {post.title}
+                      </h3>
+                      <p className="text-slate-600 text-sm mb-6 flex-grow leading-relaxed line-clamp-3">
+                        {post.excerpt}
+                      </p>
+                      <div className="flex justify-between items-center mt-auto pt-4 border-t border-slate-50 text-sm">
+                        <span className="text-slate-400 font-medium">{post.date}</span>
+                        <button className="text-blue-700 font-bold group-hover:translate-x-[-4px] transition-transform flex items-center gap-1">{t.actions.readMore} &larr;</button>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <article className="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-slate-100 p-8 sm:p-12">
+                <button onClick={handleBackToBlog} className="mb-8 text-blue-700 hover:text-blue-900 font-bold text-sm flex items-center gap-2 hover:bg-blue-50 px-4 py-2 rounded-lg transition-colors w-fit">
+                  &rarr; {t.actions.backBlog}
+                </button>
+                <header className="text-center mb-10">
+                  <div className="text-6xl mb-6">{selectedPost.icon}</div>
+                  <span className={`inline-block px-4 py-1.5 rounded-full text-sm font-bold mb-4 border ${getCategoryColor(selectedPost.category)}`}>
+                    {selectedPost.category}
+                  </span>
+                  <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 mb-6 leading-tight">{selectedPost.title}</h1>
+                  <time className="text-slate-400 text-sm font-medium">{selectedPost.date}</time>
+                </header>
+                <div className="prose prose-lg prose-blue mx-auto text-slate-700 leading-loose">
+                  <p>{selectedPost.content}</p>
+                </div>
+              </article>
+            )}
+          </div>
+        )}
+
+        {/* 🟢 صفحة من نحن */}
+        {currentPage === 'about' && (
+          <article className="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100">
+            <h1 className="text-3xl font-bold text-slate-900 mb-8 flex items-center gap-3 border-b pb-4"><span className="text-4xl">🏢</span> {t.about.title}</h1>
+            <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+              <p>{t.about.content1}</p>
+              <p>{t.about.content2}</p>
+            </div>
+          </article>
+        )}
+
+        {/* 🟢 صفحة اتصل بنا */}
+        {currentPage === 'contact' && (
+          <article className="max-w-5xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100">
+            <h1 className="text-3xl font-bold text-slate-900 mb-8 flex items-center justify-center gap-3 border-b pb-4"><span className="text-4xl">📬</span> {t.contactInfo.title}</h1>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-8">
+              <div className="space-y-8">
+                <div>
+                  <h2 className="text-2xl font-bold text-slate-800 mb-4">{t.contactInfo.title}</h2>
+                  <p className="text-slate-600 leading-relaxed text-lg">{t.contactInfo.sub}</p>
+                </div>
+                <div className="flex flex-col gap-4">
+                  <a href="https://wa.me/967776202648" target="_blank" rel="noopener noreferrer" className="bg-[#16a34a] hover:bg-green-700 text-white font-bold py-4 px-6 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-all flex items-center gap-3 text-lg">
+                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M11.964 23.955c-1.848 0-3.666-.46-5.275-1.332l-6.39 1.677 1.716-6.237c-.96-1.657-1.464-3.535-1.464-5.464C.551 5.64 6.185.006 13.136.006c6.953 0 12.585 5.634 12.585 12.593 0 6.958-5.632 12.356-13.757 12.356zm-5.228-3.41c1.554.919 3.328 1.405 5.163 1.405 5.86 0 10.635-4.782 10.635-10.655S17.76 1.94 11.9 1.94c-5.86 0-10.636 4.781-10.636 10.654 0 1.93.53 3.791 1.531 5.432l-1.026 3.731 3.823-1.011zm9.324-7.44c-.218-.109-1.288-.636-1.488-.709-.199-.073-.346-.109-.492.109-.147.218-.564.709-.693.854-.128.146-.258.164-.476.055-.218-.109-.92-.338-1.752-1.078-.647-.577-1.085-1.29-1.213-1.509-.129-.218-.014-.336.095-.445.098-.098.218-.255.326-.382.11-.128.147-.218.219-.364.073-.146.037-.273-.018-.382-.055-.11-.492-1.182-.673-1.618-.178-.428-.359-.37-.492-.377-.128-.007-.275-.007-.423-.007-.147 0-.385.055-.587.273-.201.218-.77 1.701-.77 3.342 0 1.642.788 3.23 1.053 3.559.266.327 2.42 3.69 5.856 5.168.818.351 1.458.56 1.956.717.822.259 1.569.222 2.158.134.661-.099 2.029-.828 2.316-1.628.288-.8.288-1.487.202-1.628-.087-.146-.324-.228-.543-.337z"/></svg>
+                    {t.contactInfo.wa}
+                  </a>
+                  <a href="mailto:fareestate@gmail.com" className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-4 px-6 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-all flex items-center gap-3 text-lg">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    {t.contactInfo.mail}
+                  </a>
+                </div>
+              </div>
+
+              <div className="bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-200 shadow-inner">
+                <h3 className="text-xl font-bold text-slate-800 mb-6">{t.contactInfo.formTitle}</h3>
+                {contactStatus && (
+                  <div className="mb-6 p-4 bg-emerald-100 text-emerald-800 rounded-lg border border-emerald-200 text-sm font-bold flex items-center gap-2">
+                    <span>✅</span> {contactStatus}
+                  </div>
+                )}
+                <form onSubmit={handleContactSubmit} className="space-y-5">
+                  <div>
+                    <label className="block text-sm font-bold text-slate-700 mb-2">{t.contactInfo.name}</label>
+                    <input type="text" required disabled={showSendOptions} value={contactForm.name} onChange={(e) => setContactForm({...contactForm, name: e.target.value})} className={inputClassName} />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-slate-700 mb-2">{t.contactInfo.email}</label>
+                    <input type="email" required disabled={showSendOptions} value={contactForm.email} onChange={(e) => setContactForm({...contactForm, email: e.target.value})} className={`${inputClassName} text-left`} dir="ltr" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-slate-700 mb-2">{t.contactInfo.msg}</label>
+                    <textarea required disabled={showSendOptions} rows={4} value={contactForm.message} onChange={(e) => setContactForm({...contactForm, message: e.target.value})} className={`${inputClassName} resize-none`}></textarea>
+                  </div>
+                  
+                  {/* التعديل الجديد: إظهار خيارات الإرسال المباشرة بعد ضغط "إرسال الرسالة" */}
+                  {!showSendOptions ? (
+                    <button type="submit" className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg active:scale-[0.98]">
+                      {t.contactInfo.send}
+                    </button>
+                  ) : (
+                    <div className="flex flex-col gap-3 p-4 bg-white border border-blue-100 shadow-sm rounded-xl animate-fade-in-up">
+                      <p className="text-sm font-bold text-slate-800 text-center mb-1">
+                        {lang === 'en' ? 'Choose how to send the message:' : 'اختر طريقة إرسال الرسالة:'}
+                      </p>
+                      
+                      <a
+                        href={`https://wa.me/967776202648?text=${encodeURIComponent(`الاسم: ${contactForm.name}\nالبريد: ${contactForm.email}\nالرسالة:\n${contactForm.message}`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={handleSendChoice}
+                        className="w-full bg-[#16a34a] hover:bg-green-700 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-md transition-all"
+                      >
+                        {t.contactInfo.wa}
+                      </a>
+                      
+                      <a
+                        href={`mailto:fareestate@gmail.com?subject=${encodeURIComponent(`رسالة من ${contactForm.name}`)}&body=${encodeURIComponent(`الاسم: ${contactForm.name}\nالبريد: ${contactForm.email}\nالرسالة:\n${contactForm.message}`)}`}
+                        onClick={handleSendChoice}
+                        className="w-full bg-blue-600 hover:bg-blue-800 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-md transition-all"
+                      >
+                        {t.contactInfo.mail}
+                      </a>
+                      
+                      <button type="button" onClick={() => setShowSendOptions(false)} className="mt-2 text-sm text-slate-500 hover:text-slate-800 font-bold transition-colors">
+                        {lang === 'en' ? 'Cancel' : 'إلغاء'}
+                      </button>
+                    </div>
+                  )}
+
+                </form>
+              </div>
+            </div>
+          </article>
+        )}
+
+        {/* 🟢 صفحة سياسة الخصوصية */}
+        {currentPage === 'privacy' && (
+          <article className="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100">
+            <h1 className="text-3xl font-bold text-slate-900 mb-8 flex items-center gap-3 border-b pb-4"><span className="text-4xl">🔒</span> {t.legal.privacy}</h1>
+            <p className="text-slate-700 leading-relaxed text-lg">{t.legal.privacyText}</p>
+          </article>
+        )}
+
+        {/* 🟢 صفحة شروط الاستخدام */}
+        {currentPage === 'terms' && (
+          <article className="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100">
+            <h1 className="text-3xl font-bold text-slate-900 mb-8 flex items-center gap-3 border-b pb-4"><span className="text-4xl">📜</span> {t.legal.terms}</h1>
+            <p className="text-slate-700 leading-relaxed text-lg">{t.legal.termsText}</p>
+          </article>
+        )}
+        
+      </main>
+
+      {/* 🟢 التذييل */}
+      <footer className="mt-auto py-10 border-t border-slate-200 text-center space-y-6 print:hidden bg-white">
+        <p className="text-slate-400 text-sm font-semibold tracking-wide">{t.footer}</p>
+        <div className="flex flex-wrap justify-center gap-6 text-sm text-slate-500 font-bold">
+          <button onClick={() => { setCurrentPage('privacy'); setSelectedPost(null); }} className="hover:text-blue-600 transition-colors">{t.legal.privacy}</button>
+          <button onClick={() => { setCurrentPage('terms'); setSelectedPost(null); }} className="hover:text-blue-600 transition-colors">{t.legal.terms}</button>
+          <button onClick={() => { setCurrentPage('about'); setSelectedPost(null); }} className="hover:text-blue-600 transition-colors">{t.nav.about}</button>
+          <button onClick={() => { setCurrentPage('contact'); setSelectedPost(null); }} className="hover:text-blue-600 transition-colors">{t.nav.contact}</button>
+        </div>
+      </footer>
+
+    </div>
+  );
+}
