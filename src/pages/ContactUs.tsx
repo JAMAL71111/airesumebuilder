@@ -7,10 +7,10 @@ export function ContactUs() {
       <p style={{ color: '#cbd5e1', lineHeight: '1.8', marginBottom: '20px', fontSize: '15px' }}>
         نحن هنا لمساعدتك والاستماع إلى ملاحظاتك! إذا كان لديك أي استفسارات أو اقتراحات لتطوير المنصة، لا تتردد في التواصل معنا:
       </p>
-      <ul style={{ color: '#cbd5e1', lineHeight: '1.8', fontSize: '15px', paddingRight: '20px' }}>
-        <li>**البريد الإلكتروني:** support@resumate.com</li>
-        <li>**رقم الهاتف:** 776202648</li>
-        <li>**العنوان:** صنعاء، اليمن</li>
+      <ul style={{ color: '#cbd5e1', lineHeight: '1.8', fontSize: '15px', paddingRight: '20px', listStyleType: 'disc' }}>
+        <li style={{ marginBottom: '8px' }}><strong>البريد الإلكتروني:</strong> support@fareestate.com</li>
+        <li style={{ marginBottom: '8px' }}><strong>رقم الهاتف:</strong> 776202648</li>
+        <li><strong>العنوان:</strong> صنعاء، اليمن</li>
       </ul>
     </div>
   );
