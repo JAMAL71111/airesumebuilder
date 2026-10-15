@@ -1,46 +1,35 @@
-here<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- الصفحة الرئيسية -->
   <url>
     <loc>https://fareestate.com/</loc>
     <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-  
-  <!-- صفحة المدونة -->
   <url>
     <loc>https://fareestate.com/blog</loc>
     <lastmod>2026-10-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
-
-  <!-- صفحة من نحن -->
   <url>
     <loc>https://fareestate.com/about</loc>
     <lastmod>2026-10-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
-  <!-- صفحة اتصل بنا -->
   <url>
     <loc>https://fareestate.com/contact</loc>
     <lastmod>2026-10-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
-  <!-- سياسة الخصوصية -->
   <url>
     <loc>https://fareestate.com/privacy</loc>
     <lastmod>2026-10-16</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
-
-  <!-- شروط الاستخدام -->
   <url>
     <loc>https://fareestate.com/terms</loc>
     <lastmod>2026-10-16</lastmod>
