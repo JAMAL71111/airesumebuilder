@@ -43,35 +43,5 @@
     
     <!-- السكريبت المسؤول عن تشغيل المشروع -->
     <script type="module" src="/src/main.tsx"></script>
-
-    <!-- سكريبت توجيه جميع عناصر الموقع ديناميكياً -->
-    <script>
-      // استبدل الروابط أدناه بالروابط الحقيقية التي تريد توجيه المستخدم إليها
-      const siteLinksMap = {
-        'الرئيسية': 'https://example.com/home',
-        'المدونة والنصائح': 'https://example.com/blog',
-        'من نحن': 'https://example.com/about',
-        'اتصل بنا': 'https://example.com/contact',
-        'اقرأ المزيد': 'https://example.com/post-details',
-        'سياسة الخصوصية': 'https://example.com/privacy',
-        'شروط الاستخدام': 'https://example.com/terms'
-      };
-
-      document.addEventListener('click', function(event) {
-        const target = event.target.closest('a, button, span, div, li');
-        if (!target) return;
-
-        const text = target.textContent.trim();
-
-        for (const [key, url] of Object.entries(siteLinksMap)) {
-          if (text.includes(key)) {
-            event.preventDefault();
-            event.stopPropagation();
-            window.location.href = url;
-            return;
-          }
-        }
-      }, true);
-    </script>
   </body>
 </html>
