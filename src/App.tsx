@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+hereimport { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Link, useParams, useNavigate } from 'react-router-dom';
 import { articlesData, Post } from './articlesData';
 
 // 🌐 قاموس الترجمة الشامل للموقع لدعم اللغتين بدون الحاجة لملفات معقدة
@@ -100,15 +101,12 @@ const translations = {
 // --- Helper Functions for Category Styling ---
 const getCategoryColor = (category: string) => {
   const colors: { [key: string]: string } = {
-    // English categories
     'CV Writing': 'bg-blue-100 text-blue-800 border-blue-200',
     'Interviews': 'bg-purple-100 text-purple-800 border-purple-200',
     'Career Path': 'bg-emerald-100 text-emerald-800 border-emerald-200',
     'ATS Systems': 'bg-amber-100 text-amber-800 border-amber-200',
     'Job Search': 'bg-rose-100 text-rose-800 border-rose-200',
     'Freelance': 'bg-cyan-100 text-cyan-800 border-cyan-200',
-    
-    // Arabic categories
     'كتابة السيرة الذاتية': 'bg-blue-100 text-blue-800 border-blue-200',
     'المقابلات الشخصية': 'bg-purple-100 text-purple-800 border-purple-200',
     'المسار المهني': 'bg-emerald-100 text-emerald-800 border-emerald-200',
@@ -120,15 +118,13 @@ const getCategoryColor = (category: string) => {
 };
 
 export default function App() {
-  // 🔵 لغة الموقع بالكامل
   const [lang, setLang] = useState<'ar' | 'en'>('ar');
-  // 🔵 لغة السيرة الذاتية المستخرجة
   const [cvLang, setCvLang] = useState<'ar' | 'en'>('ar');
   
   const t = translations[lang];
   const cvT = translations[cvLang].cv;
 
-  // 🔵 إضافة كود Google Analytics
+  // Google Analytics
   useEffect(() => {
     const gaScript = document.createElement('script');
     gaScript.async = true;
@@ -145,9 +141,7 @@ export default function App() {
     document.head.appendChild(gaConfigScript);
   }, []);
 
-  const [currentPage, setCurrentPage] = useState<'home' | 'blog' | 'privacy' | 'terms' | 'about' | 'contact'>('home');
-  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
-
+  // CV Builder States
   const [fullName, setFullName] = useState('');
   const [jobTitle, setJobTitle] = useState('');
   const [email, setEmail] = useState('');
@@ -155,7 +149,6 @@ export default function App() {
   const [experience, setExperience] = useState('');
   const [education, setEducation] = useState('');
   const [skills, setSkills] = useState('');
-  
   const [photo, setPhoto] = useState<string>('');
   const [dobNationality, setDobNationality] = useState('');
   const [address, setAddress] = useState('');
@@ -163,21 +156,6 @@ export default function App() {
   const [socialMedia, setSocialMedia] = useState('');
   const [training, setTraining] = useState('');
   const [interests, setInterests] = useState('');
-
-  // حالات نموذج الاتصال
-  const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
-  const [contactStatus, setContactStatus] = useState('');
-  const [showSendOptions, setShowSendOptions] = useState(false);
-
-  const handleReadMore = (post: Post) => {
-    setSelectedPost(post);
-    setCurrentPage('blog');
-    window.scrollTo(0, 0);
-  };
-
-  const handleBackToBlog = () => {
-    setSelectedPost(null);
-  };
 
   const handlePrintPDF = () => {
     window.print();
@@ -191,362 +169,331 @@ export default function App() {
     }
   };
 
-  const handleContactSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setShowSendOptions(true);
-  };
-
-  const handleSendChoice = () => {
-    setShowSendOptions(false);
-    setContactStatus(t.contactInfo.success);
-    setContactForm({ name: '', email: '', message: '' });
-    setTimeout(() => setContactStatus(''), 5000);
-  };
-
   const inputClassName = "w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 focus:bg-white hover:border-blue-300 transition-all duration-300 shadow-sm";
   const cardClassName = "bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 sm:p-8 border border-slate-100 relative overflow-hidden group";
 
   return (
-    <div className={`min-h-screen bg-slate-50/50 text-slate-800 flex flex-col justify-between selection:bg-blue-200 selection:text-blue-900 ${lang === 'en' ? 'text-left' : 'text-right'}`} dir={t.dir} style={{ fontFamily: t.font }}>
-      
-      {/* 🔴 إعدادات الطباعة */}
-      <style>
-        {`
-          @media print {
-            @page { margin: 0; size: auto; }
-            html, body, #root { width: 100% !important; height: 100% !important; margin: 0 !important; padding: 0 !important; overflow: hidden !important; background-color: white !important; }
-            body > *:not(#root) { display: none !important; }
-            .cv-print-area { position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; max-height: 100% !important; margin: 0 !important; padding: 0 !important; box-sizing: border-box !important; display: flex !important; flex-direction: column !important; overflow: hidden !important; page-break-inside: avoid !important; z-index: 99999 !important; box-shadow: none !important; border: none !important; transform: none !important; }
-            .cv-print-main-row { min-height: 0 !important; height: 100% !important; flex: 1 !important; display: flex !important; overflow: hidden !important; }
-            .cv-sidebar { height: 100% !important; padding: 20px 15px !important; gap: 12px !important; }
-            .cv-main-content { height: 100% !important; padding: 20px 25px !important; }
-            .print-header { padding: 25px 30px 15px 30px !important; border-bottom-width: 8px !important; }
-            .cv-print-area { font-size: 11px !important; }
-            .cv-print-area h1 { font-size: 24px !important; margin-bottom: 2px !important; line-height: 1.1 !important; }
-            .cv-print-area h2 { font-size: 14px !important; line-height: 1.1 !important; margin-top: 0 !important;}
-            .cv-print-area h3 { font-size: 13px !important; margin-bottom: 6px !important; }
-            .cv-print-area p, .cv-print-area span, .cv-print-area li, .cv-print-area div { font-size: 10.5px !important; line-height: 1.4 !important; }
-            .print-pic { width: 75px !important; height: 95px !important; margin: 0 auto 10px auto !important; }
-          }
-        `}
-      </style>
-
-      {/* 🟢 شريط التنقل العلوي */}
-      <header className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 print:hidden border-b border-slate-100">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div 
-            translate="no"
-            className="notranslate text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-indigo-700 tracking-tight cursor-pointer hover:opacity-80 transition-opacity"
-            onClick={() => { setCurrentPage('home'); setSelectedPost(null); }}
-          >
-            Fareestate
-          </div>
-          <nav className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-sm sm:text-base font-semibold text-slate-600">
-            <button onClick={() => { setCurrentPage('home'); setSelectedPost(null); }} className={`transition-all hover:text-blue-700 ${currentPage === 'home' ? 'text-blue-700 border-b-2 border-blue-700 pb-1' : ''}`}>{t.nav.home}</button>
-            <button onClick={() => { setCurrentPage('blog'); setSelectedPost(null); }} className={`transition-all hover:text-blue-700 ${currentPage === 'blog' ? 'text-blue-700 border-b-2 border-blue-700 pb-1' : ''}`}>{t.nav.blog}</button>
-            <button onClick={() => { setCurrentPage('about'); setSelectedPost(null); }} className={`transition-all hover:text-blue-700 ${currentPage === 'about' ? 'text-blue-700 border-b-2 border-blue-700 pb-1' : ''}`}>{t.nav.about}</button>
-            <button onClick={() => { setCurrentPage('contact'); setSelectedPost(null); }} className={`transition-all hover:text-blue-700 ${currentPage === 'contact' ? 'text-blue-700 border-b-2 border-blue-700 pb-1' : ''}`}>{t.nav.contact}</button>
-            
-            <div className="ms-4 flex bg-slate-100 rounded-lg p-1 border border-slate-200">
-              <button onClick={() => setLang('ar')} className={`px-3 py-1 text-xs font-bold rounded-md transition-colors ${lang === 'ar' ? 'bg-white text-blue-700 shadow-sm' : 'text-slate-500'}`}>عربي</button>
-              <button onClick={() => setLang('en')} className={`px-3 py-1 text-xs font-bold rounded-md transition-colors ${lang === 'en' ? 'bg-white text-blue-700 shadow-sm' : 'text-slate-500'}`}>EN</button>
-            </div>
-          </nav>
-        </div>
-      </header>
-
-      {/* 🟢 محتوى الموقع الرئيسي */}
-      <main className="max-w-7xl mx-auto px-4 py-10 flex-grow w-full space-y-12 print:p-0 print:m-0 print:block">
+    <BrowserRouter>
+      <div className={`min-h-screen bg-slate-50/50 text-slate-800 flex flex-col justify-between selection:bg-blue-200 selection:text-blue-900 ${lang === 'en' ? 'text-left' : 'text-right'}`} dir={t.dir} style={{ fontFamily: t.font }}>
         
-        {currentPage === 'home' && (
-          <div className="space-y-12 print:space-y-0 print:block">
-            
-            <section className="text-center space-y-5 print:hidden relative z-10 pt-4 pb-8">
-              <div className="inline-block px-5 py-2 bg-blue-50 border border-blue-100 text-blue-700 rounded-full text-sm font-bold shadow-sm animate-fade-in-up">{t.hero.badge}</div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-tight tracking-tight">
-                {t.hero.title1} <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">{t.hero.title2}</span> {t.hero.title3}
-              </h1>
-              <p className="text-slate-500 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">{t.hero.sub}</p>
-            </section>
+        {/* Print Styles */}
+        <style>
+          {`
+            @media print {
+              @page { margin: 0; size: auto; }
+              html, body, #root { width: 100% !important; height: 100% !important; margin: 0 !important; padding: 0 !important; overflow: hidden !important; background-color: white !important; }
+              body > *:not(#root) { display: none !important; }
+              .cv-print-area { position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; max-height: 100% !important; margin: 0 !important; padding: 0 !important; box-sizing: border-box !important; display: flex !important; flex-direction: column !important; overflow: hidden !important; page-break-inside: avoid !important; z-index: 99999 !important; box-shadow: none !important; border: none !important; transform: none !important; }
+              .cv-print-main-row { min-height: 0 !important; height: 100% !important; flex: 1 !important; display: flex !important; overflow: hidden !important; }
+              .cv-sidebar { height: 100% !important; padding: 20px 15px !important; gap: 12px !important; }
+              .cv-main-content { height: 100% !important; padding: 20px 25px !important; }
+              .print-header { padding: 25px 30px 15px 30px !important; border-bottom-width: 8px !important; }
+              .cv-print-area { font-size: 11px !important; }
+              .cv-print-area h1 { font-size: 24px !important; margin-bottom: 2px !important; line-height: 1.1 !important; }
+              .cv-print-area h2 { font-size: 14px !important; line-height: 1.1 !important; margin-top: 0 !important;}
+              .cv-print-area h3 { font-size: 13px !important; margin-bottom: 6px !important; }
+              .cv-print-area p, .cv-print-area span, .cv-print-area li, .cv-print-area div { font-size: 10.5px !important; line-height: 1.4 !important; }
+              .print-pic { width: 75px !important; height: 95px !important; margin: 0 auto 10px auto !important; }
+            }
+          `}
+        </style>
 
-            <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 print:block relative items-start">
+        {/* 🟢 Navbar */}
+        <header className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 print:hidden border-b border-slate-100">
+          <div className="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <Link 
+              translate="no"
+              to="/"
+              className="notranslate text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-indigo-700 tracking-tight hover:opacity-80 transition-opacity"
+            >
+              Fareestate
+            </Link>
+            <nav className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-sm sm:text-base font-semibold text-slate-600">
+              <Link to="/" className="transition-all hover:text-blue-700">{t.nav.home}</Link>
+              <Link to="/blog" className="transition-all hover:text-blue-700">{t.nav.blog}</Link>
+              <Link to="/about" className="transition-all hover:text-blue-700">{t.nav.about}</Link>
+              <Link to="/contact" className="transition-all hover:text-blue-700">{t.nav.contact}</Link>
               
-              <section className="w-full lg:w-[45%] space-y-6 print:hidden">
-                
-                <div className="bg-white rounded-2xl shadow-sm p-5 sm:p-6 border border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4 relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 w-1.5 h-full bg-indigo-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top"></div>
-                  <span className="font-bold text-slate-800 text-lg">{t.form.cvLangTitle}</span>
-                  <div className="flex bg-slate-50 border border-slate-200 rounded-xl p-1 shadow-inner">
-                    <button onClick={() => setCvLang('ar')} className={`px-5 py-2 text-sm font-bold rounded-lg transition-all ${cvLang === 'ar' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'}`}>{t.form.cvLangAr}</button>
-                    <button onClick={() => setCvLang('en')} className={`px-5 py-2 text-sm font-bold rounded-lg transition-all ${cvLang === 'en' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'}`}>{t.form.cvLangEn}</button>
-                  </div>
-                </div>
+              <div className="ms-4 flex bg-slate-100 rounded-lg p-1 border border-slate-200">
+                <button onClick={() => setLang('ar')} className={`px-3 py-1 text-xs font-bold rounded-md transition-colors ${lang === 'ar' ? 'bg-white text-blue-700 shadow-sm' : 'text-slate-500'}`}>عربي</button>
+                <button onClick={() => setLang('en')} className={`px-3 py-1 text-xs font-bold rounded-md transition-colors ${lang === 'en' ? 'bg-white text-blue-700 shadow-sm' : 'text-slate-500'}`}>EN</button>
+              </div>
+            </nav>
+          </div>
+        </header>
 
-                <article className={cardClassName}>
-                  <div className="absolute top-0 right-0 w-1.5 h-full bg-blue-600 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top"></div>
-                  <h2 className="text-xl font-bold text-slate-800 mb-6 border-b border-slate-100 pb-4 flex items-center gap-3">
-                    <span className="bg-blue-50 p-2.5 rounded-xl text-xl">👤</span> {t.form.personal}
-                  </h2>
-                  
-                  <div className="mb-5 space-y-2">
-                    <label className="block text-sm font-bold text-slate-700">{t.form.photo}</label>
-                    <div className="relative">
-                      <input type="file" id="photo-upload" accept="image/*" onChange={handlePhotoUpload} className="hidden" />
-                      <label htmlFor="photo-upload" className="flex items-center justify-center w-full p-3.5 bg-blue-50 border-2 border-blue-200 border-dashed rounded-xl text-blue-700 font-bold cursor-pointer hover:bg-blue-100 transition-colors text-sm">
-                        {photo ? t.form.photoSuccess : t.form.photoBtn}
-                      </label>
-                    </div>
-                  </div>
+        {/* 🟢 Main Routes */}
+        <main className="max-w-7xl mx-auto px-4 py-10 flex-grow w-full space-y-12 print:p-0 print:m-0 print:block">
+          <Routes>
+            {/* Home / CV Builder */}
+            <Route path="/" element={
+              <div className="space-y-12 print:space-y-0 print:block">
+                <section className="text-center space-y-5 print:hidden relative z-10 pt-4 pb-8">
+                  <div className="inline-block px-5 py-2 bg-blue-50 border border-blue-100 text-blue-700 rounded-full text-sm font-bold shadow-sm animate-fade-in-up">{t.hero.badge}</div>
+                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-tight tracking-tight">
+                    {t.hero.title1} <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">{t.hero.title2}</span> {t.hero.title3}
+                  </h1>
+                  <p className="text-slate-500 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">{t.hero.sub}</p>
+                </section>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <div className="space-y-2">
-                      <label className="block text-sm font-bold text-slate-700">{t.form.name}</label>
-                      <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder={t.form.namePh} className={inputClassName} />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="block text-sm font-bold text-slate-700">{t.form.job}</label>
-                      <input type="text" value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} placeholder={t.form.jobPh} className={inputClassName} />
-                    </div>
-                    <div className="space-y-2 md:col-span-2">
-                      <label className="block text-sm font-bold text-slate-700">{t.form.dobNat}</label>
-                      <input type="text" value={dobNationality} onChange={(e) => setDobNationality(e.target.value)} placeholder={t.form.dobNatPh} className={inputClassName} />
-                    </div>
-                  </div>
-                </article>
-
-                <article className={cardClassName}>
-                  <div className="absolute top-0 right-0 w-1.5 h-full bg-emerald-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top"></div>
-                  <h2 className="text-xl font-bold text-slate-800 mb-6 border-b border-slate-100 pb-4 flex items-center gap-3">
-                    <span className="bg-emerald-50 p-2.5 rounded-xl text-xl">📞</span> {t.form.contact}
-                  </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <div className="space-y-2 md:col-span-2">
-                      <label className="block text-sm font-bold text-slate-700">{t.form.address}</label>
-                      <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} placeholder={t.form.addressPh} className={inputClassName} />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="block text-sm font-bold text-slate-700">{t.form.email}</label>
-                      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="example@mail.com" className={`${inputClassName} text-left`} dir="ltr" />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="block text-sm font-bold text-slate-700">{t.form.phone}</label>
-                      <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+967..." className={`${inputClassName} text-left`} dir="ltr" />
-                    </div>
-                    <div className="space-y-2 md:col-span-2">
-                      <label className="block text-sm font-bold text-slate-700">{t.form.social}</label>
-                      <textarea rows={3} value={socialMedia} onChange={(e) => setSocialMedia(e.target.value)} placeholder="linkedin.com/in/...&#10;x.com/..." className={`${inputClassName} text-left resize-none`} dir="ltr"></textarea>
-                    </div>
-                  </div>
-                </article>
-
-                <article className={cardClassName}>
-                  <div className="absolute top-0 right-0 w-1.5 h-full bg-amber-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top"></div>
-                  <h2 className="text-xl font-bold text-slate-800 mb-6 border-b border-slate-100 pb-4 flex items-center gap-3">
-                    <span className="bg-amber-50 p-2.5 rounded-xl text-xl">🎓</span> {t.form.career}
-                  </h2>
-                  <div className="space-y-5">
-                    <div className="space-y-2">
-                      <label className="block text-sm font-bold text-slate-700">{t.form.edu}</label>
-                      <textarea rows={3} value={education} onChange={(e) => setEducation(e.target.value)} placeholder={t.form.eduPh} className={`${inputClassName} resize-none`}></textarea>
-                    </div>
-                    <div className="space-y-2">
-                      <label className="block text-sm font-bold text-slate-700">{t.form.exp}</label>
-                      <textarea rows={3} value={experience} onChange={(e) => setExperience(e.target.value)} placeholder={t.form.expPh} className={`${inputClassName} resize-none`}></textarea>
-                    </div>
-                    <div className="space-y-2">
-                      <label className="block text-sm font-bold text-slate-700">{t.form.train}</label>
-                      <textarea rows={2} value={training} onChange={(e) => setTraining(e.target.value)} placeholder={t.form.trainPh} className={`${inputClassName} resize-none`}></textarea>
-                    </div>
-                  </div>
-                </article>
-
-                <article className={cardClassName}>
-                  <div className="absolute top-0 right-0 w-1.5 h-full bg-purple-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top"></div>
-                  <h2 className="text-xl font-bold text-slate-800 mb-6 border-b border-slate-100 pb-4 flex items-center gap-3">
-                    <span className="bg-purple-50 p-2.5 rounded-xl text-xl">⚙️</span> {t.form.skillsSect}
-                  </h2>
-                  <div className="space-y-5">
-                    <div className="space-y-2">
-                      <label className="block text-sm font-bold text-slate-700">{t.form.skills}</label>
-                      <textarea rows={3} value={skills} onChange={(e) => setSkills(e.target.value)} className={`${inputClassName} resize-none`}></textarea>
-                    </div>
-                    <div className="space-y-2">
-                      <label className="block text-sm font-bold text-slate-700">{t.form.langs}</label>
-                      <textarea rows={2} value={languages} onChange={(e) => setLanguages(e.target.value)} className={`${inputClassName} resize-none`}></textarea>
-                    </div>
-                    <div className="space-y-2">
-                      <label className="block text-sm font-bold text-slate-700">{t.form.interests}</label>
-                      <textarea rows={2} value={interests} onChange={(e) => setInterests(e.target.value)} className={`${inputClassName} resize-none`}></textarea>
-                    </div>
-                  </div>
-                </article>
-
-              </section>
-
-              {/* 👁️ القسم الأيسر (المعاينة الحية للسيرة الذاتية) */}
-              <section className="w-full lg:w-[55%] print:w-full lg:sticky lg:top-24 z-10 transition-transform duration-500 flex flex-col gap-6">
-                
-                <div className="w-full overflow-x-auto pb-4 custom-scrollbar rounded-2xl shadow-xl hover:shadow-2xl transition-shadow border border-slate-200/60 print:border-none print:shadow-none print:overflow-visible print:pb-0">
-                  <div className={`cv-print-area bg-white w-full min-w-[700px] lg:min-w-0 mx-auto overflow-hidden ${cvLang === 'en' ? 'text-left font-sans' : 'text-right'}`} dir={translations[cvLang].dir}>
-                    
-                    <div className="print-header w-full bg-white pt-8 pb-4 px-10 border-b-[16px] border-[#1A2B3C] mb-6 print:mb-0">
-                       <h1 className="text-5xl font-light text-slate-800 mb-1 tracking-widest uppercase">{fullName || cvT.name}</h1>
-                       <h2 className="text-xl text-slate-600 font-medium tracking-[0.2em] uppercase">{jobTitle || (cvLang === 'en' ? 'Job Title' : 'المسمى الوظيفي')}</h2>
+                <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 print:block relative items-start">
+                  <section className="w-full lg:w-[45%] space-y-6 print:hidden">
+                    <div className="bg-white rounded-2xl shadow-sm p-5 sm:p-6 border border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4 relative overflow-hidden group">
+                      <div className="absolute top-0 right-0 w-1.5 h-full bg-indigo-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top"></div>
+                      <span className="font-bold text-slate-800 text-lg">{t.form.cvLangTitle}</span>
+                      <div className="flex bg-slate-50 border border-slate-200 rounded-xl p-1 shadow-inner">
+                        <button onClick={() => setCvLang('ar')} className={`px-5 py-2 text-sm font-bold rounded-lg transition-all ${cvLang === 'ar' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'}`}>{t.form.cvLangAr}</button>
+                        <button onClick={() => setCvLang('en')} className={`px-5 py-2 text-sm font-bold rounded-lg transition-all ${cvLang === 'en' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'}`}>{t.form.cvLangEn}</button>
+                      </div>
                     </div>
 
-                    <div className="cv-print-main-row flex flex-row w-full min-h-[900px] bg-white">
-                      
-                      <aside className="cv-sidebar w-[35%] bg-[#1A2B3C] text-white p-8 flex flex-col gap-8" style={{ WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
-                        <div className="print-pic w-40 h-48 mx-auto bg-slate-400 overflow-hidden shadow-lg border border-slate-500 relative flex-shrink-0 group">
-                           {photo ? (
-                             <img src={photo} alt="Profile" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                           ) : (
-                             <div className="w-full h-full flex flex-col items-center justify-center text-slate-300 text-sm gap-2">
-                               <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2-2v12a2 2 0 002 2z" /></svg>
-                             </div>
-                           )}
+                    <article className={cardClassName}>
+                      <div className="absolute top-0 right-0 w-1.5 h-full bg-blue-600 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top"></div>
+                      <h2 className="text-xl font-bold text-slate-800 mb-6 border-b border-slate-100 pb-4 flex items-center gap-3">
+                        <span className="bg-blue-50 p-2.5 rounded-xl text-xl">👤</span> {t.form.personal}
+                      </h2>
+                      <div className="mb-5 space-y-2">
+                        <label className="block text-sm font-bold text-slate-700">{t.form.photo}</label>
+                        <div className="relative">
+                          <input type="file" id="photo-upload" accept="image/*" onChange={handlePhotoUpload} className="hidden" />
+                          <label htmlFor="photo-upload" className="flex items-center justify-center w-full p-3.5 bg-blue-50 border-2 border-blue-200 border-dashed rounded-xl text-blue-700 font-bold cursor-pointer hover:bg-blue-100 transition-colors text-sm">
+                            {photo ? t.form.photoSuccess : t.form.photoBtn}
+                          </label>
                         </div>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div className="space-y-2">
+                          <label className="block text-sm font-bold text-slate-700">{t.form.name}</label>
+                          <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder={t.form.namePh} className={inputClassName} />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="block text-sm font-bold text-slate-700">{t.form.job}</label>
+                          <input type="text" value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} placeholder={t.form.jobPh} className={inputClassName} />
+                        </div>
+                        <div className="space-y-2 md:col-span-2">
+                          <label className="block text-sm font-bold text-slate-700">{t.form.dobNat}</label>
+                          <input type="text" value={dobNationality} onChange={(e) => setDobNationality(e.target.value)} placeholder={t.form.dobNatPh} className={inputClassName} />
+                        </div>
+                      </div>
+                    </article>
 
-                        <div>
-                          <h3 className="text-xl font-bold mb-4 uppercase text-white tracking-widest">{cvT.profile}</h3>
-                          <div className="space-y-4 text-sm font-light">
-                            <div>
-                              <span className="block text-slate-400 font-bold mb-1 print:mb-0 text-xs uppercase">{cvT.name}</span>
-                              <span className="text-slate-100">{fullName || cvT.name}</span>
+                    <article className={cardClassName}>
+                      <div className="absolute top-0 right-0 w-1.5 h-full bg-emerald-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top"></div>
+                      <h2 className="text-xl font-bold text-slate-800 mb-6 border-b border-slate-100 pb-4 flex items-center gap-3">
+                        <span className="bg-emerald-50 p-2.5 rounded-xl text-xl">📞</span> {t.form.contact}
+                      </h2>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div className="space-y-2 md:col-span-2">
+                          <label className="block text-sm font-bold text-slate-700">{t.form.address}</label>
+                          <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} placeholder={t.form.addressPh} className={inputClassName} />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="block text-sm font-bold text-slate-700">{t.form.email}</label>
+                          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="example@mail.com" className={`${inputClassName} text-left`} dir="ltr" />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="block text-sm font-bold text-slate-700">{t.form.phone}</label>
+                          <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+967..." className={`${inputClassName} text-left`} dir="ltr" />
+                        </div>
+                        <div className="space-y-2 md:col-span-2">
+                          <label className="block text-sm font-bold text-slate-700">{t.form.social}</label>
+                          <textarea rows={3} value={socialMedia} onChange={(e) => setSocialMedia(e.target.value)} placeholder="linkedin.com/in/...&#10;x.com/..." className={`${inputClassName} text-left resize-none`} dir="ltr"></textarea>
+                        </div>
+                      </div>
+                    </article>
+
+                    <article className={cardClassName}>
+                      <div className="absolute top-0 right-0 w-1.5 h-full bg-amber-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top"></div>
+                      <h2 className="text-xl font-bold text-slate-800 mb-6 border-b border-slate-100 pb-4 flex items-center gap-3">
+                        <span className="bg-amber-50 p-2.5 rounded-xl text-xl">🎓</span> {t.form.career}
+                      </h2>
+                      <div className="space-y-5">
+                        <div className="space-y-2">
+                          <label className="block text-sm font-bold text-slate-700">{t.form.edu}</label>
+                          <textarea rows={3} value={education} onChange={(e) => setEducation(e.target.value)} placeholder={t.form.eduPh} className={`${inputClassName} resize-none`}></textarea>
+                        </div>
+                        <div className="space-y-2">
+                          <label className="block text-sm font-bold text-slate-700">{t.form.exp}</label>
+                          <textarea rows={3} value={experience} onChange={(e) => setExperience(e.target.value)} placeholder={t.form.expPh} className={`${inputClassName} resize-none`}></textarea>
+                        </div>
+                        <div className="space-y-2">
+                          <label className="block text-sm font-bold text-slate-700">{t.form.train}</label>
+                          <textarea rows={2} value={training} onChange={(e) => setTraining(e.target.value)} placeholder={t.form.trainPh} className={`${inputClassName} resize-none`}></textarea>
+                        </div>
+                      </div>
+                    </article>
+
+                    <article className={cardClassName}>
+                      <div className="absolute top-0 right-0 w-1.5 h-full bg-purple-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top"></div>
+                      <h2 className="text-xl font-bold text-slate-800 mb-6 border-b border-slate-100 pb-4 flex items-center gap-3">
+                        <span className="bg-purple-50 p-2.5 rounded-xl text-xl">⚙️</span> {t.form.skillsSect}
+                      </h2>
+                      <div className="space-y-5">
+                        <div className="space-y-2">
+                          <label className="block text-sm font-bold text-slate-700">{t.form.skills}</label>
+                          <textarea rows={3} value={skills} onChange={(e) => setSkills(e.target.value)} className={`${inputClassName} resize-none`}></textarea>
+                        </div>
+                        <div className="space-y-2">
+                          <label className="block text-sm font-bold text-slate-700">{t.form.langs}</label>
+                          <textarea rows={2} value={languages} onChange={(e) => setLanguages(e.target.value)} className={`${inputClassName} resize-none`}></textarea>
+                        </div>
+                        <div className="space-y-2">
+                          <label className="block text-sm font-bold text-slate-700">{t.form.interests}</label>
+                          <textarea rows={2} value={interests} onChange={(e) => setInterests(e.target.value)} className={`${inputClassName} resize-none`}></textarea>
+                        </div>
+                      </div>
+                    </article>
+                  </section>
+
+                  {/* CV Live Preview */}
+                  <section className="w-full lg:w-[55%] print:w-full lg:sticky lg:top-24 z-10 transition-transform duration-500 flex flex-col gap-6">
+                    <div className="w-full overflow-x-auto pb-4 custom-scrollbar rounded-2xl shadow-xl hover:shadow-2xl transition-shadow border border-slate-200/60 print:border-none print:shadow-none print:overflow-visible print:pb-0">
+                      <div className={`cv-print-area bg-white w-full min-w-[700px] lg:min-w-0 mx-auto overflow-hidden ${cvLang === 'en' ? 'text-left font-sans' : 'text-right'}`} dir={translations[cvLang].dir}>
+                        <div className="print-header w-full bg-white pt-8 pb-4 px-10 border-b-[16px] border-[#1A2B3C] mb-6 print:mb-0">
+                           <h1 className="text-5xl font-light text-slate-800 mb-1 tracking-widest uppercase">{fullName || cvT.name}</h1>
+                           <h2 className="text-xl text-slate-600 font-medium tracking-[0.2em] uppercase">{jobTitle || (cvLang === 'en' ? 'Job Title' : 'المسمى الوظيفي')}</h2>
+                        </div>
+                        <div className="cv-print-main-row flex flex-row w-full min-h-[900px] bg-white">
+                          <aside className="cv-sidebar w-[35%] bg-[#1A2B3C] text-white p-8 flex flex-col gap-8" style={{ WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
+                            <div className="print-pic w-40 h-48 mx-auto bg-slate-400 overflow-hidden shadow-lg border border-slate-500 relative flex-shrink-0 group">
+                               {photo ? (
+                                 <img src={photo} alt="Profile" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                               ) : (
+                                 <div className="w-full h-full flex flex-col items-center justify-center text-slate-300 text-sm gap-2">
+                                   <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2-2v12a2 2 0 002 2z" /></svg>
+                                 </div>
+                               )}
                             </div>
-                            {dobNationality && (
+                            <div>
+                              <h3 className="text-xl font-bold mb-4 uppercase text-white tracking-widest">{cvT.profile}</h3>
+                              <div className="space-y-4 text-sm font-light">
+                                <div>
+                                  <span className="block text-slate-400 font-bold mb-1 print:mb-0 text-xs uppercase">{cvT.name}</span>
+                                  <span className="text-slate-100">{fullName || cvT.name}</span>
+                                </div>
+                                {dobNationality && (
+                                  <div>
+                                    <span className="block text-slate-400 font-bold mb-1 print:mb-0 text-xs uppercase">{cvT.dobNat}</span>
+                                    <span className="text-slate-100 whitespace-pre-line">{dobNationality}</span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                            <div className="space-y-4 text-sm font-light">
+                              {address && (
+                                <div>
+                                  <h3 className="text-lg font-bold text-white mb-1 uppercase tracking-widest">{cvT.address}</h3>
+                                  <span className="text-slate-100">{address}</span>
+                                </div>
+                              )}
+                              {phone && (
+                                <div>
+                                  <h3 className="text-lg font-bold text-white mb-1 uppercase tracking-widest">{cvT.phone}</h3>
+                                  <span className="text-slate-100 block" dir="ltr">{phone}</span>
+                                </div>
+                              )}
+                              {email && (
+                                <div>
+                                  <h3 className="text-lg font-bold text-white mb-1 uppercase tracking-widest">{cvT.email}</h3>
+                                  <span className="text-slate-100 break-all block">{email}</span>
+                                </div>
+                              )}
+                            </div>
+                            {languages && (
                               <div>
-                                <span className="block text-slate-400 font-bold mb-1 print:mb-0 text-xs uppercase">{cvT.dobNat}</span>
-                                <span className="text-slate-100 whitespace-pre-line">{dobNationality}</span>
+                                <h3 className="text-lg font-bold text-white mb-2 uppercase tracking-widest">{cvT.langs}</h3>
+                                <div className="text-sm font-light text-slate-100 whitespace-pre-line">{languages}</div>
                               </div>
                             )}
-                          </div>
-                        </div>
-
-                        <div className="space-y-4 text-sm font-light">
-                          {address && (
-                            <div>
-                              <h3 className="text-lg font-bold text-white mb-1 uppercase tracking-widest">{cvT.address}</h3>
-                              <span className="text-slate-100">{address}</span>
-                            </div>
-                          )}
-                          {phone && (
-                            <div>
-                              <h3 className="text-lg font-bold text-white mb-1 uppercase tracking-widest">{cvT.phone}</h3>
-                              <span className="text-slate-100 block" dir="ltr">{phone}</span>
-                            </div>
-                          )}
-                          {email && (
-                            <div>
-                              <h3 className="text-lg font-bold text-white mb-1 uppercase tracking-widest">{cvT.email}</h3>
-                              <span className="text-slate-100 break-all block">{email}</span>
-                            </div>
-                          )}
-                        </div>
-
-                        {languages && (
-                          <div>
-                            <h3 className="text-lg font-bold text-white mb-2 uppercase tracking-widest">{cvT.langs}</h3>
-                            <div className="text-sm font-light text-slate-100 whitespace-pre-line">{languages}</div>
-                          </div>
-                        )}
-
-                        {socialMedia && (
-                          <div>
-                            <h3 className="text-lg font-bold text-white mb-2 uppercase tracking-widest">{cvT.social}</h3>
-                            <div className="text-sm font-light text-slate-100 whitespace-pre-line break-all" dir="ltr">{socialMedia}</div>
-                          </div>
-                        )}
-                      </aside>
-
-                      <main className="cv-main-content w-[65%] bg-white p-8 ps-10 text-slate-800">
-                        <div className="space-y-8 print:space-y-4">
-                          {education && (
-                            <section>
-                              <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
-                                <span className="text-[#1A2B3C]">🎓</span> {cvT.edu}
-                              </h3>
-                              <p className="text-slate-600 text-sm leading-loose whitespace-pre-line ps-8 border-s-2 border-slate-100 ms-3">{education}</p>
-                            </section>
-                          )}
-
-                          {experience && (
-                            <section>
-                              <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
-                                <span className="text-[#1A2B3C]">💼</span> {cvT.exp}
-                              </h3>
-                              <p className="text-slate-600 text-sm leading-loose whitespace-pre-line ps-8 border-s-2 border-slate-100 ms-3">{experience}</p>
-                            </section>
-                          )}
-
-                          {training && (
-                            <section>
-                              <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
-                                <span className="text-[#1A2B3C]">📋</span> {cvT.train}
-                              </h3>
-                              <p className="text-slate-600 text-sm leading-loose whitespace-pre-line ps-8 border-s-2 border-slate-100 ms-3">{training}</p>
-                            </section>
-                          )}
-
-                          {skills && (
-                            <section>
-                              <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
-                                <span className="text-[#1A2B3C]">⚙️</span> {cvT.skills}
-                              </h3>
-                              <div className="grid grid-cols-2 gap-x-8 gap-y-4 ps-6 print:ps-4 print:gap-x-4 ms-3">
-                                {skills.split('\n').map((skill, index) => {
-                                  if (!skill.trim()) return null;
-                                  return (
-                                    <div key={index} className="flex flex-col gap-1.5 mb-2 print:mb-0">
-                                      <span className="text-slate-700 text-xs font-bold uppercase tracking-wide">{skill.trim()}</span>
-                                      <div className="w-full h-1.5 bg-slate-100 flex rounded-full overflow-hidden print:h-1">
-                                        <div className="bg-[#1A2B3C] h-full rounded-full" style={{ width: '85%' }}></div>
-                                      </div>
-                                    </div>
-                                  )
-                                })}
+                            {socialMedia && (
+                              <div>
+                                <h3 className="text-lg font-bold text-white mb-2 uppercase tracking-widest">{cvT.social}</h3>
+                                <div className="text-sm font-light text-slate-100 whitespace-pre-line break-all" dir="ltr">{socialMedia}</div>
                               </div>
-                            </section>
-                          )}
+                            )}
+                          </aside>
 
-                          {interests && (
-                            <section>
-                              <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
-                                <span className="text-[#1A2B3C]">🎯</span> {cvT.interests}
-                              </h3>
-                              <ul className="list-disc list-inside text-slate-600 text-sm leading-loose ps-8 ms-3 marker:text-blue-500">
-                                {interests.split('\n').map((interest, i) => (
-                                  interest.trim() ? <li key={i}>{interest.trim()}</li> : null
-                                ))}
-                              </ul>
-                            </section>
-                          )}
+                          <main className="cv-main-content w-[65%] bg-white p-8 ps-10 text-slate-800">
+                            <div className="space-y-8 print:space-y-4">
+                              {education && (
+                                <section>
+                                  <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
+                                    <span className="text-[#1A2B3C]">🎓</span> {cvT.edu}
+                                  </h3>
+                                  <p className="text-slate-600 text-sm leading-loose whitespace-pre-line ps-8 border-s-2 border-slate-100 ms-3">{education}</p>
+                                </section>
+                              )}
+                              {experience && (
+                                <section>
+                                  <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
+                                    <span className="text-[#1A2B3C]">💼</span> {cvT.exp}
+                                  </h3>
+                                  <p className="text-slate-600 text-sm leading-loose whitespace-pre-line ps-8 border-s-2 border-slate-100 ms-3">{experience}</p>
+                                </section>
+                              )}
+                              {training && (
+                                <section>
+                                  <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
+                                    <span className="text-[#1A2B3C]">📋</span> {cvT.train}
+                                  </h3>
+                                  <p className="text-slate-600 text-sm leading-loose whitespace-pre-line ps-8 border-s-2 border-slate-100 ms-3">{training}</p>
+                                </section>
+                              )}
+                              {skills && (
+                                <section>
+                                  <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
+                                    <span className="text-[#1A2B3C]">⚙️</span> {cvT.skills}
+                                  </h3>
+                                  <div className="grid grid-cols-2 gap-x-8 gap-y-4 ps-6 print:ps-4 print:gap-x-4 ms-3">
+                                    {skills.split('\n').map((skill, index) => {
+                                      if (!skill.trim()) return null;
+                                      return (
+                                        <div key={index} className="flex flex-col gap-1.5 mb-2 print:mb-0">
+                                          <span className="text-slate-700 text-xs font-bold uppercase tracking-wide">{skill.trim()}</span>
+                                          <div className="w-full h-1.5 bg-slate-100 flex rounded-full overflow-hidden print:h-1">
+                                            <div className="bg-[#1A2B3C] h-full rounded-full" style={{ width: '85%' }}></div>
+                                          </div>
+                                        </div>
+                                      )
+                                    })}
+                                  </div>
+                                </section>
+                              )}
+                              {interests && (
+                                <section>
+                                  <h3 className="text-xl font-bold text-slate-800 mb-4 uppercase tracking-widest flex items-center gap-3">
+                                    <span className="text-[#1A2B3C]">🎯</span> {cvT.interests}
+                                  </h3>
+                                  <ul className="list-disc list-inside text-slate-600 text-sm leading-loose ps-8 ms-3 marker:text-blue-500">
+                                    {interests.split('\n').map((interest, i) => (
+                                      interest.trim() ? <li key={i}>{interest.trim()}</li> : null
+                                    ))}
+                                  </ul>
+                                </section>
+                              )}
+                            </div>
+                          </main>
                         </div>
-                      </main>
+                      </div>
                     </div>
-                  </div>
+
+                    <button 
+                      onClick={handlePrintPDF} 
+                      className="w-full flex justify-center items-center gap-3 py-4 px-6 text-xl font-extrabold rounded-2xl text-white bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-[0_10px_20px_rgba(37,99,235,0.3)] hover:shadow-[0_15px_30px_rgba(37,99,235,0.4)] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 print:hidden"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                      </svg>
+                      {t.actions.download}
+                    </button>
+                  </section>
                 </div>
+              </div>
+            } />
 
-                <button 
-                  onClick={handlePrintPDF} 
-                  className="w-full flex justify-center items-center gap-3 py-4 px-6 text-xl font-extrabold rounded-2xl text-white bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-[0_10px_20px_rgba(37,99,235,0.3)] hover:shadow-[0_15px_30px_rgba(37,99,235,0.4)] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 print:hidden"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-                  </svg>
-                  {t.actions.download}
-                </button>
-
-              </section>
-            </div>
-          </div>
-        )}
-
-        {/* 🟢 صفحة المدونة */}
-        {currentPage === 'blog' && (
-          <div>
-            {!selectedPost ? (
-              <>
+            {/* Blog List Page */}
+            <Route path="/blog" element={
+              <div>
                 <section className="text-center space-y-4 mb-12">
                   <h1 className="text-3xl sm:text-4xl font-bold text-slate-900">{t.blog.title}</h1>
                   <p className="text-slate-600 text-lg max-w-2xl mx-auto">{t.blog.sub}</p>
@@ -555,7 +502,7 @@ export default function App() {
                   {articlesData.map((post) => {
                     const currentContent = lang === 'ar' ? post.ar : post.en;
                     return (
-                      <article key={post.id} className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 p-8 flex flex-col h-full group cursor-pointer" onClick={() => handleReadMore(post)}>
+                      <Link key={post.id} to={`/blog/${post.id}`} className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 p-8 flex flex-col h-full group">
                         <div className="text-5xl mb-6 transform group-hover:scale-110 transition-transform duration-300">{post.icon}</div>
                         <span className={`text-xs font-bold w-fit px-3 py-1 rounded-full mb-4 border ${getCategoryColor(currentContent.category)}`}>
                           {currentContent.category}
@@ -568,187 +515,229 @@ export default function App() {
                         </p>
                         <div className="flex justify-between items-center mt-auto pt-4 border-t border-slate-50 text-sm">
                           <span className="text-slate-400 font-medium">{post.date}</span>
-                          <button className="text-blue-700 font-bold group-hover:translate-x-[-4px] transition-transform flex items-center gap-1">{t.actions.readMore} &larr;</button>
+                          <span className="text-blue-700 font-bold group-hover:translate-x-[-4px] transition-transform flex items-center gap-1">{t.actions.readMore} &larr;</span>
                         </div>
-                      </article>
+                      </Link>
                     );
                   })}
                 </div>
-              </>
-            ) : (
-              <article className="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-slate-100 p-8 sm:p-12">
-                <button onClick={handleBackToBlog} className="mb-8 text-blue-700 hover:text-blue-900 font-bold text-sm flex items-center gap-2 hover:bg-blue-50 px-4 py-2 rounded-lg transition-colors w-fit">
-                  &rarr; {t.actions.backBlog}
-                </button>
-                <header className="text-center mb-10">
-                  <div className="text-6xl mb-6">{selectedPost.icon}</div>
-                  <span className={`inline-block px-4 py-1.5 rounded-full text-sm font-bold mb-4 border ${getCategoryColor(lang === 'ar' ? selectedPost.ar.category : selectedPost.en.category)}`}>
-                    {lang === 'ar' ? selectedPost.ar.category : selectedPost.en.category}
-                  </span>
-                  <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 mb-6 leading-tight">
-                    {lang === 'ar' ? selectedPost.ar.title : selectedPost.en.title}
-                  </h1>
-                  <time className="text-slate-400 text-sm font-medium">{selectedPost.date}</time>
-                </header>
-                <div className="prose prose-lg prose-blue mx-auto text-slate-700 leading-loose whitespace-pre-line">
-                  {lang === 'ar' ? selectedPost.ar.content : selectedPost.en.content}
+              </div>
+            } />
+
+            {/* Single Blog Post Page */}
+            <Route path="/blog/:id" element={<BlogPostView lang={lang} t={t} />} />
+
+            {/* About Us Page */}
+            <Route path="/about" element={
+              <article className="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100">
+                <h1 className="text-3xl font-bold text-slate-900 mb-8 flex items-center gap-3 border-b pb-4"><span className="text-4xl">🏢</span> {t.about.title}</h1>
+                <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+                  <p>{t.about.content1}</p>
+                  <p>{t.about.content2}</p>
                 </div>
               </article>
-            )}
-          </div>
-        )}
+            } />
 
-        {/* 🟢 صفحة من نحن */}
-        {currentPage === 'about' && (
-          <article className="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100">
-            <h1 className="text-3xl font-bold text-slate-900 mb-8 flex items-center gap-3 border-b pb-4"><span className="text-4xl">🏢</span> {t.about.title}</h1>
-            <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
-              <p>{t.about.content1}</p>
-              <p>{t.about.content2}</p>
-            </div>
-          </article>
-        )}
+            {/* Contact Us Page */}
+            <Route path="/contact" element={<ContactPageView t={t} lang={lang} inputClassName={inputClassName} />} />
 
-        {/* 🟢 صفحة اتصل بنا */}
-        {currentPage === 'contact' && (
-          <article className="max-w-5xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100">
-            <h1 className="text-3xl font-bold text-slate-900 mb-8 flex items-center justify-center gap-3 border-b pb-4"><span className="text-4xl">📬</span> {t.contactInfo.title}</h1>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-8">
-              <div className="space-y-8">
-                <div>
-                  <h2 className="text-2xl font-bold text-slate-800 mb-4">{t.contactInfo.title}</h2>
-                  <p className="text-slate-600 leading-relaxed text-lg">{t.contactInfo.sub}</p>
-                </div>
-                <div className="flex flex-col gap-4">
-                  <a href="https://wa.me/967776202648" target="_blank" rel="noopener noreferrer" className="bg-[#16a34a] hover:bg-green-700 text-white font-bold py-4 px-6 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-all flex items-center gap-3 text-lg">
-                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M11.964 23.955c-1.848 0-3.666-.46-5.275-1.332l-6.39 1.677 1.716-6.237c-.96-1.657-1.464-3.535-1.464-5.464C.551 5.64 6.185.006 13.136.006c6.953 0 12.585 5.634 12.585 12.593 0 6.958-5.632 12.356-13.757 12.356zm-5.228-3.41c1.554.919 3.328 1.405 5.163 1.405 5.86 0 10.635-4.782 10.635-10.655S17.76 1.94 11.9 1.94c-5.86 0-10.636 4.781-10.636 10.654 0 1.93.53 3.791 1.531 5.432l-1.026 3.731 3.823-1.011zm9.324-7.44c-.218-.109-1.288-.636-1.488-.709-.199-.073-.346-.109-.492.109-.147.218-.564.709-.693.854-.128.146-.258.164-.476.055-.218-.109-.92-.338-1.752-1.078-.647-.577-1.085-1.29-1.213-1.509-.129-.218-.014-.336.095-.445.098-.098.218-.255.326-.382.11-.128.147-.218.219-.364.073-.146.037-.273-.018-.382-.055-.11-.492-1.182-.673-1.618-.178-.428-.359-.37-.492-.377-.128-.007-.275-.007-.423-.007-.147 0-.385.055-.587.273-.201.218-.77 1.701-.77 3.342 0 1.642.788 3.23 1.053 3.559.266.327 2.42 3.69 5.856 5.168.818.351 1.458.56 1.956.717.822.259 1.569.222 2.158.134.661-.099 2.029-.828 2.316-1.628.288-.8.288-1.487.202-1.628-.087-.146-.324-.228-.543-.337z"/></svg>
-                    {t.contactInfo.wa}
-                  </a>
-                  <a href="mailto:fareestate@gmail.com" className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-4 px-6 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-all flex items-center gap-3 text-lg">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                    {t.contactInfo.mail}
-                  </a>
-                </div>
-              </div>
-
-              <div className="bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-200 shadow-inner">
-                <h3 className="text-xl font-bold text-slate-800 mb-6">{t.contactInfo.formTitle}</h3>
-                {contactStatus && (
-                  <div className="mb-6 p-4 bg-emerald-100 text-emerald-800 rounded-lg border border-emerald-200 text-sm font-bold flex items-center gap-2">
-                    <span>✅</span> {contactStatus}
-                  </div>
-                )}
-                <form onSubmit={handleContactSubmit} className="space-y-5">
-                  <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">{t.contactInfo.name}</label>
-                    <input type="text" required disabled={showSendOptions} value={contactForm.name} onChange={(e) => setContactForm({...contactForm, name: e.target.value})} className={inputClassName} />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">{t.contactInfo.email}</label>
-                    <input type="email" required disabled={showSendOptions} value={contactForm.email} onChange={(e) => setContactForm({...contactForm, email: e.target.value})} className={`${inputClassName} text-left`} dir="ltr" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">{t.contactInfo.msg}</label>
-                    <textarea required disabled={showSendOptions} rows={4} value={contactForm.message} onChange={(e) => setContactForm({...contactForm, message: e.target.value})} className={`${inputClassName} resize-none`}></textarea>
-                  </div>
-                  
-                  {!showSendOptions ? (
-                    <button type="submit" className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg active:scale-[0.98]">
-                      {t.contactInfo.send}
-                    </button>
-                  ) : (
-                    <div className="flex flex-col gap-3 p-4 bg-white border border-blue-100 shadow-sm rounded-xl animate-fade-in-up">
-                      <p className="text-sm font-bold text-slate-800 text-center mb-1">
-                        {lang === 'en' ? 'Choose how to send the message:' : 'اختر طريقة إرسال الرسالة:'}
+            {/* Privacy Policy Page */}
+            <Route path="/privacy" element={
+              <article className="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100">
+                <h1 className="text-3xl font-bold text-slate-900 mb-8 flex items-center gap-3 border-b pb-4"><span className="text-4xl">🔒</span> {t.legal.privacy}</h1>
+                <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+                  <p>{t.legal.privacyIntro}</p>
+                  {t.legal.privacySections.map((sec, idx) => (
+                    <div key={idx} className="space-y-2 mt-6">
+                      <h2 className="text-xl font-bold text-slate-800">{sec.title}</h2>
+                      <p className="whitespace-pre-line text-slate-600">
+                        {sec.content.split(/(https:\/\/[^\s]+)/).map((part, i) => 
+                          part.startsWith('https://') ? (
+                            <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline break-all font-semibold" dir="ltr">
+                              {part}
+                            </a>
+                          ) : (
+                            <span key={i}>{part}</span>
+                          )
+                        )}
                       </p>
-                      
-                      <a
-                        href={`https://wa.me/967776202648?text=${encodeURIComponent(`الاسم: ${contactForm.name}\nالبريد: ${contactForm.email}\nالرسالة:\n${contactForm.message}`)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={handleSendChoice}
-                        className="w-full bg-[#16a34a] hover:bg-green-700 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-md transition-all"
-                      >
-                        {t.contactInfo.wa}
-                      </a>
-                      
-                      <a
-                        href={`mailto:fareestate@gmail.com?subject=${encodeURIComponent(`رسالة من ${contactForm.name}`)}&body=${encodeURIComponent(`الاسم: ${contactForm.name}\nالبريد: ${contactForm.email}\nالرسالة:\n${contactForm.message}`)}`}
-                        onClick={handleSendChoice}
-                        className="w-full bg-blue-600 hover:bg-blue-800 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-md transition-all"
-                      >
-                        {t.contactInfo.mail}
-                      </a>
-                      
-                      <button type="button" onClick={() => setShowSendOptions(false)} className="mt-2 text-sm text-slate-500 hover:text-slate-800 font-bold transition-colors">
-                        {lang === 'en' ? 'Cancel' : 'إلغاء'}
-                      </button>
                     </div>
-                  )}
-
-                </form>
-              </div>
-            </div>
-          </article>
-        )}
-
-        {/* 🟢 صفحة سياسة الخصوصية الاحترافية والمتوافقة مع أدسنس */}
-        {currentPage === 'privacy' && (
-          <article className="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100">
-            <h1 className="text-3xl font-bold text-slate-900 mb-8 flex items-center gap-3 border-b pb-4"><span className="text-4xl">🔒</span> {t.legal.privacy}</h1>
-            <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
-              <p>{t.legal.privacyIntro}</p>
-              {t.legal.privacySections.map((sec, idx) => (
-                <div key={idx} className="space-y-2 mt-6">
-                  <h2 className="text-xl font-bold text-slate-800">{sec.title}</h2>
-                  <p className="whitespace-pre-line text-slate-600">
-                    {/* تحويل الرابط النصي إلى رابط قابل للنقر آلياً */}
-                    {sec.content.split(/(https:\/\/[^\s]+)/).map((part, i) => 
-                      part.startsWith('https://') ? (
-                        <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline break-all font-semibold" dir="ltr">
-                          {part}
-                        </a>
-                      ) : (
-                        <span key={i}>{part}</span>
-                      )
-                    )}
-                  </p>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </article>
-        )}
+              </article>
+            } />
 
-        {/* 🟢 صفحة شروط الاستخدام (تم تحويلها لشكل احترافي مقسم لبنود) */}
-        {currentPage === 'terms' && (
-          <article className="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100">
-            <h1 className="text-3xl font-bold text-slate-900 mb-8 flex items-center gap-3 border-b pb-4"><span className="text-4xl">📜</span> {t.legal.terms}</h1>
-            <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
-              <p>{t.legal.termsIntro}</p>
-              {t.legal.termsSections.map((sec, idx) => (
-                <div key={idx} className="space-y-2 mt-6">
-                  <h2 className="text-xl font-bold text-slate-800">{sec.title}</h2>
-                  <p className="whitespace-pre-line text-slate-600">{sec.content}</p>
+            {/* Terms of Use Page */}
+            <Route path="/terms" element={
+              <article className="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100">
+                <h1 className="text-3xl font-bold text-slate-900 mb-8 flex items-center gap-3 border-b pb-4"><span className="text-4xl">📜</span> {t.legal.terms}</h1>
+                <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+                  <p>{t.legal.termsIntro}</p>
+                  {t.legal.termsSections.map((sec, idx) => (
+                    <div key={idx} className="space-y-2 mt-6">
+                      <h2 className="text-xl font-bold text-slate-800">{sec.title}</h2>
+                      <p className="whitespace-pre-line text-slate-600">{sec.content}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </article>
-        )}
-        
-      </main>
+              </article>
+            } />
+          </Routes>
+        </main>
 
-      {/* 🟢 التذييل */}
-      <footer className="mt-auto py-10 border-t border-slate-200 text-center space-y-6 print:hidden bg-white">
-        <p className="text-slate-400 text-sm font-semibold tracking-wide">{t.footer}</p>
-        <div className="flex flex-wrap justify-center gap-6 text-sm text-slate-500 font-bold">
-          <button onClick={() => { setCurrentPage('privacy'); setSelectedPost(null); }} className="hover:text-blue-600 transition-colors">{t.legal.privacy}</button>
-          <button onClick={() => { setCurrentPage('terms'); setSelectedPost(null); }} className="hover:text-blue-600 transition-colors">{t.legal.terms}</button>
-          <button onClick={() => { setCurrentPage('about'); setSelectedPost(null); }} className="hover:text-blue-600 transition-colors">{t.nav.about}</button>
-          <button onClick={() => { setCurrentPage('contact'); setSelectedPost(null); }} className="hover:text-blue-600 transition-colors">{t.nav.contact}</button>
+        {/* 🟢 Footer */}
+        <footer className="mt-auto py-10 border-t border-slate-200 text-center space-y-6 print:hidden bg-white">
+          <p className="text-slate-400 text-sm font-semibold tracking-wide">{t.footer}</p>
+          <div className="flex flex-wrap justify-center gap-6 text-sm text-slate-500 font-bold">
+            <Link to="/privacy" className="hover:text-blue-600 transition-colors">{t.legal.privacy}</Link>
+            <Link to="/terms" className="hover:text-blue-600 transition-colors">{t.legal.terms}</Link>
+            <Link to="/about" className="hover:text-blue-600 transition-colors">{t.nav.about}</Link>
+            <Link to="/contact" className="hover:text-blue-600 transition-colors">{t.nav.contact}</Link>
+          </div>
+        </footer>
+
+      </div>
+    </BrowserRouter>
+  );
+}
+
+// Sub-component for individual blog post view
+function BlogPostView({ lang, t }: { lang: 'ar' | 'en'; t: any }) {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const post = articlesData.find((p) => p.id === id);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
+
+  if (!post) {
+    return (
+      <div className="text-center py-20 space-y-4">
+        <h2 className="text-2xl font-bold text-slate-800">المقال غير موجود</h2>
+        <button onClick={() => navigate('/blog')} className="text-blue-600 font-bold underline">العودة إلى المدونة</button>
+      </div>
+    );
+  }
+
+  const content = lang === 'ar' ? post.ar : post.en;
+
+  return (
+    <article className="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-slate-100 p-8 sm:p-12">
+      <Link to="/blog" className="mb-8 text-blue-700 hover:text-blue-900 font-bold text-sm flex items-center gap-2 hover:bg-blue-50 px-4 py-2 rounded-lg transition-colors w-fit">
+        &rarr; {t.actions.backBlog}
+      </Link>
+      <header className="text-center mb-10">
+        <div className="text-6xl mb-6">{post.icon}</div>
+        <span className={`inline-block px-4 py-1.5 rounded-full text-sm font-bold mb-4 border ${getCategoryColor(content.category)}`}>
+          {content.category}
+        </span>
+        <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 mb-6 leading-tight">
+          {content.title}
+        </h1>
+        <time className="text-slate-400 text-sm font-medium">{post.date}</time>
+      </header>
+      <div className="prose prose-lg prose-blue mx-auto text-slate-700 leading-loose whitespace-pre-line">
+        {content.content}
+      </div>
+    </article>
+  );
+}
+
+// Sub-component for Contact Page
+function ContactPageView({ t, lang, inputClassName }: { t: any; lang: 'ar' | 'en'; inputClassName: string }) {
+  const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
+  const [contactStatus, setContactStatus] = useState('');
+  const [showSendOptions, setShowSendOptions] = useState(false);
+
+  const handleContactSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setShowSendOptions(true);
+  };
+
+  const handleSendChoice = () => {
+    setShowSendOptions(false);
+    setContactStatus(t.contactInfo.success);
+    setContactForm({ name: '', email: '', message: '' });
+    setTimeout(() => setContactStatus(''), 5000);
+  };
+
+  return (
+    <article className="max-w-5xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-100">
+      <h1 className="text-3xl font-bold text-slate-900 mb-8 flex items-center justify-center gap-3 border-b pb-4"><span className="text-4xl">📬</span> {t.contactInfo.title}</h1>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-8">
+        <div className="space-y-8">
+          <div>
+            <h2 className="text-2xl font-bold text-slate-800 mb-4">{t.contactInfo.title}</h2>
+            <p className="text-slate-600 leading-relaxed text-lg">{t.contactInfo.sub}</p>
+          </div>
+          <div className="flex flex-col gap-4">
+            <a href="https://wa.me/967776202648" target="_blank" rel="noopener noreferrer" className="bg-[#16a34a] hover:bg-green-700 text-white font-bold py-4 px-6 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-all flex items-center gap-3 text-lg">
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M11.964 23.955c-1.848 0-3.666-.46-5.275-1.332l-6.39 1.677 1.716-6.237c-.96-1.657-1.464-3.535-1.464-5.464C.551 5.64 6.185.006 13.136.006c6.953 0 12.585 5.634 12.585 12.593 0 6.958-5.632 12.356-13.757 12.356zm-5.228-3.41c1.554.919 3.328 1.405 5.163 1.405 5.86 0 10.635-4.782 10.635-10.655S17.76 1.94 11.9 1.94c-5.86 0-10.636 4.781-10.636 10.654 0 1.93.53 3.791 1.531 5.432l-1.026 3.731 3.823-1.011zm9.324-7.44c-.218-.109-1.288-.636-1.488-.709-.199-.073-.346-.109-.492.109-.147.218-.564.709-.693.854-.128.146-.258.164-.476.055-.218-.109-.92-.338-1.752-1.078-.647-.577-1.085-1.29-1.213-1.509-.129-.218-.014-.336.095-.445.098-.098.218-.255.326-.382.11-.128.147-.218.219-.364.073-.146.037-.273-.018-.382-.055-.11-.492-1.182-.673-1.618-.178-.428-.359-.37-.492-.377-.128-.007-.275-.007-.423-.007-.147 0-.385.055-.587.273-.201.218-.77 1.701-.77 3.342 0 1.642.788 3.23 1.053 3.559.266.327 2.42 3.69 5.856 5.168.818.351 1.458.56 1.956.717.822.259 1.569.222 2.158.134.661-.099 2.029-.828 2.316-1.628.288-.8.288-1.487.202-1.628-.087-.146-.324-.228-.543-.337z"/></svg>
+              {t.contactInfo.wa}
+            </a>
+            <a href="mailto:fareestate@gmail.com" className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-4 px-6 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-all flex items-center gap-3 text-lg">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+              {t.contactInfo.mail}
+            </a>
+          </div>
         </div>
-      </footer>
 
-    </div>
+        <div className="bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-200 shadow-inner">
+          <h3 className="text-xl font-bold text-slate-800 mb-6">{t.contactInfo.formTitle}</h3>
+          {contactStatus && (
+            <div className="mb-6 p-4 bg-emerald-100 text-emerald-800 rounded-lg border border-emerald-200 text-sm font-bold flex items-center gap-2">
+              <span>✅</span> {contactStatus}
+            </div>
+          )}
+          <form onSubmit={handleContactSubmit} className="space-y-5">
+            <div>
+              <label className="block text-sm font-bold text-slate-700 mb-2">{t.contactInfo.name}</label>
+              <input type="text" required disabled={showSendOptions} value={contactForm.name} onChange={(e) => setContactForm({...contactForm, name: e.target.value})} className={inputClassName} />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-slate-700 mb-2">{t.contactInfo.email}</label>
+              <input type="email" required disabled={showSendOptions} value={contactForm.email} onChange={(e) => setContactForm({...contactForm, email: e.target.value})} className={`${inputClassName} text-left`} dir="ltr" />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-slate-700 mb-2">{t.contactInfo.msg}</label>
+              <textarea required disabled={showSendOptions} rows={4} value={contactForm.message} onChange={(e) => setContactForm({...contactForm, message: e.target.value})} className={`${inputClassName} resize-none`}></textarea>
+            </div>
+            
+            {!showSendOptions ? (
+              <button type="submit" className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg active:scale-[0.98]">
+                {t.contactInfo.send}
+              </button>
+            ) : (
+              <div className="flex flex-col gap-3 p-4 bg-white border border-blue-100 shadow-sm rounded-xl animate-fade-in-up">
+                <p className="text-sm font-bold text-slate-800 text-center mb-1">
+                  {lang === 'en' ? 'Choose how to send the message:' : 'اختر طريقة إرسال الرسالة:'}
+                </p>
+                <a
+                  href={`https://wa.me/967776202648?text=${encodeURIComponent(`الاسم: ${contactForm.name}\nالبريد: ${contactForm.email}\nالرسالة:\n${contactForm.message}`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={handleSendChoice}
+                  className="w-full bg-[#16a34a] hover:bg-green-700 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-md transition-all"
+                >
+                  {t.contactInfo.wa}
+                </a>
+                <a
+                  href={`mailto:fareestate@gmail.com?subject=${encodeURIComponent(`رسالة من ${contactForm.name}`)}&body=${encodeURIComponent(`الاسم: ${contactForm.name}\nالبريد: ${contactForm.email}\nالرسالة:\n${contactForm.message}`)}`}
+                  onClick={handleSendChoice}
+                  className="w-full bg-blue-600 hover:bg-blue-800 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-md transition-all"
+                >
+                  {t.contactInfo.mail}
+                </a>
+                <button type="button" onClick={() => setShowSendOptions(false)} className="mt-2 text-sm text-slate-500 hover:text-slate-800 font-bold transition-colors">
+                  {lang === 'en' ? 'Cancel' : 'إلغاء'}
+                </button>
+              </div>
+            )}
+          </form>
+        </div>
+      </div>
+    </article>
   );
 }
